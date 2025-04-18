@@ -2,10 +2,9 @@ package pl.tablehub.mobile.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val PRIMARY_COLOR: Color = Color(0xFFFF6A1A)
+val SECONDARY_COLOR: Color = Color(0xFFFFFFEB)
+val TERTIARY_COLOR: Color = Color(0xFF174A63)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val BACKGROUND_COLOR: Color = SECONDARY_COLOR
+val BUTTON_COLOR: Color = PRIMARY_COLOR

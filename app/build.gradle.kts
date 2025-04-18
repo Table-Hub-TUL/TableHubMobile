@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "pl.tablehub.mobile"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "pl.tablehub.mobile"
