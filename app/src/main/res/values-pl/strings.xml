@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Table Hub</string>
+    <string name="password">Hasło</string>
+    <string name="log_in">Zaloguj się</string>
+    <string name="create_account">Załóż konto</string>
+    <string name="forgot_password">Zapomniałeś hasła?</string>
+    <string name="welcome_back">WItaj ponownie</string>
+    <string name="sign_in_to_cont">Zaloguj się, żeby kontynuować</string>
+</resources>
