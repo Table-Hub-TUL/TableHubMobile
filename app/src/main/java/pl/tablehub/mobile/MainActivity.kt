@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
                         onLoginSuccess = {
                             // Navigate to Home Screen or next destination
                             // For now, we'll just show a snackbar
-                            // In a real app, you'd use Navigation Component
                         },
                         modifier = Modifier
                             .fillMaxSize()
