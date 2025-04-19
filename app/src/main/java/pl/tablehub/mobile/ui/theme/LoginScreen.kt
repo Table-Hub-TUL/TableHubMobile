@@ -89,6 +89,7 @@ fun LoginScreen(
                 fontSize = 16.sp,
                 color = TERTIARY_COLOR) },
             modifier = Modifier.fillMaxWidth(),
+            maxLines = 1,
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = PRIMARY_COLOR,
@@ -107,6 +108,7 @@ fun LoginScreen(
                 fontSize = 16.sp,
                 color = TERTIARY_COLOR) },
             modifier = Modifier.fillMaxWidth(),
+            maxLines = 1,
             shape = RoundedCornerShape(12.dp),
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
