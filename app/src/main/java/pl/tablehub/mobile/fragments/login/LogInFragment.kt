@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import pl.tablehub.mobile.fragments.login.composables.MainLoginView
 import pl.tablehub.mobile.ui.theme.TableHubTheme
 
 @AndroidEntryPoint
@@ -22,10 +23,7 @@ class LogInFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                TableHubTheme {
-                    Text("Test placeholder",
-                        color = Color.Black)
-                }
+                MainLoginView()
             }
         }
     }
