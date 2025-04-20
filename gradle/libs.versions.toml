@@ -38,6 +38,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+mapbox-maps = { module = "com.mapbox.maps:android", version = "11.11.0" }
 maps-compose = { module = "com.mapbox.extension:maps-compose", version.ref = "mapsCompose" }
 
 [plugins]

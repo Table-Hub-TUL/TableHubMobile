@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/logInFragment"
         android:name="pl.tablehub.mobile.fragments.login.LogInFragment"
-        android:label="LogInFragment" />
+        android:label="LogInFragment" >
+        <action
+            android:id="@+id/action_logInFragment_to_mainViewFragment"
+            app:destination="@id/mainViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainViewFragment"
+        android:name="pl.tablehub.mobile.fragments.mainview.MainViewFragment"
+        android:label="MainViewFragment" />
 </navigation>
