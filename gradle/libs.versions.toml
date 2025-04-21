@@ -13,6 +13,7 @@ composeBom = "2025.04.00"
 ksp = "2.1.20-1.0.32"
 hilt = "2.56.1"
 mapsCompose = "11.11.0"
+materialIconsCore = "1.7.8"
 navigationFragmentKtx = "2.8.9"
 navigationUiKtx = "2.8.9"
 navigationCompose = "2.8.9"
@@ -20,6 +21,7 @@ navigationCompose = "2.8.9"
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
