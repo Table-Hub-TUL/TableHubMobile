@@ -7,4 +7,7 @@
     <string name="forgot_password">Zapomniałeś hasła?</string>
     <string name="welcome_back">WItaj ponownie</string>
     <string name="sign_in_to_cont">Zaloguj się, żeby kontynuować</string>
+    <string name="filter">Filtruj</string>
+    <string name="report_free_tables">Zgłoś wolne stoliki</string>
+    <string name="current_location">Obecna lokazlizacja</string>
 </resources>
