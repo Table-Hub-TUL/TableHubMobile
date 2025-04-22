@@ -1,12 +1,32 @@
 package pl.tablehub.mobile.fragments.login.composables
 
+<<<<<<< HEAD
+=======
+import android.widget.Toast
+import androidx.compose.foundation.Image
+>>>>>>> 6b09a05c76ebb26650abc485a850eff51d5be7ac
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+<<<<<<< HEAD
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+=======
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+>>>>>>> 6b09a05c76ebb26650abc485a850eff51d5be7ac
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,22 +34,45 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+<<<<<<< HEAD
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.ui.shared.composables.AppLogo
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+=======
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import pl.tablehub.mobile.R
+import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
+import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+>>>>>>> 6b09a05c76ebb26650abc485a850eff51d5be7ac
 import pl.tablehub.mobile.ui.theme.TableHubTheme
 
 
 @Composable
 fun MainLoginView(
     modifier: Modifier = Modifier,
+<<<<<<< HEAD
     onLogin: (String, String) -> Unit = { _: String, _: String -> },
     onRegister: () -> Unit = {},
     onForgotPassword: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+=======
+    onLoginSuccess: () -> Unit = {}
+) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    val context = LocalContext.current
+>>>>>>> 6b09a05c76ebb26650abc485a850eff51d5be7ac
 
     Column(
         modifier = modifier
@@ -39,6 +82,7 @@ fun MainLoginView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+<<<<<<< HEAD
         AppLogo(imgSize = 240)
         Spacer(modifier = Modifier.height(32.dp))
         WelcomeText()
@@ -54,6 +98,133 @@ fun MainLoginView(
         LogInButton { onLogin(email, password) }
         Spacer(modifier = Modifier.height(16.dp))
         RegisterButton(onRegister)
+=======
+        // Logo
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "TableHub Logo",
+            modifier = Modifier.size(240.dp)
+        )
+
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // Welcome Text
+        Text(
+            text = "Welcome Back",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = TERTIARY_COLOR
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Sign in to continue",
+            fontSize = 16.sp,
+            color = TERTIARY_COLOR.copy(alpha = 0.7f)
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // Email Field
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text(text = "Email...",
+                fontSize = 16.sp,
+                color = TERTIARY_COLOR
+            ) },
+            modifier = Modifier.fillMaxWidth(),
+            maxLines = 1,
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = PRIMARY_COLOR,
+                unfocusedBorderColor = TERTIARY_COLOR
+            ),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Password Field
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text(text = "Password...",
+                fontSize = 16.sp,
+                color = TERTIARY_COLOR
+            ) },
+            modifier = Modifier.fillMaxWidth(),
+            maxLines = 1,
+            shape = RoundedCornerShape(12.dp),
+            visualTransformation = PasswordVisualTransformation(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = PRIMARY_COLOR,
+                unfocusedBorderColor = TERTIARY_COLOR
+            ),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Forgot Password
+        Text(
+            text = "Forgot Password?",
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(vertical = 8.dp),
+            color = TERTIARY_COLOR
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Login Button
+        Button(
+            onClick = {
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    onLoginSuccess()
+                } else {
+                    Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = TERTIARY_COLOR
+            )
+        ) {
+            Text(
+                text = "LOG IN",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Register Button
+        OutlinedButton(
+            onClick = {
+                Toast.makeText(context, "Register clicked", Toast.LENGTH_SHORT).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = TERTIARY_COLOR
+            )
+        ) {
+            Text(
+                text = "CREATE ACCOUNT",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+>>>>>>> 6b09a05c76ebb26650abc485a850eff51d5be7ac
     }
 }
 
