@@ -37,6 +37,7 @@ fun BottomButtons(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        // TODO: Make this button at the center of the bottom
         MainViewButton(
             text = stringResource(R.string.report_free_tables),
             onClick = onReportClick
