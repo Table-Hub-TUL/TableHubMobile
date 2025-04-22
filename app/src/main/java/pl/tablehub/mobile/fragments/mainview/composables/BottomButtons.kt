@@ -1,8 +1,8 @@
 package pl.tablehub.mobile.fragments.mainview.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,13 +35,13 @@ fun BottomButtons(
             .fillMaxWidth()
             .padding(horizontal = HORIZONTAL_PADDING.dp, vertical = VERTICAL_PADDING.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // TODO: Make this button at the center of the bottom
+        Spacer(modifier = Modifier.weight(1f))
         MainViewButton(
             text = stringResource(R.string.report_free_tables),
             onClick = onReportClick
         )
+        Spacer(modifier = Modifier.weight(0.5f))
         IconButton(onClick = onLocationClick,
             modifier = Modifier
                 .size(BUTTON_HEIGHT.dp)

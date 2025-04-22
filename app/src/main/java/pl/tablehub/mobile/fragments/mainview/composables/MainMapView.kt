@@ -6,18 +6,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainMapView() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
 
     MainViewMenu(drawerState = drawerState) {
         Box(modifier = Modifier.fillMaxSize()) {
-            MapboxMapWrapper()
+            MapboxMapWrapper(locationTrigger = locationTrigger)
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -32,7 +35,11 @@ fun MainMapView() {
                 Box(modifier = Modifier.weight(1f))
                 BottomButtons(
                     onReportClick = { /* TODO: Implement report action */ },
-                    onLocationClick = { /* TODO: Implement location action */ }
+                    onLocationClick = {
+                        scope.launch {
+                            locationTrigger.tryEmit(Unit)
+                        }
+                    }
                 )
             }
         }
