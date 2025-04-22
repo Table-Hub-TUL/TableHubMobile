@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.login.composables.MainLoginView
 
+
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
     override fun onCreateView(
