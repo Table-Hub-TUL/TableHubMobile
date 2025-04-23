@@ -3,7 +3,6 @@ package pl.tablehub.mobile.services.mock
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.mapbox.maps.plugin.ViewPlugin
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Position
@@ -17,11 +16,11 @@ import pl.tablehub.mobile.model.websocket.RestaurantsRequest
 import pl.tablehub.mobile.model.websocket.RestaurantsResponse
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.model.websocket.TableUpdateResponse
-import pl.tablehub.mobile.services.interfaces.TablesInterface
+import pl.tablehub.mobile.services.interfaces.TablesService
 import kotlin.random.Random
 
 @AndroidEntryPoint
-class MockTableService : Service(), TablesInterface {
+class MockTableService : Service(), TablesService {
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }

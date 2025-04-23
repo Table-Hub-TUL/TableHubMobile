@@ -8,8 +8,7 @@ import pl.tablehub.mobile.model.websocket.RestaurantsResponse
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.model.websocket.TableUpdateResponse
 
-@AndroidEntryPoint
-interface TablesInterface {
+interface TablesService {
     fun requestRestaurants(
         requestParams: RestaurantsRequest
     ) : RestaurantsResponse

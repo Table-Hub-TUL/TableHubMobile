@@ -6,21 +6,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import pl.tablehub.mobile.model.Restaurant
+
+// TODO: Replace MutableSharedFlow with a proper state management for location trigger if needed
+val locationTrigger = MutableSharedFlow<Unit>(replay = 0)
 
 @Composable
-fun MainMapView() {
+fun MainMapView(restaurants: List<Restaurant>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
 
     MainViewMenu(drawerState = drawerState) {
         Box(modifier = Modifier.fillMaxSize()) {
-            MapboxMapWrapper(locationTrigger = locationTrigger)
+            MapboxMapWrapper(locationTrigger = locationTrigger, restaurants = restaurants)
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -42,6 +46,14 @@ fun MainMapView() {
                     }
                 )
             }
+        }
+    }
+
+    // Example of triggering location centering on initial composition
+    LaunchedEffect(Unit) {
+        scope.launch {
+            // Optionally trigger map centering on load
+            // locationTrigger.emit(Unit)
         }
     }
 }
