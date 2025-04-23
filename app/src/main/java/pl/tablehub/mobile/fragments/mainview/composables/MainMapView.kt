@@ -14,13 +14,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Restaurant
 
-// TODO: Replace MutableSharedFlow with a proper state management for location trigger if needed
-val locationTrigger = MutableSharedFlow<Unit>(replay = 0)
-
 @Composable
 fun MainMapView(restaurants: List<Restaurant>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
 
     MainViewMenu(drawerState = drawerState) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -48,12 +46,9 @@ fun MainMapView(restaurants: List<Restaurant>) {
             }
         }
     }
-
-    // Example of triggering location centering on initial composition
     LaunchedEffect(Unit) {
         scope.launch {
-            // Optionally trigger map centering on load
-            // locationTrigger.emit(Unit)
+            locationTrigger.emit(Unit)
         }
     }
 }

@@ -37,8 +37,8 @@ fun MapboxMapWrapper(
 
     val mapViewportState = rememberMapViewportState {
         setCameraOptions {
-            zoom(14.0) // Adjusted zoom level for better initial view
-            center(Point.fromLngLat(19.457216, 51.759445)) // Center on Łódź
+            zoom(14.0)
+            center(Point.fromLngLat(19.457216, 51.759445))
             pitch(0.0)
             bearing(0.0)
         }
@@ -62,7 +62,6 @@ fun MapboxMapWrapper(
                 puckBearingEnabled = true
             }
         }
-
         MapEffect(restaurants, markerBitmap) { mapView ->
             val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
             pointAnnotationManager.deleteAll()
