@@ -1,6 +1,5 @@
 package pl.tablehub.mobile.services.interfaces
 
-import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantSubscriptionResponse
 import pl.tablehub.mobile.model.websocket.RestaurantsRequest

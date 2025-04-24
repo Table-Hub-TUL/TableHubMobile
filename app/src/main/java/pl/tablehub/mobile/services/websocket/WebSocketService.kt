@@ -25,7 +25,7 @@ class WebSocketService @Inject constructor(
 
     init {
         val stompClient = StompClient(client)
-        val session: StompSession = stompClient.connect(SERVER_URL)
+        //val session: StompSession = stompClient.connect(SERVER_URL)
     }
 
     override fun onBind(intent: Intent?): IBinder? {

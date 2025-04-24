@@ -26,7 +26,12 @@ class MainViewFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val restaurants by viewModel.restaurants.collectAsState()
-                MainMapView(restaurants = restaurants)
+                val userLocation by viewModel.userLocation.collectAsState()
+                val tables by viewModel.tables.collectAsState()
+                MainMapView(
+                    restaurants = restaurants,
+                    userLocation = userLocation,
+                    tables = tables)
             }
         }
     }

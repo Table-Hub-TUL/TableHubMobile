@@ -12,17 +12,27 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.Section
 
 @Composable
-fun MainMapView(restaurants: List<Restaurant>) {
+fun MainMapView(
+    restaurants: List<Restaurant>,
+    userLocation: Location,
+    tables: HashMap<Long, List<Section>>
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
 
     MainViewMenu(drawerState = drawerState) {
         Box(modifier = Modifier.fillMaxSize()) {
-            MapboxMapWrapper(locationTrigger = locationTrigger, restaurants = restaurants)
+            MapboxMapWrapper(
+                locationTrigger = locationTrigger,
+                restaurants = restaurants,
+                userLocation = userLocation,
+                tables = tables)
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {

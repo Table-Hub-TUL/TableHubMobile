@@ -1,44 +1,57 @@
 package pl.tablehub.mobile.fragments.mainview.composables
 
-import android.graphics.BitmapFactory
+import android.annotation.SuppressLint
+import android.graphics.*
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.google.gson.JsonElement
+import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import pl.tablehub.mobile.R
+import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.Section
+
 
 @Composable
 fun MapboxMapWrapper(
     locationTrigger: SharedFlow<Unit>,
-    restaurants: List<Restaurant>
+    restaurants: List<Restaurant>,
+    userLocation: Location,
+    tables: HashMap<Long, List<Section>>
 ) {
     val context = LocalContext.current
-    val markerBitmap = remember {
-        BitmapFactory.decodeResource(context.resources, R.drawable.logo_for_system)
+    val baseMarkerBitmap = remember {
+        BitmapFactory.decodeResource(context.resources, R.drawable.marker)
+    }
+    val textBitmaps = restaurants.map { restaurant ->
+        rememberTextOnBitmap(baseBitmap = baseMarkerBitmap, text = calculateFreeTablesText(restaurant.id, tables))
     }
 
     val mapViewportState = rememberMapViewportState {
         setCameraOptions {
-            zoom(14.0)
-            center(Point.fromLngLat(19.457216, 51.759445))
+            zoom(10.0)
+            center(Point.fromLngLat(userLocation.longitude, userLocation.latitude))
             pitch(0.0)
             bearing(0.0)
         }
@@ -62,21 +75,30 @@ fun MapboxMapWrapper(
                 puckBearingEnabled = true
             }
         }
-        MapEffect(restaurants, markerBitmap) { mapView ->
+        MapEffect(textBitmaps) { mapView ->
             val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
             pointAnnotationManager.deleteAll()
-            val pointAnnotationOptionsList = restaurants.map {
+            val pointAnnotationOptionsList = restaurants.zip(textBitmaps).map { (restaurant, textBitmap) ->
                 PointAnnotationOptions()
-                    .withPoint(Point.fromLngLat(it.location.longitude, it.location.latitude))
-                    .withIconImage(markerBitmap)
+                    .withPoint(Point.fromLngLat(restaurant.location.longitude, restaurant.location.latitude))
+                    .withIconImage(textBitmap)
+                    .withIconAnchor(IconAnchor.BOTTOM)
                     .withIconSize(0.1)
+                    .withData(JsonPrimitive(restaurant.id))
             }
             pointAnnotationManager.create(pointAnnotationOptionsList)
+            pointAnnotationManager.removeClickListener { true }
+            pointAnnotationManager.addClickListener( MarkersOnClickListeners(restaurants, tables))
         }
     }
+
     LaunchedEffect(locationTrigger, mapViewportState) {
         locationTrigger.collectLatest {
-            mapViewportState.transitionToFollowPuckState()
+            val followOptions = FollowPuckViewportStateOptions.Builder()
+                .pitch(0.0)
+                .bearing(FollowPuckViewportStateBearing.Constant(0.0))
+                .build()
+            mapViewportState.transitionToFollowPuckState(followOptions)
         }
     }
 }

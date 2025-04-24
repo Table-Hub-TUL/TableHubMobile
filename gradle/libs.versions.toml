@@ -22,6 +22,7 @@ navigationFragmentKtx = "2.8.9"
 navigationUiKtx = "2.8.9"
 navigationCompose = "2.8.9"
 okhttp = "4.12.0"
+playServicesLocation = "21.3.0"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -52,6 +53,7 @@ krossbow-websocket-builtin = { module = "org.hildan.krossbow:krossbow-websocket-
 mapbox-maps = { module = "com.mapbox.maps:android", version = "11.11.0" }
 maps-compose = { module = "com.mapbox.extension:maps-compose", version.ref = "mapsCompose" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
