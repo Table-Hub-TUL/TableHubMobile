@@ -33,14 +33,9 @@ fun RestaurantInput(
     strRes: Int,
     keyboardType: KeyboardType
 ) {
-    var inputValue by remember { mutableStateOf(value) }
-
     OutlinedTextField(
-        value = inputValue,
-        onValueChange = {
-            inputValue = it
-            onValueChange(it)
-        },
+        value = value,
+        onValueChange = onValueChange,
         label = {
             Text(
                 text = stringResource(strRes),
