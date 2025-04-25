@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.fragments.mainview.composables.MainMapView
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
 
 @AndroidEntryPoint
@@ -26,7 +27,12 @@ class MainViewFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val restaurants by viewModel.restaurants.collectAsState()
-                MainMapView(restaurants = restaurants)
+                val userLocation by viewModel.userLocation.collectAsState()
+                val tables by viewModel.tables.collectAsState()
+                MainMapView(
+                    restaurants = restaurants,
+                    userLocation = userLocation,
+                    tables = tables)
             }
         }
     }

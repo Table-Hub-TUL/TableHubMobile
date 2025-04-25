@@ -17,10 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.ui.shared.composables.constants.CORNER_ROUND_SIZE
-import pl.tablehub.mobile.ui.shared.composables.constants.HORIZONTAL_PADDING
-import pl.tablehub.mobile.ui.shared.composables.constants.ICON_SIZE
-import pl.tablehub.mobile.ui.shared.composables.constants.VERTICAL_PADDING
+import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
+import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
+import pl.tablehub.mobile.ui.shared.constants.ICON_SIZE
+import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 
 @Composable

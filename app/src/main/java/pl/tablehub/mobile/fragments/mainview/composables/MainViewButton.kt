@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import pl.tablehub.mobile.ui.shared.composables.constants.BUTTON_HEIGHT
-import pl.tablehub.mobile.ui.shared.composables.constants.CORNER_ROUND_SIZE
-import pl.tablehub.mobile.ui.shared.composables.constants.FONT_SIZE
+import pl.tablehub.mobile.ui.shared.constants.BUTTON_HEIGHT
+import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
+import pl.tablehub.mobile.ui.shared.constants.FONT_SIZE
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 

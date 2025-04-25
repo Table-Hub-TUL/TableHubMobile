@@ -8,9 +8,13 @@
     <string name="welcome_back">WItaj ponownie</string>
     <string name="sign_in_to_cont">Zaloguj się, żeby kontynuować</string>
     <string name="filter">Filtruj</string>
-    <string name="report_free_tables">Zgłoś wolne stoliki</string>
+    <string name="report_free_tables">Zgłoś stoliki</string>
     <string name="current_location">Obecna lokazlizacja</string>
     <string name="profile">Moje Konto</string>
     <string name="settings">Ustawienia</string>
     <string name="history">Historia</string>
+    <string name="rating">Opinie</string>
+    <string name="cuisines">kuchnie</string>
+    <string name="available_tables">Wolne stoliki</string>
+    <string name="more_details">Więcej szczegółów</string>
 </resources>
