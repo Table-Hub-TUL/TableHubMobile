@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -36,7 +37,10 @@ class MainViewFragment : Fragment() {
                     userLocation = userLocation,
                     tables = tables,
                     onReport = {
-                        findNavController().navigate(R.id.action_mainViewFragment_to_reportViewFragment)
+                        findNavController().navigate(R.id.action_mainViewFragment_to_reportViewFragment, bundleOf(
+                            Pair("restaurants", restaurants),
+                            Pair("user_location", userLocation)
+                        ))
                 })
             }
         }
