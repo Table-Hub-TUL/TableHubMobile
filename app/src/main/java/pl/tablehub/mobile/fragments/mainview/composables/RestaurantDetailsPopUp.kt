@@ -19,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mapbox.maps.extension.style.expressions.dsl.generated.mod
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section

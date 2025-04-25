@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.fragments.mainview.composables
 
+import android.annotation.SuppressLint
 import android.graphics.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
@@ -22,6 +24,7 @@ import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import pl.tablehub.mobile.R
@@ -30,11 +33,13 @@ import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
 
 
+@SuppressLint("MissingPermission")
 @Composable
 fun MapboxMapWrapper(
     locationTrigger: SharedFlow<Unit>,
+    centerOnPointTrigger: SharedFlow<Point>,
+    potentialCenterLocation: Location,
     restaurants: List<Restaurant>,
-    userLocation: Location,
     tables: HashMap<Long, List<Section>>,
     onMarkerClick: (Restaurant) -> Unit = {}
 ) {
@@ -49,7 +54,7 @@ fun MapboxMapWrapper(
     val mapViewportState = rememberMapViewportState {
         setCameraOptions {
             zoom(10.0)
-            center(Point.fromLngLat(userLocation.longitude, userLocation.latitude))
+            center(Point.fromLngLat(potentialCenterLocation.longitude, potentialCenterLocation.latitude))
             pitch(0.0)
             bearing(0.0)
         }
@@ -88,15 +93,29 @@ fun MapboxMapWrapper(
             pointAnnotationManager.removeClickListener { true }
             pointAnnotationManager.addClickListener( MarkersOnClickListeners(restaurants, onMarkerClick = onMarkerClick))
         }
-    }
 
-    LaunchedEffect(locationTrigger, mapViewportState) {
-        locationTrigger.collectLatest {
-            val followOptions = FollowPuckViewportStateOptions.Builder()
-                .pitch(0.0)
-                .bearing(FollowPuckViewportStateBearing.Constant(0.0))
-                .build()
-            mapViewportState.transitionToFollowPuckState(followOptions)
+        LaunchedEffect(centerOnPointTrigger, mapViewportState) {
+            centerOnPointTrigger.collectLatest { pointToCenterOn ->
+                mapViewportState.easeTo(
+                    CameraOptions.Builder()
+                        .center(pointToCenterOn)
+                        .zoom(14.0)
+                        .pitch(0.0)
+                        .bearing(0.0)
+                        .build(),
+                    MapAnimationOptions.mapAnimationOptions { duration(2000L) }
+                )
+            }
+        }
+
+        LaunchedEffect(locationTrigger, mapViewportState) {
+            locationTrigger.collectLatest {
+                val followOptions = FollowPuckViewportStateOptions.Builder()
+                    .pitch(0.0)
+                    .bearing(FollowPuckViewportStateBearing.Constant(0.0))
+                    .build()
+                mapViewportState.transitionToFollowPuckState(followOptions)
+            }
         }
     }
 }

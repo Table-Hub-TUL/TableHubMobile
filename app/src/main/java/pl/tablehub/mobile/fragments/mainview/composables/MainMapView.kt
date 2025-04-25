@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.mapbox.geojson.Point
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Location
@@ -29,17 +30,28 @@ fun MainMapView(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
+    val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
     var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
 
     MainViewMenu(drawerState = drawerState) {
+        LaunchedEffect(Unit) {
+            scope.launch {
+                locationTrigger.emit(Unit)
+            }
+        }
         Box(modifier = Modifier.fillMaxSize()) {
             MapboxMapWrapper(
                 locationTrigger = locationTrigger,
+                centerOnPointTrigger = centerOnPointTrigger,
                 restaurants = restaurants,
-                userLocation = userLocation,
+                potentialCenterLocation = userLocation,
                 tables = tables,
                 onMarkerClick = { restaurant ->
                     selectedRestaurant = restaurant
+                    scope.launch {
+                        val point = Point.fromLngLat(restaurant.location.longitude, restaurant.location.latitude)
+                        centerOnPointTrigger.emit(point)
+                    }
                 })
             Column(
                 modifier = Modifier.fillMaxSize()
@@ -65,15 +77,10 @@ fun MainMapView(
             selectedRestaurant?.let { restaurant ->
                 RestaurantDetailsPopup(
                     restaurant = restaurant,
-                    sections = tables[restaurant.id] ?: emptyList(),
                     onDismissRequest = { selectedRestaurant = null },
+                    sections = tables[restaurant.id] ?: emptyList(),
                     onMoreDetailsClick = {_ -> Log.d("PLACEHOLDER", "PLACEHOLDER")})
             }
-        }
-    }
-    LaunchedEffect(Unit) {
-        scope.launch {
-            locationTrigger.emit(Unit)
         }
     }
 }
