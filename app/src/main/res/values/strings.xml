@@ -8,7 +8,7 @@
     <string name="welcome_back">Welcome back</string>
     <string name="sign_in_to_cont">Sing in to continue</string>
     <string name="filter">FIlter</string>
-    <string name="report_free_tables">Report free tables</string>
+    <string name="report_free_tables">Report tables</string>
     <string name="menu" translatable="false">Menu</string>
     <string name="current_location">Current location</string>
     <string name="profile">My Account</string>
@@ -17,4 +17,8 @@
     <string name="restaurant_name">Restaurant Name...</string>
     <string name="back">Go Back</string>
     <string name="search">Search</string>
+    <string name="rating">Rating</string>
+    <string name="cuisines">Cuisines</string>
+    <string name="available_tables">Available tables</string>
+    <string name="more_details">More details</string>
 </resources>
