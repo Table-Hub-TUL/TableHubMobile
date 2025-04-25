@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Restaurant
 
 @Composable
-fun MainMapView(restaurants: List<Restaurant>) {
+fun MainMapView(restaurants: List<Restaurant>,
+                onReport: () -> Unit = {}) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
@@ -36,7 +37,7 @@ fun MainMapView(restaurants: List<Restaurant>) {
                 )
                 Box(modifier = Modifier.weight(1f))
                 BottomButtons(
-                    onReportClick = { /* TODO: Implement report action */ },
+                    onReportClick = onReport,
                     onLocationClick = {
                         scope.launch {
                             locationTrigger.tryEmit(Unit)

@@ -13,4 +13,7 @@
     <string name="profile">Moje Konto</string>
     <string name="settings">Ustawienia</string>
     <string name="history">Historia</string>
+    <string name="restaurant_name">Nazwa Restauracji...</string>
+    <string name="back">Powrót</string>
+    <string name="search">Szukaj</string>
 </resources>

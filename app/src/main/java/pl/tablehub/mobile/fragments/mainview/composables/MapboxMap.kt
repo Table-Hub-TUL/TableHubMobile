@@ -28,7 +28,7 @@ import pl.tablehub.mobile.model.Restaurant
 @Composable
 fun MapboxMapWrapper(
     locationTrigger: SharedFlow<Unit>,
-    restaurants: List<Restaurant>
+    restaurants: List<Restaurant>,
 ) {
     val context = LocalContext.current
     val markerBitmap = remember {
