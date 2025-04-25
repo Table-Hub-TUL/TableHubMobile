@@ -15,5 +15,17 @@
     <fragment
         android:id="@+id/mainViewFragment"
         android:name="pl.tablehub.mobile.fragments.mainview.MainViewFragment"
-        android:label="MainViewFragment" />
+        android:label="MainViewFragment" >
+        <action
+            android:id="@+id/action_mainViewFragment_to_reportViewFragment"
+            app:destination="@id/reportViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportViewFragment"
+        android:name="pl.tablehub.mobile.fragments.reportview.ReportViewFragment"
+        android:label="ReportViewFragment" >
+        <action
+            android:id="@+id/action_reportViewFragment_to_mainViewFragment2"
+            app:destination="@id/mainViewFragment" />
+    </fragment>
 </navigation>

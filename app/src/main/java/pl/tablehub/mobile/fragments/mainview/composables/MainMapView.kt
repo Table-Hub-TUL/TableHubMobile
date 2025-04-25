@@ -26,6 +26,7 @@ fun MainMapView(
     restaurants: List<Restaurant>,
     userLocation: Location,
     tables: HashMap<Long, List<Section>>,
+    onReport: () -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -66,7 +67,7 @@ fun MainMapView(
                 )
                 Box(modifier = Modifier.weight(1f))
                 BottomButtons(
-                    onReportClick = { /* TODO: Implement report action */ },
+                    onReportClick = onReport,
                     onLocationClick = {
                         scope.launch {
                             locationTrigger.tryEmit(Unit)
