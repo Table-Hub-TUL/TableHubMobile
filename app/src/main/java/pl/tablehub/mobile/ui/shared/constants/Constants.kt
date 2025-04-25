@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.ui.shared.composables.constants
+package pl.tablehub.mobile.ui.shared.constants
 
 const val BUTTON_HEIGHT = 56
 const val HORIZONTAL_PADDING = 8

@@ -3,7 +3,6 @@ package pl.tablehub.mobile.services.mock
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Position

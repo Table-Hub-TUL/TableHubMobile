@@ -1,8 +1,6 @@
 package pl.tablehub.mobile.fragments.mainview.composables
 
-import android.annotation.SuppressLint
 import android.graphics.*
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
@@ -10,7 +8,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.compose.MapEffect
@@ -38,7 +35,8 @@ fun MapboxMapWrapper(
     locationTrigger: SharedFlow<Unit>,
     restaurants: List<Restaurant>,
     userLocation: Location,
-    tables: HashMap<Long, List<Section>>
+    tables: HashMap<Long, List<Section>>,
+    onMarkerClick: (Restaurant) -> Unit = {}
 ) {
     val context = LocalContext.current
     val baseMarkerBitmap = remember {
@@ -88,7 +86,7 @@ fun MapboxMapWrapper(
             }
             pointAnnotationManager.create(pointAnnotationOptionsList)
             pointAnnotationManager.removeClickListener { true }
-            pointAnnotationManager.addClickListener( MarkersOnClickListeners(restaurants, tables))
+            pointAnnotationManager.addClickListener( MarkersOnClickListeners(restaurants, onMarkerClick = onMarkerClick))
         }
     }
 

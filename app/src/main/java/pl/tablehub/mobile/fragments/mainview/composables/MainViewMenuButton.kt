@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import pl.tablehub.mobile.ui.shared.composables.constants.CORNER_ROUND_SIZE
+import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 
