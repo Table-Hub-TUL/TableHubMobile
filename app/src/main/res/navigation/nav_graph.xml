@@ -30,5 +30,8 @@
         <argument
             android:name="restaurants"
             app:argType="pl.tablehub.mobile.model.Restaurant[]" />
+        <argument
+            android:name="user_location"
+            app:argType="pl.tablehub.mobile.model.Location" />
     </fragment>
 </navigation>

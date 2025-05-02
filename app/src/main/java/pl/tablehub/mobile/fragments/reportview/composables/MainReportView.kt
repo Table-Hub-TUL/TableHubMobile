@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TableHubTheme
 
@@ -23,9 +23,10 @@ import pl.tablehub.mobile.ui.theme.TableHubTheme
 fun MainReportView(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
-    onRestaurantSelected: (Restaurant) -> Unit = {}
+    onRestaurantSelected: (RestaurantResponseDTO) -> Unit = {},
+    restaurants: List<RestaurantResponseDTO> = emptyList(),
+    userLocation: Location = Location(0.0, 0.0)
 ) {
-    val userLocation by remember { mutableStateOf(Location(51.7592, 19.4560)) }
     var searchText by remember { mutableStateOf("") }
 
     val configuration = LocalConfiguration.current
@@ -52,7 +53,8 @@ fun MainReportView(
             userLocation = userLocation,
             onRestaurantClick = { restaurant ->
                 onRestaurantSelected(restaurant)
-            }
+            },
+            restaurants = restaurants
         )
     }
 }

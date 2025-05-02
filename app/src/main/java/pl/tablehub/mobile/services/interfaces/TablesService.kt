@@ -1,6 +1,6 @@
 package pl.tablehub.mobile.services.interfaces
 
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.websocket.RestaurantSubscriptionResponse
 import pl.tablehub.mobile.model.websocket.RestaurantsRequest
 import pl.tablehub.mobile.model.websocket.RestaurantsResponse
@@ -13,11 +13,11 @@ interface TablesService {
     ) : RestaurantsResponse
 
     fun subscribeRestaurants (
-        requestParams: List<Restaurant>
+        requestParams: List<RestaurantResponseDTO>
     ) : List<RestaurantSubscriptionResponse>
 
     fun unSubscribeRestaurants (
-        requestParams: List<Restaurant>
+        requestParams: List<RestaurantResponseDTO>
     ) : Error?
 
     fun updateTableStatus (

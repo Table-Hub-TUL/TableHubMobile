@@ -5,7 +5,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.ui.shared.composables.PopUpWrapper
@@ -91,10 +90,10 @@ internal fun PopUpButton(
 
 @Composable
 fun RestaurantDetailsPopup(
-    restaurant: Restaurant,
+    restaurant: RestaurantResponseDTO,
     sections: List<Section>,
     onDismissRequest: () -> Unit,
-    onMoreDetailsClick: (Restaurant) -> Unit
+    onMoreDetailsClick: (RestaurantResponseDTO) -> Unit
 ) {
     val availableTables by remember { mutableIntStateOf(sections.flatMap { it.tables }.count { it.status == TableStatus.AVAILABLE }) }
     PopUpWrapper(

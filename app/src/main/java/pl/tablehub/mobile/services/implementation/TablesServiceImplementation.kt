@@ -3,7 +3,7 @@ package pl.tablehub.mobile.services.implementation
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.websocket.RestaurantSubscriptionResponse
 import pl.tablehub.mobile.model.websocket.RestaurantsRequest
 import pl.tablehub.mobile.model.websocket.RestaurantsResponse
@@ -25,11 +25,11 @@ class TablesServiceImplementation : Service(), TablesService {
         TODO("Not yet implemented")
     }
 
-    override fun subscribeRestaurants(requestParams: List<Restaurant>): List<RestaurantSubscriptionResponse> {
+    override fun subscribeRestaurants(requestParams: List<RestaurantResponseDTO>): List<RestaurantSubscriptionResponse> {
         TODO("Not yet implemented")
     }
 
-    override fun unSubscribeRestaurants(requestParams: List<Restaurant>): Error? {
+    override fun unSubscribeRestaurants(requestParams: List<RestaurantResponseDTO>): Error? {
         TODO("Not yet implemented")
     }
 

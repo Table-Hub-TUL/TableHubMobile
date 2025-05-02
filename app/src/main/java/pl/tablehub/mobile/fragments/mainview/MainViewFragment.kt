@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.mainview.composables.MainMapView
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
 
 @AndroidEntryPoint
@@ -28,6 +29,7 @@ class MainViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val restaurants by viewModel.restaurants.collectAsState()
                 val userLocation by viewModel.userLocation.collectAsState()
@@ -38,8 +40,8 @@ class MainViewFragment : Fragment() {
                     tables = tables,
                     onReport = {
                         findNavController().navigate(R.id.action_mainViewFragment_to_reportViewFragment, bundleOf(
-                            Pair("restaurants", restaurants),
-                            Pair("user_location", userLocation)
+                            Pair(NavArgs.RESTAURANTS, restaurants.toTypedArray()),
+                            Pair(NavArgs.USER_LOCATION, userLocation)
                         ))
                 })
             }
