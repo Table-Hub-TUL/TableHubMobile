@@ -6,3 +6,8 @@ const val VERTICAL_PADDING = 30
 const val ICON_SIZE = 36
 const val CORNER_ROUND_SIZE = 8
 const val FONT_SIZE = 20
+
+object NavArgs {
+    const val RESTAURANTS = "restaurants"
+    const val USER_LOCATION = "user_location"
+}

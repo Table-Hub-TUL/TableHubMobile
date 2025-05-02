@@ -6,7 +6,7 @@ import android.os.IBinder
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Position
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.Table
 import pl.tablehub.mobile.model.TableStatus
@@ -29,7 +29,7 @@ class MockTableService : Service(), TablesService {
     private val lodzLongitude = 19.457216
 
     private val mockRestaurants = listOf(
-        Restaurant(
+        RestaurantResponseDTO(
             id = 1L,
             name = "Pierogarnia Łódzka",
             address = "Piotrkowska 100, 90-001 Łódź",
@@ -37,7 +37,7 @@ class MockTableService : Service(), TablesService {
             cuisine = listOf("Polish", "Pierogi"),
             rating = 4.5,
         ),
-        Restaurant(
+        RestaurantResponseDTO(
             id = 2L,
             name = "Anatewka Manufaktura",
             address = "Drewnowska 58, 91-002 Łódź",
@@ -45,7 +45,7 @@ class MockTableService : Service(), TablesService {
             cuisine = listOf("Jewish", "Polish"),
             rating = 4.8,
         ),
-        Restaurant(
+        RestaurantResponseDTO(
             id = 3L,
             name = "Cesky Film",
             address = "Tymienieckiego 3, 90-365 Łódź",
@@ -74,7 +74,7 @@ class MockTableService : Service(), TablesService {
         return RestaurantsResponse(requestParams, mockRestaurants)
     }
 
-    override fun subscribeRestaurants(requestParams: List<Restaurant>): List<RestaurantSubscriptionResponse> {
+    override fun subscribeRestaurants(requestParams: List<RestaurantResponseDTO>): List<RestaurantSubscriptionResponse> {
         return requestParams.map { restaurant ->
             RestaurantSubscriptionResponse(
                 restaurantId = restaurant.id,
@@ -89,7 +89,7 @@ class MockTableService : Service(), TablesService {
         }
     }
 
-    override fun unSubscribeRestaurants(requestParams: List<Restaurant>): Error? {
+    override fun unSubscribeRestaurants(requestParams: List<RestaurantResponseDTO>): Error? {
         return null
     }
 

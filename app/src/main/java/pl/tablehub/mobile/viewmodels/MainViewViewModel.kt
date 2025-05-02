@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.websocket.RestaurantsRequest
 import pl.tablehub.mobile.services.interfaces.TablesService
@@ -22,8 +22,8 @@ class MainViewViewModel @Inject constructor(
     private val service: TablesService
 ) : AndroidViewModel(application) {
 
-    private val _restaurants = MutableStateFlow<List<Restaurant>>(emptyList())
-    val restaurants: StateFlow<List<Restaurant>> = _restaurants
+    private val _restaurants = MutableStateFlow<List<RestaurantResponseDTO>>(emptyList())
+    val restaurants: StateFlow<List<RestaurantResponseDTO>> = _restaurants
     private val _userLocation = MutableStateFlow(Location(0.0, 0.0))
     val userLocation: StateFlow<Location> = _userLocation
     /**
@@ -33,15 +33,15 @@ class MainViewViewModel @Inject constructor(
     val tables: StateFlow<HashMap<Long, List<Section>>> = _tables
 
     init {
-        fetchRestaurants()
         fetchUserLocation()
+        fetchRestaurants()
         fetchTables()
     }
 
     private fun fetchRestaurants() {
         viewModelScope.launch {
             val requestParams = RestaurantsRequest(
-                localization = Location(51.759445, 19.457216),
+                localization = _userLocation.value,
                 radius = 1000.0,
                 filters = emptyList()
             )
@@ -56,10 +56,10 @@ class MainViewViewModel @Inject constructor(
         val locationClient = LocationServices.getFusedLocationProviderClient(application.applicationContext)
         locationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
-                _userLocation.value = Location(location.latitude, location.longitude)
+                _userLocation.value = Location(location.longitude, location.latitude)
             } else {
                 // Dom Czosnka
-                _userLocation.value = Location(51.759445, 19.457216)
+                _userLocation.value = Location(19.457216, 51.759445)
             }
         }
     }

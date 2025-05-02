@@ -11,6 +11,9 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.reportview.composables.MainReportView
+import pl.tablehub.mobile.model.Location
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
+import pl.tablehub.mobile.ui.shared.constants.NavArgs
 
 @AndroidEntryPoint
 class ReportViewFragment : Fragment() {
@@ -21,10 +24,17 @@ class ReportViewFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                MainReportView(
+                val restaurants: List<RestaurantResponseDTO> =
+                    (arguments?.getParcelableArray(NavArgs.RESTAURANTS, RestaurantResponseDTO::class.java)?.map { it as RestaurantResponseDTO }
+                        ?: emptyList())
+                val userLocation: Location =
+                    arguments?.getParcelable(NavArgs.USER_LOCATION, Location::class.java)!!
+                MainReportView (
                     onBack = {
                         findNavController().navigate(R.id.action_reportViewFragment_to_mainViewFragment2)
-                    }
+                    },
+                    restaurants = restaurants,
+                    userLocation = userLocation
                 )
             }
         }

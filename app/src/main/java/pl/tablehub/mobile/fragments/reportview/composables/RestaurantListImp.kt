@@ -26,88 +26,19 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
-
-private val DEFAULT_USER_LOCATION = Location(51.7592, 19.4560)
 
 @Composable
 fun RestaurantList(
     searchText: String,
-    userLocation: Location = DEFAULT_USER_LOCATION,
-    onRestaurantClick: (Restaurant) -> Unit = {}
+    userLocation: Location,
+    onRestaurantClick: (RestaurantResponseDTO) -> Unit = {},
+    restaurants: List<RestaurantResponseDTO> = emptyList()
 ) {
-    val allRestaurants = remember {
-        listOf(
-            Restaurant(
-                id = 1,
-                name = "Manekin",
-                address = "ul. Piotrkowska 67",
-                location = Location(51.7686, 19.4573),
-                cuisine = listOf("Polish", "European", "Pancakes"),
-                rating = 4.7
-            ),
-            Restaurant(
-                id = 2,
-                name = "Anatewka",
-                address = "ul. 6 Sierpnia 2/4",
-                location = Location(51.7704, 19.4549),
-                cuisine = listOf("Jewish", "Polish", "European"),
-                rating = 4.6
-            ),
-            Restaurant(
-                id = 3,
-                name = "Piwnica Łódzka",
-                address = "ul. Tymienieckiego 22/24",
-                location = Location(51.7471, 19.4662),
-                cuisine = listOf("Polish", "Bar", "Pub"),
-                rating = 4.3
-            ),
-            Restaurant(
-                id = 4,
-                name = "Zielona Restaurant",
-                address = "ul. Legionów 2",
-                location = Location(51.7784, 19.4467),
-                cuisine = listOf("Italian", "Mediterranean"),
-                rating = 4.5
-            ),
-            Restaurant(
-                id = 5,
-                name = "Sushi Kushi",
-                address = "ul. Piotrkowska 123",
-                location = Location(51.7623, 19.4571),
-                cuisine = listOf("Japanese", "Sushi", "Asian"),
-                rating = 4.4
-            ),
-            Restaurant(
-                id = 6,
-                name = "Browar Księży Młyn",
-                address = "ul. Tymienieckiego 22/24",
-                location = Location(51.7476, 19.4659),
-                cuisine = listOf("Brewery", "Polish", "Pub"),
-                rating = 4.2
-            ),
-            Restaurant(
-                id = 7,
-                name = "Viva La Pizza",
-                address = "ul. Narutowicza 48",
-                location = Location(51.7690, 19.4793),
-                cuisine = listOf("Italian", "Pizza"),
-                rating = 4.3
-            ),
-            Restaurant(
-                id = 8,
-                name = "Bułka z Masłem",
-                address = "ul. Piotrkowska 152",
-                location = Location(51.7600, 19.4567),
-                cuisine = listOf("Breakfast", "Brunch", "Café"),
-                rating = 4.1
-            )
-        )
-    }
 
     val restaurantsWithDistance = remember(userLocation) {
-        allRestaurants.map { restaurant ->
+        restaurants.map { restaurant ->
             val distanceInMeters = calculateDistance(
                 userLocation.latitude, userLocation.longitude,
                 restaurant.location.latitude, restaurant.location.longitude
@@ -147,7 +78,7 @@ fun RestaurantList(
 
 @Composable
 fun RestaurantItem(
-    restaurant: Restaurant,
+    restaurant: RestaurantResponseDTO,
     distanceInMeters: Int,
     onClick: () -> Unit
 ) {
