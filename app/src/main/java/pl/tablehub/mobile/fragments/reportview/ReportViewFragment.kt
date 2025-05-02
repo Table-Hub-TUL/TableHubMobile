@@ -23,7 +23,6 @@ class ReportViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val restaurants: List<RestaurantResponseDTO> =
                     (arguments?.getParcelableArray(NavArgs.RESTAURANTS, RestaurantResponseDTO::class.java)?.map { it as RestaurantResponseDTO }
