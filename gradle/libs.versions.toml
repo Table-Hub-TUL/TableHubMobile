@@ -1,6 +1,7 @@
 [versions]
 agp = "8.7.3"
 appcompat = "1.7.0"
+hildanKrossbowStompCore = "9.3.0"
 hiltAndroid = "2.56.1"
 jacksonDatabind = "2.18.3"
 javaWebsocketVersion = "1.6.0"
@@ -12,6 +13,7 @@ espressoCore = "3.6.1"
 kotlinxSerializationJson = "1.6.3"
 krossbowStompCore = "7.0.0"
 krossbowWebsocketBuiltin = "7.0.0"
+krossbowWebsocketOkhttp = "7.3.0"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2025.04.00"
@@ -51,7 +53,9 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 krossbow-stomp-core = { module = "org.hildan.krossbow:krossbow-stomp-core", version.ref = "krossbowStompCore" }
+krossbow-stomp-core-v930 = { module = "org.hildan.krossbow:krossbow-stomp-core", version.ref = "hildanKrossbowStompCore" }
 krossbow-websocket-builtin = { module = "org.hildan.krossbow:krossbow-websocket-builtin", version.ref = "krossbowWebsocketBuiltin" }
+krossbow-websocket-okhttp = { module = "org.hildan.krossbow:krossbow-websocket-okhttp", version.ref = "krossbowWebsocketOkhttp" }
 mapbox-maps = { module = "com.mapbox.maps:android", version = "11.11.0" }
 maps-compose = { module = "com.mapbox.extension:maps-compose", version.ref = "mapsCompose" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }

@@ -3,7 +3,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- REMOVE CLEAR TEXT TRAFFIC -->
     <application
+        android:usesCleartextTraffic="true"
         android:name=".core.TableHubApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,6 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".services.websocket.WebSocketService"
+            android:exported="false" />
     </application>
 
 </manifest>
