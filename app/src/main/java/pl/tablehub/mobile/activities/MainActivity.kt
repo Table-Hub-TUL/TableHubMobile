@@ -15,9 +15,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        val serviceIntent = Intent(this, WebSocketService::class.java)
-        startService(serviceIntent)
-        Log.d("MAIN_ACTIVITY", "Called startService() for WebSocketService")
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.logInFragment) as? NavHostFragment
         if(savedInstanceState == null) {

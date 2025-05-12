@@ -18,6 +18,7 @@ import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.model.websocket.RestaurantSubscriptionResponse
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.model.websocket.WebSocketMessage
+import pl.tablehub.mobile.util.WSMessageRelay
 import java.util.concurrent.ConcurrentLinkedQueue
 import javax.inject.Inject
 
@@ -34,40 +35,31 @@ class WebSocketService : Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private lateinit var stompSession: StompSession
-    private val messageQueue: ConcurrentLinkedQueue<WebSocketMessage> = ConcurrentLinkedQueue()
-
-    fun getMessageFromQueue() : WebSocketMessage? {
-        return messageQueue.poll()
-    }
 
     @Inject
     lateinit var client: WebSocketClient
 
-    override fun onCreate() {
-        super.onCreate()
-        connectWebSocket()
-    }
+    @Inject
+    lateinit var messageRelay: WSMessageRelay
 
-    private fun connectWebSocket() {
+    fun connectWebSocket() {
         serviceScope.launch {
             try {
                 val stompClient = StompClient(client)
                 stompSession = stompClient.connect(url = SERVER_URL)
-                subscribeToInitialStatus()
-                subscribeToUpdateTableStatus()
             } catch (e: Exception) {
                 Log.e(DEBUG_TAG, "WebSocket connection failed", e)
             }
         }
     }
 
-    private fun subscribeToInitialStatus() {
+    fun subscribeToInitialStatus() {
         serviceScope.launch {
             try {
                 stompSession.subscribe(DEST_SUBSCRIBE_INITIAL_STATUS).collect { frame ->
                     val body = frame.bodyAsText
                     val subscriptionResponse = Json.decodeFromString<WebSocketMessage>(body)
-                    messageQueue.add(subscriptionResponse)
+                    messageRelay.emitMessage(subscriptionResponse)
                 }
             } catch (e: Exception) {
                 Log.e(DEBUG_TAG, "Initial status subscription failed", e)
@@ -75,13 +67,13 @@ class WebSocketService : Service() {
         }
     }
 
-    private fun subscribeToUpdateTableStatus() {
+    fun subscribeToUpdateTableStatus() {
         serviceScope.launch {
             try {
                 stompSession.subscribe(DEST_SUBSCRIBE_UPDATE_TABLE).collect { frame ->
                     val body = frame.bodyAsText
                     val updateResponse = Json.decodeFromString<WebSocketMessage>(body)
-                    messageQueue.add(updateResponse)
+                    messageRelay.emitMessage(updateResponse)
                 }
             } catch (e: Exception) {
                 Log.e(DEBUG_TAG, "Table update subscription failed", e)
