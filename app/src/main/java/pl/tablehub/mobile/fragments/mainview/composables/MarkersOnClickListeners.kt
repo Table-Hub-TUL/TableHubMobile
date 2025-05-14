@@ -19,7 +19,7 @@ internal class MarkersOnClickListeners(
         }
         val clickedRestaurant: Restaurant = restaurants.find { restaurant: Restaurant ->
             restaurant.id == restaurantId
-        }!!
+        } ?: return false
         onMarkerClick(clickedRestaurant)
         return true
     }

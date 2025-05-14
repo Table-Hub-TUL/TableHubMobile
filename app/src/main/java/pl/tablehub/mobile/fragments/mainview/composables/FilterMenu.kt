@@ -5,15 +5,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 
 @Composable
 fun FilterMenu(
     drawerState: DrawerState,
-    restaurants: List<RestaurantResponseDTO>,
+    restaurants: List<Restaurant>,
     tables: HashMap<Long, List<Section>>,
-    onFilterResult: (List<RestaurantResponseDTO>) -> Unit,
+    onFilterResult: (List<Restaurant>) -> Unit,
     content: @Composable () -> Unit
 ) {
     val isOpen = drawerState.isOpen
