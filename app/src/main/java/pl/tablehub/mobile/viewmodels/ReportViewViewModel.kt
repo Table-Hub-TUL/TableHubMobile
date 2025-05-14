@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewViewModel @Inject constructor(
-    private val application: Application,
-    private val service: TablesService
+    private val application: Application
 ) : AndroidViewModel(application) {
 }

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.TableStatus
@@ -90,10 +91,10 @@ internal fun PopUpButton(
 
 @Composable
 fun RestaurantDetailsPopup(
-    restaurant: RestaurantResponseDTO,
+    restaurant: Restaurant,
     sections: List<Section>,
     onDismissRequest: () -> Unit,
-    onMoreDetailsClick: (RestaurantResponseDTO) -> Unit
+    onMoreDetailsClick: (Restaurant) -> Unit
 ) {
     val availableTables by remember { mutableIntStateOf(sections.flatMap { it.tables }.count { it.status == TableStatus.AVAILABLE }) }
     PopUpWrapper(

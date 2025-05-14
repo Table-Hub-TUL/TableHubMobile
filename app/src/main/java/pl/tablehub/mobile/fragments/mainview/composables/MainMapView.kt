@@ -18,12 +18,13 @@ import com.mapbox.geojson.Point
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Location
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 
 @Composable
 fun MainMapView(
-    restaurants: List<RestaurantResponseDTO>,
+    restaurants: List<Restaurant>,
     userLocation: Location,
     tables: HashMap<Long, List<Section>>,
     onReport: () -> Unit = {}
@@ -33,7 +34,7 @@ fun MainMapView(
     val scope = rememberCoroutineScope()
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
     val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
-    var selectedRestaurant by remember { mutableStateOf<RestaurantResponseDTO?>(null) }
+    var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
     var visibleRestaurants by remember { mutableStateOf(restaurants) }
 
 

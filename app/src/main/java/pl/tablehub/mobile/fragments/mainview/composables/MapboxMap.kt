@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
 
 
@@ -39,9 +39,9 @@ fun MapboxMapWrapper(
     locationTrigger: SharedFlow<Unit>,
     centerOnPointTrigger: SharedFlow<Point>,
     potentialCenterLocation: Location,
-    restaurants: List<RestaurantResponseDTO>,
+    restaurants: List<Restaurant>,
     tables: HashMap<Long, List<Section>>,
-    onMarkerClick: (RestaurantResponseDTO) -> Unit = {}
+    onMarkerClick: (Restaurant) -> Unit = {}
 ) {
     val context = LocalContext.current
     val baseMarkerBitmap = remember {
