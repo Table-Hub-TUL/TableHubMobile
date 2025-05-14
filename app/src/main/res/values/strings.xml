@@ -21,4 +21,7 @@
     <string name="cuisines">Cuisines</string>
     <string name="available_tables">Available tables</string>
     <string name="more_details">More details</string>
+    <string name="any">Any</string>
+    <string name="minimum_free_tables">Minimum free tables</string>
+    <string name="minimum_rating">Minimum rating</string>
 </resources>

@@ -29,59 +29,73 @@ fun MainMapView(
     tables: HashMap<Long, List<Section>>,
     onReport: () -> Unit = {}
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val menuDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val filterDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
     val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
     var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
+    var visibleRestaurants by remember { mutableStateOf(restaurants) }
 
-    MainViewMenu(drawerState = drawerState) {
-        LaunchedEffect(Unit) {
-            scope.launch {
-                locationTrigger.emit(Unit)
+
+    MainViewMenu(drawerState = menuDrawerState) {
+        FilterMenu(drawerState = filterDrawerState, restaurants = restaurants, tables = tables, onFilterResult = { filteredList ->
+            visibleRestaurants = filteredList
+        }) {
+            LaunchedEffect(Unit) {
+                scope.launch {
+                    locationTrigger.emit(Unit)
+                }
             }
-        }
-        Box(modifier = Modifier.fillMaxSize()) {
-            MapboxMapWrapper(
-                locationTrigger = locationTrigger,
-                centerOnPointTrigger = centerOnPointTrigger,
-                restaurants = restaurants,
-                potentialCenterLocation = userLocation,
-                tables = tables,
-                onMarkerClick = { restaurant ->
-                    selectedRestaurant = restaurant
-                    scope.launch {
-                        val point = Point.fromLngLat(restaurant.location.longitude, restaurant.location.latitude)
-                        centerOnPointTrigger.emit(point)
-                    }
-                })
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                TopBarContent(
-                    onMenuClick = {
+            Box(modifier = Modifier.fillMaxSize()) {
+                MapboxMapWrapper(
+                    locationTrigger = locationTrigger,
+                    centerOnPointTrigger = centerOnPointTrigger,
+                    restaurants = restaurants,
+                    potentialCenterLocation = userLocation,
+                    tables = tables,
+                    onMarkerClick = { restaurant ->
+                        selectedRestaurant = restaurant
                         scope.launch {
-                            drawerState.open()
+                            val point = Point.fromLngLat(
+                                restaurant.location.longitude,
+                                restaurant.location.latitude
+                            )
+                            centerOnPointTrigger.emit(point)
                         }
-                    },
-                    onFilterClick = { /* TODO: Implement filter action */ }
-                )
-                Box(modifier = Modifier.weight(1f))
-                BottomButtons(
-                    onReportClick = onReport,
-                    onLocationClick = {
-                        scope.launch {
-                            locationTrigger.tryEmit(Unit)
+                    })
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    TopBarContent(
+                        onMenuClick = {
+                            scope.launch {
+                                menuDrawerState.open()
+                            }
+                        },
+                        onFilterClick = {
+                            scope.launch {
+                                filterDrawerState.open()
+                            }
                         }
-                    }
-                )
-            }
-            selectedRestaurant?.let { restaurant ->
-                RestaurantDetailsPopup(
-                    restaurant = restaurant,
-                    onDismissRequest = { selectedRestaurant = null },
-                    sections = tables[restaurant.id] ?: emptyList(),
-                    onMoreDetailsClick = {_ -> Log.d("PLACEHOLDER", "PLACEHOLDER")})
+                    )
+                    Box(modifier = Modifier.weight(1f))
+                    BottomButtons(
+                        onReportClick = onReport,
+                        onLocationClick = {
+                            scope.launch {
+                                locationTrigger.tryEmit(Unit)
+                            }
+                        }
+                    )
+                }
+                selectedRestaurant?.let { restaurant ->
+                    RestaurantDetailsPopup(
+                        restaurant = restaurant,
+                        onDismissRequest = { selectedRestaurant = null },
+                        sections = tables[restaurant.id] ?: emptyList(),
+                        onMoreDetailsClick = { _ -> Log.d("PLACEHOLDER", "PLACEHOLDER") })
+                }
             }
         }
     }
