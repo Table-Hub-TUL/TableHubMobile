@@ -7,8 +7,8 @@ import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 
 internal class MarkersOnClickListeners(
-    private val restaurants: List<RestaurantResponseDTO>,
-    private val onMarkerClick: (RestaurantResponseDTO) -> Unit
+    private val restaurants: List<Restaurant>,
+    private val onMarkerClick: (Restaurant) -> Unit
 ) : OnPointAnnotationClickListener {
     override fun onAnnotationClick(annotation: PointAnnotation): Boolean {
         val restaurantId = try {
@@ -17,7 +17,7 @@ internal class MarkersOnClickListeners(
             Log.e("MAP ERROR", "Invalid annotation data")
             return false
         }
-        val clickedRestaurant: RestaurantResponseDTO = restaurants.find { restaurant: RestaurantResponseDTO ->
+        val clickedRestaurant: Restaurant = restaurants.find { restaurant: Restaurant ->
             restaurant.id == restaurantId
         }!!
         onMarkerClick(clickedRestaurant)

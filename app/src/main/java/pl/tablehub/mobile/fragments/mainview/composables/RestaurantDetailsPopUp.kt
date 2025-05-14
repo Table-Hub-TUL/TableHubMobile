@@ -91,10 +91,10 @@ internal fun PopUpButton(
 
 @Composable
 fun RestaurantDetailsPopup(
-    restaurant: RestaurantResponseDTO,
+    restaurant: Restaurant,
     sections: List<Section>,
     onDismissRequest: () -> Unit,
-    onMoreDetailsClick: (RestaurantResponseDTO) -> Unit
+    onMoreDetailsClick: (Restaurant) -> Unit
 ) {
     val availableTables by remember { mutableIntStateOf(sections.flatMap { it.tables }.count { it.status == TableStatus.AVAILABLE }) }
     PopUpWrapper(
