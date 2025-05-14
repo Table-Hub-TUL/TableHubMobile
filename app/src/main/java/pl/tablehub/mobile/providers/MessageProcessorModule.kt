@@ -13,7 +13,7 @@ import javax.inject.Singleton
 object MessageProcessorModule {
     @Provides
     @Singleton
-    fun provideMessageProcessor() : IWebsocketMessageProcessor {
-        return WebsocketMessageProcessorImpl()
-    }
+    fun provideMessageProcessor(
+        impl: WebsocketMessageProcessorImpl
+    ): IWebsocketMessageProcessor = impl
 }

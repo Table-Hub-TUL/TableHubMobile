@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -21,9 +22,13 @@ import pl.tablehub.mobile.model.websocket.WebSocketMessage
 import pl.tablehub.mobile.util.WSMessageRelay
 import java.util.concurrent.ConcurrentLinkedQueue
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AndroidEntryPoint
-class WebSocketService : Service() {
+@Singleton
+class WebSocketService @Inject constructor(
+    private val client: WebSocketClient,
+    private val messageRelay: WSMessageRelay
+) {
 
     companion object ServiceContract {
         private const val SERVER_URL: String = "ws://10.0.2.2:8080/ws"
@@ -35,25 +40,21 @@ class WebSocketService : Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private lateinit var stompSession: StompSession
-
-    @Inject
-    lateinit var client: WebSocketClient
-
-    @Inject
-    lateinit var messageRelay: WSMessageRelay
-
     fun connectWebSocket() {
         serviceScope.launch {
             try {
                 val stompClient = StompClient(client)
                 stompSession = stompClient.connect(url = SERVER_URL)
+                Log.d(DEBUG_TAG, "Connected")
+                subscribeToInitialStatus()
+                subscribeToUpdateTableStatus()
             } catch (e: Exception) {
                 Log.e(DEBUG_TAG, "WebSocket connection failed", e)
             }
         }
     }
 
-    fun subscribeToInitialStatus() {
+    private fun subscribeToInitialStatus() {
         serviceScope.launch {
             try {
                 stompSession.subscribe(DEST_SUBSCRIBE_INITIAL_STATUS).collect { frame ->
@@ -67,7 +68,7 @@ class WebSocketService : Service() {
         }
     }
 
-    fun subscribeToUpdateTableStatus() {
+    private fun subscribeToUpdateTableStatus() {
         serviceScope.launch {
             try {
                 stompSession.subscribe(DEST_SUBSCRIBE_UPDATE_TABLE).collect { frame ->
@@ -98,12 +99,6 @@ class WebSocketService : Service() {
         serviceScope.launch {
             stompSession.disconnect()
         }
+        serviceScope.cancel()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disconnect()
-    }
-
-    override fun onBind(intent: Intent?): IBinder? = null
 }

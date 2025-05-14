@@ -1,7 +1,7 @@
 package pl.tablehub.mobile.providers
 
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.tablehub.mobile.repository.IRestaurantsRepository
@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+object RepositoryModule {
 
-    @Binds
+    @Provides
     @Singleton
-    abstract fun bindRestaurantRepository(
-        restaurantRepositoryImpl: RestaurantsRepositoryImpl
-    ): IRestaurantsRepository
+    fun bindRestaurantRepository(): IRestaurantsRepository {
+        return RestaurantsRepositoryImpl()
+    }
 }

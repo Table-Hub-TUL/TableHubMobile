@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.krossbow.stomp.core.v930)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.hilt.common)
     implementation(libs.krossbow.stomp.core)
     implementation(libs.krossbow.websocket.builtin)
     implementation(libs.jackson.databind)

@@ -15,13 +15,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class WebsocketMessageProcessorImpl @Inject constructor() : IWebsocketMessageProcessor {
+class WebsocketMessageProcessorImpl @Inject constructor(
+    private val messageRelay: WSMessageRelay,
+    private val restaurantsRepository: IRestaurantsRepository
+) : IWebsocketMessageProcessor {
     private val processorScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
-    @Inject
-    private lateinit var messageRelay: WSMessageRelay
-    @Inject
-    private lateinit var restaurantsRepository: IRestaurantsRepository
 
     init {
         start()
