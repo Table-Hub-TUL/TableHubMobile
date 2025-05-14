@@ -15,6 +15,9 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.mainview.composables.MainMapView
+import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.model.Table
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
 
@@ -31,9 +34,9 @@ class MainViewFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                val restaurants by viewModel.restaurants.collectAsState()
+                val restaurants = emptyList<Restaurant>()
                 val userLocation by viewModel.userLocation.collectAsState()
-                val tables by viewModel.tables.collectAsState()
+                val tables = HashMap<Long, List<Section>>()
                 MainMapView(
                     restaurants = restaurants,
                     userLocation = userLocation,

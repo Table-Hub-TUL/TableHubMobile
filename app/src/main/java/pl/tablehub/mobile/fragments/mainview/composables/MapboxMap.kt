@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Location
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 

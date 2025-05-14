@@ -18,6 +18,7 @@ import com.mapbox.geojson.Point
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Location
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 

@@ -1,11 +1,14 @@
 package pl.tablehub.mobile.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavOptions
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import androidx.navigation.fragment.NavHostFragment
+import pl.tablehub.mobile.services.websocket.WebSocketService
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

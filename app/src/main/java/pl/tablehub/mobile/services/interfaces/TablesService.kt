@@ -22,5 +22,5 @@ interface TablesService {
 
     fun updateTableStatus (
         requestParams: List<TableUpdateRequest>
-    ) : List<TableUpdateResponse>
+    )
 }

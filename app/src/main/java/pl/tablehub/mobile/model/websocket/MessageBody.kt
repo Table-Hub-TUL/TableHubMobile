@@ -1,4 +1,6 @@
 package pl.tablehub.mobile.model.websocket
 
-interface MessageBody {
-}
+import kotlinx.serialization.*
+
+@Serializable
+sealed interface MessageBody

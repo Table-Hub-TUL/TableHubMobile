@@ -93,7 +93,7 @@ class MockTableService : Service(), TablesService {
         return null
     }
 
-    override fun updateTableStatus(requestParams: List<TableUpdateRequest>): List<TableUpdateResponse> {
+    override fun updateTableStatus(requestParams: List<TableUpdateRequest>) {
         val responses = requestParams.map { req ->
             TableUpdateResponse(
                 restaurantId = req.restaurantId,
@@ -105,6 +105,5 @@ class MockTableService : Service(), TablesService {
                 pointsAwarded = 1
             )
         }
-        return responses
     }
 }
