@@ -51,7 +51,7 @@ fun MainMapView(
                 MapboxMapWrapper(
                     locationTrigger = locationTrigger,
                     centerOnPointTrigger = centerOnPointTrigger,
-                    restaurants = restaurants,
+                    restaurants = visibleRestaurants,
                     potentialCenterLocation = userLocation,
                     tables = tables,
                     onMarkerClick = { restaurant ->

@@ -19,20 +19,21 @@ import pl.tablehub.mobile.model.websocket.RestaurantsRequest
 import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.services.implementation.TablesServiceImplementation
 import pl.tablehub.mobile.services.interfaces.TablesService
+import pl.tablehub.mobile.services.mock.MockTableService
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewViewModel @Inject constructor(
     private val application: Application,
-    //private val repository: IRestaurantsRepository
+    repository: IRestaurantsRepository
 ) : AndroidViewModel(application) {
-    private val _restaurants = MutableStateFlow(HashMap<Long, Restaurant>())
+    private val _restaurants = repository.restaurantsMap
     val restaurants: StateFlow<Map<Long, Restaurant>> = _restaurants
     private val _userLocation = MutableStateFlow(Location(0.0, 0.0))
     val userLocation: StateFlow<Location> = _userLocation
 
     init {
-        val serviceIntent: Intent = Intent(application, TablesServiceImplementation::class.java)
+        val serviceIntent: Intent = Intent(application, MockTableService::class.java)
         application.startService(serviceIntent)
         Log.d("CO", "JEST")
         fetchUserLocation()

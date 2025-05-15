@@ -35,18 +35,6 @@ class TablesServiceImplementation : Service(), TablesService {
         return START_NOT_STICKY
     }
 
-    override fun requestRestaurants(requestParams: RestaurantsRequest): RestaurantsResponse {
-        TODO("Not yet implemented")
-    }
-
-    override fun subscribeRestaurants(requestParams: List<RestaurantResponseDTO>): List<RestaurantSubscriptionResponse> {
-        TODO("Not yet implemented")
-    }
-
-    override fun unSubscribeRestaurants(requestParams: List<RestaurantResponseDTO>): Error? {
-        TODO("Not yet implemented")
-    }
-
     override fun updateTableStatus(requestParams: List<TableUpdateRequest>) {
         requestParams.forEach { param -> webSocketService.sendStatusUpdate(param) }
     }

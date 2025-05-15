@@ -8,18 +8,6 @@ import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.model.websocket.TableUpdateResponse
 
 interface TablesService {
-    fun requestRestaurants(
-        requestParams: RestaurantsRequest
-    ) : RestaurantsResponse
-
-    fun subscribeRestaurants (
-        requestParams: List<RestaurantResponseDTO>
-    ) : List<RestaurantSubscriptionResponse>
-
-    fun unSubscribeRestaurants (
-        requestParams: List<RestaurantResponseDTO>
-    ) : Error?
-
     fun updateTableStatus (
         requestParams: List<TableUpdateRequest>
     )

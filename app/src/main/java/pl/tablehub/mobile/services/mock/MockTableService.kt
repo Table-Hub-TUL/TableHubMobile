@@ -16,94 +16,32 @@ import pl.tablehub.mobile.model.websocket.RestaurantsRequest
 import pl.tablehub.mobile.model.websocket.RestaurantsResponse
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.model.websocket.TableUpdateResponse
+import pl.tablehub.mobile.processing.interfaces.IWebsocketMessageProcessor
 import pl.tablehub.mobile.services.interfaces.TablesService
+import javax.inject.Inject
 import kotlin.random.Random
 
 @AndroidEntryPoint
 class MockTableService : Service(), TablesService {
+
+    @Inject
+    internal lateinit var messageProcessor: IWebsocketMessageProcessor
+
     override fun onBind(intent: Intent?): IBinder? {
-        return null
+        TODO("Not yet implemented")
     }
 
-    private val lodzLatitude = 51.759445
-    private val lodzLongitude = 19.457216
-
-    private val mockRestaurants = listOf(
-        RestaurantResponseDTO(
-            id = 1L,
-            name = "Pierogarnia Łódzka",
-            address = "Piotrkowska 100, 90-001 Łódź",
-            location = Location(longitude = lodzLongitude + Random.nextDouble(-0.05, 0.05), latitude = lodzLatitude + Random.nextDouble(-0.05, 0.05)),
-            cuisine = listOf("Polish", "Pierogi"),
-            rating = 4.5,
-        ),
-        RestaurantResponseDTO(
-            id = 2L,
-            name = "Anatewka Manufaktura",
-            address = "Drewnowska 58, 91-002 Łódź",
-            location = Location(longitude = lodzLongitude + Random.nextDouble(-0.05, 0.05), latitude = lodzLatitude + Random.nextDouble(-0.05, 0.05)),
-            cuisine = listOf("Jewish", "Polish"),
-            rating = 4.8,
-        ),
-        RestaurantResponseDTO(
-            id = 3L,
-            name = "Cesky Film",
-            address = "Tymienieckiego 3, 90-365 Łódź",
-            location = Location(longitude = lodzLongitude + Random.nextDouble(-0.05, 0.05), latitude = lodzLatitude + Random.nextDouble(-0.05, 0.05)),
-            cuisine = listOf("Czech", "European"),
-            rating = 4.2,
-        )
-    )
-
-    private val mockTables = listOf(
-        Table(id = 101L, position = Position(x = 10.0, y = 20.0), capacity = 6, status = TableStatus.AVAILABLE),
-        Table(id = 102L, position = Position(x = 15.0, y = 25.0), capacity = 2, status = TableStatus.OCCUPIED),
-        Table(id = 103L, position = Position(x = 20.0, y = 30.0), capacity = 6, status = TableStatus.AVAILABLE),
-        Table(id = 201L, position = Position(x = 5.00, y = 10.0), capacity = 2, status = TableStatus.AVAILABLE),
-        Table(id = 202L, position = Position(x = 8.00, y = 15.0), capacity = 4, status = TableStatus.OCCUPIED),
-        Table(id = 301L, position = Position(x = 30.0, y = 10.0), capacity = 3, status = TableStatus.AVAILABLE),
-    )
-
-    private val mockSections = listOf(
-        Section(id = 11L, name = "Main Hall", tables = mockTables.filter { it.id.toString().startsWith("1") }),
-        Section(id = 12L, name = "Patio", tables = mockTables.filter { it.id.toString().startsWith("2") }),
-        Section(id = 13L, name = "VIP Room", tables = mockTables.filter { it.id.toString().startsWith("3") }),
-    )
-
-    override fun requestRestaurants(requestParams: RestaurantsRequest): RestaurantsResponse {
-        return RestaurantsResponse(requestParams, mockRestaurants)
-    }
-
-    override fun subscribeRestaurants(requestParams: List<RestaurantResponseDTO>): List<RestaurantSubscriptionResponse> {
-        return requestParams.map { restaurant ->
-            RestaurantSubscriptionResponse(
-                restaurantId = restaurant.id,
-                message = "Success",
-                success = true,
-                initialState = RestaurantSubscriptionInitialState(
-                    id = restaurant.id,
-                    sections = mockSections.filter { section ->
-                        (section.id == (restaurant.id + 10L)) },
-                )
-            )
-        }
-    }
-
-    override fun unSubscribeRestaurants(requestParams: List<RestaurantResponseDTO>): Error? {
-        return null
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        messageProcessor.start()
+        return START_NOT_STICKY
     }
 
     override fun updateTableStatus(requestParams: List<TableUpdateRequest>) {
-        val responses = requestParams.map { req ->
-            TableUpdateResponse(
-                restaurantId = req.restaurantId,
-                tableId = req.tableId,
-                resultingStatus = req.requestedStatus,
-                updateSuccess = true,
-                message = "Status updated successfully (mock)",
-                sectionId = req.sectionId,
-                pointsAwarded = 1
-            )
-        }
+        TODO("Not yet implemented")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        messageProcessor.stop()
     }
 }

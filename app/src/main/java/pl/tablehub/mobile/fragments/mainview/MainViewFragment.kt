@@ -34,7 +34,7 @@ class MainViewFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                val restaurants = emptyList<Restaurant>()
+                val restaurants = viewModel.restaurants.collectAsState().value.values.toList()
                 val userLocation by viewModel.userLocation.collectAsState()
                 val tables = HashMap<Long, List<Section>>()
                 MainMapView(
