@@ -7,21 +7,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 
 @Composable
 fun FilterMenu(
     drawerState: DrawerState,
     restaurants: List<Restaurant>,
-    tables: HashMap<Long, List<Section>>,
+    tables: Map<Long, List<Section>>,
     onFilterResult: (List<Restaurant>) -> Unit,
     content: @Composable () -> Unit
 ) {
     val isOpen = drawerState.isOpen
 
-    var selectedRating by remember { mutableStateOf(0.0) }
+    var selectedRating by remember { mutableDoubleStateOf(0.0) }
     var selectedCuisine by remember { mutableStateOf<String?>(null) }
-    var minFreeTables by remember { mutableStateOf(0) }
+    var minFreeTables by remember { mutableIntStateOf(0) }
 
     val cuisines = restaurants.flatMap { it.cuisine }.distinct().sorted()
 

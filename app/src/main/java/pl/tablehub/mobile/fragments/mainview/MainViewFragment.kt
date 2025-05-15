@@ -36,11 +36,9 @@ class MainViewFragment : Fragment() {
             setContent {
                 val restaurants = viewModel.restaurants.collectAsState().value.values.toList()
                 val userLocation by viewModel.userLocation.collectAsState()
-                val tables = HashMap<Long, List<Section>>()
                 MainMapView(
                     restaurants = restaurants,
                     userLocation = userLocation,
-                    tables = tables,
                     onReport = {
                         findNavController().navigate(R.id.action_mainViewFragment_to_reportViewFragment, bundleOf(
                             Pair(NavArgs.RESTAURANTS, restaurants.toTypedArray()),

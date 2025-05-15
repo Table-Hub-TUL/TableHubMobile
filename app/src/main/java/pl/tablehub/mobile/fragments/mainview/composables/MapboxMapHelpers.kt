@@ -32,7 +32,7 @@ fun rememberTextOnBitmap(baseBitmap: Bitmap, text: String): Bitmap {
     }
 }
 
-internal fun calculateFreeTablesText(restaurantId: Long, tables: HashMap<Long, List<Section>>): String {
+internal fun calculateFreeTablesText(restaurantId: Long, tables: Map<Long, List<Section>>): String {
     val count: Int = (tables[restaurantId]?.flatMap { it.tables }?.count { it.status == TableStatus.AVAILABLE }
         ?: 0)
     return when(count < 100) {
