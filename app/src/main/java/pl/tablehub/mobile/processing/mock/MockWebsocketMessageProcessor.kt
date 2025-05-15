@@ -85,7 +85,7 @@ object Mocks {
             address = "Tymienieckiego 3, 90-365 Łódź",
             location = Location(longitude = lodzLongitude + Random.nextDouble(-0.05, 0.05), latitude = lodzLatitude + Random.nextDouble(-0.05, 0.05)),
             cuisine = listOf("Czech", "European"),
-            rating = 4.2,
+            rating = 3.2,
         )
     )
 

@@ -40,7 +40,7 @@ fun MapboxMapWrapper(
     centerOnPointTrigger: SharedFlow<Point>,
     potentialCenterLocation: Location,
     restaurants: List<Restaurant>,
-    tables: HashMap<Long, List<Section>>,
+    tables: Map<Long, List<Section>>,
     onMarkerClick: (Restaurant) -> Unit = {}
 ) {
     val context = LocalContext.current
