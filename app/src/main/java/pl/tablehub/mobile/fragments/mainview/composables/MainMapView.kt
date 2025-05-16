@@ -37,11 +37,12 @@ fun MainMapView(
 
 
     MainViewMenu(drawerState = menuDrawerState) {
-        FilterMenu(drawerState = filterDrawerState, restaurants = restaurants, tables = tables, onFilterResult = { filteredList ->
-            run {
-                visibleRestaurants = filteredList
-            }
-        }) {
+        FilterMenu(
+            drawerState = filterDrawerState,
+            restaurants = restaurants,
+            tables = tables,
+            onFilterResult = { filteredList -> visibleRestaurants = filteredList }
+        ) {
             LaunchedEffect(Unit) {
                 scope.launch {
                     locationTrigger.emit(Unit)
