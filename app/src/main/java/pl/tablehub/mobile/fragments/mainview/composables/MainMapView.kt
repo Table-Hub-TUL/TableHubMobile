@@ -32,13 +32,15 @@ fun MainMapView(
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
     val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
     var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
-    var visibleRestaurants by remember { mutableStateOf<List<Restaurant>>(emptyList()) }
+    var visibleRestaurants by remember { mutableStateOf<List<Restaurant>>(restaurants) }
     val tables = restaurants.associateBy( { it.id }, { it.sections })
 
 
     MainViewMenu(drawerState = menuDrawerState) {
         FilterMenu(drawerState = filterDrawerState, restaurants = restaurants, tables = tables, onFilterResult = { filteredList ->
-            visibleRestaurants = filteredList
+            run {
+                visibleRestaurants = filteredList
+            }
         }) {
             LaunchedEffect(Unit) {
                 scope.launch {

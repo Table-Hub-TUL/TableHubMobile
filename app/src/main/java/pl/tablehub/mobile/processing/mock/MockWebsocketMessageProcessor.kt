@@ -86,7 +86,6 @@ object Mocks {
             location = Location(longitude = lodzLongitude + Random.nextDouble(-0.05, 0.05), latitude = lodzLatitude + Random.nextDouble(-0.05, 0.05)),
             cuisine = listOf("Czech", "European"),
             rating = 3.2,
-            rating = 4.2,
         )
     )
 

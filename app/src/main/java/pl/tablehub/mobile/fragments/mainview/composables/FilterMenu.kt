@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.fragments.mainview.composables
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -24,12 +25,27 @@ fun FilterMenu(
 
     val cuisines = restaurants.flatMap { it.cuisine }.distinct().sorted()
 
-    LaunchedEffect(selectedRating, selectedCuisine, minFreeTables) {
-        onFilterResult(restaurants.filter { restaurant ->
+    val applyFilters = {
+        val filteredList = restaurants.filter { restaurant ->
             restaurant.rating >= selectedRating &&
                     (selectedCuisine == null || restaurant.cuisine.contains(selectedCuisine)) &&
                     (calculateFreeTablesText(restaurant.id, tables).toIntOrNull() ?: 0) >= minFreeTables
-        })
+        }
+        onFilterResult(filteredList)
+    }
+
+    LaunchedEffect(selectedRating, selectedCuisine, minFreeTables) {
+        applyFilters()
+    }
+
+    LaunchedEffect(Unit) {
+        onFilterResult(restaurants)
+    }
+
+    LaunchedEffect(drawerState.currentValue) {
+        if (drawerState.currentValue == DrawerValue.Closed) {
+            applyFilters()
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

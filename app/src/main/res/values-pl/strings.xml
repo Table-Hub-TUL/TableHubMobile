@@ -21,6 +21,6 @@
     <string name="available_tables">Wolne stoliki</string>
     <string name="more_details">Więcej szczegółów</string>
     <string name="any">Wszystkie</string>
-    <string name="minimum_free_tables">Minimalne wolne stoliki</string>
+    <string name="minimum_free_seats">Minimalne wolne miejsca</string>
     <string name="minimum_rating">Minimalna ocena</string>
 </resources>
