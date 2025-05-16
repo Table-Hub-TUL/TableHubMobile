@@ -43,11 +43,12 @@ fun MainMapView(
             tables = tables,
             onFilterResult = { filteredList -> visibleRestaurants = filteredList }
         ) {
-            LaunchedEffect(Unit) {
+            LaunchedEffect(userLocation) {
                 scope.launch {
                     locationTrigger.emit(Unit)
                 }
             }
+
             Box(modifier = Modifier.fillMaxSize()) {
                 MapboxMapWrapper(
                     locationTrigger = locationTrigger,
