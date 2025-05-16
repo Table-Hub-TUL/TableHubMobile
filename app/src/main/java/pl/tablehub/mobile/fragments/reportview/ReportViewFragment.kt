@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.reportview.composables.MainReportView
 import pl.tablehub.mobile.model.Location
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 
@@ -24,8 +25,8 @@ class ReportViewFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                val restaurants: List<RestaurantResponseDTO> =
-                    (arguments?.getParcelableArray(NavArgs.RESTAURANTS, RestaurantResponseDTO::class.java)?.map { it as RestaurantResponseDTO }
+                val restaurants: List<Restaurant> =
+                    (arguments?.getParcelableArray(NavArgs.RESTAURANTS, Restaurant::class.java)?.map { it as Restaurant }
                         ?: emptyList())
                 val userLocation: Location =
                     arguments?.getParcelable(NavArgs.USER_LOCATION, Location::class.java)!!

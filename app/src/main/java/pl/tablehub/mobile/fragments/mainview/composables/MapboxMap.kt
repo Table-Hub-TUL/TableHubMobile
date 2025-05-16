@@ -2,6 +2,7 @@ package pl.tablehub.mobile.fragments.mainview.composables
 
 import android.annotation.SuppressLint
 import android.graphics.*
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
@@ -25,6 +26,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import pl.tablehub.mobile.R
@@ -78,9 +80,12 @@ fun MapboxMapWrapper(
                 puckBearingEnabled = true
             }
         }
+        var pointAnnotationManager by remember { mutableStateOf<PointAnnotationManager?>(null) }
         MapEffect(textBitmaps) { mapView ->
-            val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
-            pointAnnotationManager.deleteAll()
+            if (pointAnnotationManager == null) {
+                pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+            }
+            pointAnnotationManager!!.deleteAll()
             val pointAnnotationOptionsList = restaurants.zip(textBitmaps).map { (restaurant, textBitmap) ->
                 PointAnnotationOptions()
                     .withPoint(Point.fromLngLat(restaurant.location.longitude, restaurant.location.latitude))
@@ -89,9 +94,9 @@ fun MapboxMapWrapper(
                     .withIconSize(0.1)
                     .withData(JsonPrimitive(restaurant.id))
             }
-            pointAnnotationManager.create(pointAnnotationOptionsList)
-            pointAnnotationManager.removeClickListener { true }
-            pointAnnotationManager.addClickListener( MarkersOnClickListeners(restaurants, onMarkerClick = onMarkerClick))
+            pointAnnotationManager!!.create(pointAnnotationOptionsList)
+            pointAnnotationManager!!.removeClickListener { true }
+            pointAnnotationManager!!.addClickListener( MarkersOnClickListeners(restaurants, onMarkerClick = onMarkerClick))
         }
 
         LaunchedEffect(centerOnPointTrigger, mapViewportState) {

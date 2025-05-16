@@ -29,7 +29,7 @@ fun TableFilter(
         },
         label = {
             Text(
-                text = stringResource(R.string.minimum_free_tables),
+                text = stringResource(R.string.minimum_free_seats),
                 fontSize = 16.sp,
                 color = TERTIARY_COLOR
             )

@@ -26,6 +26,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 import pl.tablehub.mobile.model.Location
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 
@@ -33,8 +34,8 @@ import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 fun RestaurantList(
     searchText: String,
     userLocation: Location,
-    onRestaurantClick: (RestaurantResponseDTO) -> Unit = {},
-    restaurants: List<RestaurantResponseDTO> = emptyList()
+    onRestaurantClick: (Restaurant) -> Unit = {},
+    restaurants: List<Restaurant> = emptyList()
 ) {
 
     val restaurantsWithDistance = remember(userLocation) {
@@ -78,7 +79,7 @@ fun RestaurantList(
 
 @Composable
 fun RestaurantItem(
-    restaurant: RestaurantResponseDTO,
+    restaurant: Restaurant,
     distanceInMeters: Int,
     onClick: () -> Unit
 ) {
