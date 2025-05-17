@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.fragments.mainview.composables
+package pl.tablehub.mobile.fragments.mainview.composables.filter
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition

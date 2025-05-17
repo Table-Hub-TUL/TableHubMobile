@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.height
 import pl.tablehub.mobile.R
+import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuButton
+import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuReturnButton
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 
 @Composable

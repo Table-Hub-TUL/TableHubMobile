@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.fragments.mainview.composables
+package pl.tablehub.mobile.fragments.mainview.composables.filter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
+import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewButton
 import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
 import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
 

@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.fragments.mainview.composables
+package pl.tablehub.mobile.fragments.mainview.composables.filter
 
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath

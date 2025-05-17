@@ -1,8 +1,7 @@
-package pl.tablehub.mobile.fragments.mainview.composables
+package pl.tablehub.mobile.fragments.mainview.composables.map
 
 import android.annotation.SuppressLint
 import android.graphics.*
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*

@@ -1,9 +1,12 @@
 package pl.tablehub.mobile.viewmodels
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
@@ -39,15 +42,26 @@ class MainViewViewModel @Inject constructor(
         fetchUserLocation()
     }
 
-    @SuppressLint("MissingPermission")
-    private fun fetchUserLocation() {
-        val locationClient = LocationServices.getFusedLocationProviderClient(application.applicationContext)
-        locationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                _userLocation.value = Location(location.longitude, location.latitude)
-            } else {
-                _userLocation.value = Location(19.457216, 51.759445)
+    fun fetchUserLocation() {
+        if (ContextCompat.checkSelfPermission(
+                application.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                application.applicationContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            val locationClient = LocationServices.getFusedLocationProviderClient(application.applicationContext)
+            locationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    _userLocation.value = Location(location.longitude, location.latitude)
+                } else {
+                    _userLocation.value = Location(0.0, 0.0)
+                }
             }
+        } else {
+            _userLocation.value = Location(0.0, 0.0)
         }
     }
 }

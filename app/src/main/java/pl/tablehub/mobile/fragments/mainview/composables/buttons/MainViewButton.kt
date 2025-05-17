@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.fragments.mainview.composables
+package pl.tablehub.mobile.fragments.mainview.composables.buttons
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer

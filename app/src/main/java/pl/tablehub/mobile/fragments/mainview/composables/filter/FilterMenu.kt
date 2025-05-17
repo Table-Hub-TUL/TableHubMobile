@@ -1,10 +1,11 @@
-package pl.tablehub.mobile.fragments.mainview.composables
+package pl.tablehub.mobile.fragments.mainview.composables.filter
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import pl.tablehub.mobile.fragments.mainview.composables.map.calculateFreeTablesText
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
 
