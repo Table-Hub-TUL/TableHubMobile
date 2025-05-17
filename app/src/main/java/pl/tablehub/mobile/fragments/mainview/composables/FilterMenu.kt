@@ -1,6 +1,5 @@
 package pl.tablehub.mobile.fragments.mainview.composables
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

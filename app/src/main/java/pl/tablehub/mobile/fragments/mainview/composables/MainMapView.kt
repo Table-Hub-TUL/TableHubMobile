@@ -32,7 +32,7 @@ fun MainMapView(
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
     val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
     var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
-    var visibleRestaurants by remember { mutableStateOf<List<Restaurant>>(restaurants) }
+    var visibleRestaurants by remember { mutableStateOf(restaurants) }
     val tables = restaurants.associateBy( { it.id }, { it.sections })
 
 
