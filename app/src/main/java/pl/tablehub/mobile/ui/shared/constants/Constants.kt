@@ -10,4 +10,5 @@ const val FONT_SIZE = 20
 object NavArgs {
     const val RESTAURANTS = "restaurants"
     const val USER_LOCATION = "user_location"
+    const val SELECTED_RESTAURANT = "restaurant"
 }
