@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.fragments.mainview.composables
+package pl.tablehub.mobile.fragments.mainview.composables.map
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

@@ -24,4 +24,5 @@
     <string name="any">Any</string>
     <string name="minimum_free_seats">Minimum free seats</string>
     <string name="minimum_rating">Minimum rating</string>
+    <string name="location_denied">You denied permission to use your location. If you change your mind please go to app settings</string>
 </resources>

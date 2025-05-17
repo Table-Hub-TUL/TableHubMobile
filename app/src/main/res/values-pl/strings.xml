@@ -23,4 +23,5 @@
     <string name="any">Wszystkie</string>
     <string name="minimum_free_seats">Minimalne wolne miejsca</string>
     <string name="minimum_rating">Minimalna ocena</string>
+    <string name="location_denied">Odmówiłe/aś dostępu do lokalizacji. Jeśli zmienisz zdanie udaj się do ustawień aplikacji</string>
 </resources>
