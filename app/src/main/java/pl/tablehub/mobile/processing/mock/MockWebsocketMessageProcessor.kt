@@ -90,12 +90,12 @@ object Mocks {
     )
 
     val mockTables = listOf(
-        Table(id = 101L, position = Position(x = 10.0, y = 20.0), capacity = 6, status = TableStatus.AVAILABLE),
-        Table(id = 102L, position = Position(x = 15.0, y = 25.0), capacity = 2, status = TableStatus.OCCUPIED),
-        Table(id = 103L, position = Position(x = 20.0, y = 30.0), capacity = 6, status = TableStatus.AVAILABLE),
+        Table(id = 101L, position = Position(x = 2.0, y = 2.0), capacity = 6, status = TableStatus.AVAILABLE),
+        Table(id = 102L, position = Position(x = 10.0, y = 10.0), capacity = 2, status = TableStatus.OCCUPIED),
+        Table(id = 103L, position = Position(x = 20.0, y = 20.0), capacity = 6, status = TableStatus.AVAILABLE),
         Table(id = 201L, position = Position(x = 5.00, y = 10.0), capacity = 2, status = TableStatus.AVAILABLE),
-        Table(id = 202L, position = Position(x = 8.00, y = 15.0), capacity = 4, status = TableStatus.OCCUPIED),
-        Table(id = 301L, position = Position(x = 30.0, y = 10.0), capacity = 3, status = TableStatus.AVAILABLE),
+        Table(id = 202L, position = Position(x = 20.00, y = 15.0), capacity = 4, status = TableStatus.OCCUPIED),
+        Table(id = 301L, position = Position(x = 30.0, y = 30.0), capacity = 3, status = TableStatus.AVAILABLE),
     )
 
     val mockSections = listOf(

@@ -24,4 +24,11 @@
     <string name="minimum_free_seats">Minimalne wolne miejsca</string>
     <string name="minimum_rating">Minimalna ocena</string>
     <string name="location_denied">Odmówiłe/aś dostępu do lokalizacji. Jeśli zmienisz zdanie udaj się do ustawień aplikacji</string>
+    <string name="change_table_states">Zmień Stany Stolików</string>
+    <string name="cancel">Anuluj</string>
+    <string name="confirm">Potwierdź</string>
+    <string name="unknown">Nieznany</string>
+    <string name="occupied">Zajęty</string>
+    <string name="free">Dostępny</string>
+    <string name="report_tables">Zgłoś Stoliki</string>
 </resources>

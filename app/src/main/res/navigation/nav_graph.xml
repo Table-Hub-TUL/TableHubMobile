@@ -41,11 +41,11 @@
         android:id="@+id/restaurantLayoutFragment"
         android:name="pl.tablehub.mobile.fragments.restaurantlayoutview.RestaurantLayoutFragment"
         android:label="RestaurantLayoutFragment" >
-        <action
-            android:id="@+id/action_restaurantLayoutFragment_to_reportViewFragment"
-            app:destination="@id/reportViewFragment" />
         <argument
             android:name="restaurant"
             app:argType="pl.tablehub.mobile.model.Restaurant" />
+        <action
+            android:id="@+id/action_restaurantLayoutFragment_to_reportViewFragment"
+            app:destination="@id/reportViewFragment" />
     </fragment>
 </navigation>

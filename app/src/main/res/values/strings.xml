@@ -25,4 +25,11 @@
     <string name="minimum_free_seats">Minimum free seats</string>
     <string name="minimum_rating">Minimum rating</string>
     <string name="location_denied">You denied permission to use your location. If you change your mind please go to app settings</string>
+    <string name="change_table_states">Change Table States</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="unknown">Unknown</string>
+    <string name="occupied">Occupied</string>
+    <string name="free">Free</string>
+    <string name="report_tables">Report Tables</string>
 </resources>
