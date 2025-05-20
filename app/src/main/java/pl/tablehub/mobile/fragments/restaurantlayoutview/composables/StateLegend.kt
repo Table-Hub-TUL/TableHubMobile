@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
+import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 
 @Composable
@@ -35,7 +36,7 @@ fun StateLegend() {
 
         LegendItem(status = stringResource(R.string.occupied), color = Color.Red)
 
-        LegendItem(status = stringResource(R.string.free), color = Color(0xFF8CE563))
+        LegendItem(status = stringResource(R.string.free), color = GREEN_FREE_COLOR)
     }
 }
 

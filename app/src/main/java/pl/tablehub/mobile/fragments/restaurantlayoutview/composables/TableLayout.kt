@@ -31,6 +31,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
+import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
@@ -56,7 +57,7 @@ fun TableLayout(
             val yOffset = (table.position.y * scaleFactor).dp
 
             val tableColor = when (table.status) {
-                TableStatus.AVAILABLE -> Color(0xFF8CE563)
+                TableStatus.AVAILABLE -> GREEN_FREE_COLOR
                 TableStatus.OCCUPIED -> Color.Red
                 TableStatus.UNKNOWN -> Color.Gray
             }
@@ -79,7 +80,7 @@ fun TableLayout(
                     text = table.capacity.toString(),
                     modifier = Modifier
                         .align(androidx.compose.ui.Alignment.Center),
-                    color = Color.White,
+                    color = SECONDARY_COLOR,
                     fontSize = 24.sp
                 )
             }
