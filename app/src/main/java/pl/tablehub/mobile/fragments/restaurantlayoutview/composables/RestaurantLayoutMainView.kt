@@ -12,10 +12,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
@@ -36,7 +38,7 @@ fun RestaurantLayoutMainView(
         TopBarContent(onBackClick = onBack)
 
         Text(
-            text = "Report Tables",
+            text = stringResource(R.string.report_tables),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp),

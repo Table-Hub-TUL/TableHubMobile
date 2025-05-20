@@ -30,4 +30,5 @@
     <string name="unknown">Nieznany</string>
     <string name="occupied">Zajęty</string>
     <string name="free">Dostępny</string>
+    <string name="report_tables">Zgłoś Stoliki</string>
 </resources>

@@ -31,4 +31,5 @@
     <string name="unknown">Unknown</string>
     <string name="occupied">Occupied</string>
     <string name="free">Free</string>
+    <string name="report_tables">Report Tables</string>
 </resources>
