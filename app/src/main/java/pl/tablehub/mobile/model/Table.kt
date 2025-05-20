@@ -10,5 +10,5 @@ data class Table(
     val id: Long,
     val position: Position,
     val capacity: Int,
-    val status: TableStatus
+    var status: TableStatus
 ) : Parcelable
