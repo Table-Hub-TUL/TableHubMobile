@@ -6,7 +6,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.tablehub.mobile.processing.implementation.WebsocketMessageProcessorImpl
 import pl.tablehub.mobile.processing.interfaces.IWebsocketMessageProcessor
-import pl.tablehub.mobile.processing.mock.MockWebsocketMessageProcessor
 import javax.inject.Singleton
 
 @Module
@@ -15,6 +14,6 @@ object MessageProcessorModule {
     @Provides
     @Singleton
     fun provideMessageProcessor(
-        impl: MockWebsocketMessageProcessor
+        impl: WebsocketMessageProcessorImpl
     ): IWebsocketMessageProcessor = impl
 }

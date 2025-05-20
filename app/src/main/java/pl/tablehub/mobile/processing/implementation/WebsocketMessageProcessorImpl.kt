@@ -40,6 +40,7 @@ class WebsocketMessageProcessorImpl @Inject constructor(
     }
 
     override suspend fun process(webSocketMessage: WebSocketMessage) {
+        Log.d("WebsocketMessageProcessor", "Processing message: $webSocketMessage")
         when (webSocketMessage.header.type) {
             MessageType.QUERY_RESTAURANTS_RESPONSE -> processRestaurantsResponse(webSocketMessage)
             MessageType.SUBSCRIBE_RESTAURANT_UPDATES_RESPONSE -> processSubscriptionResponse(webSocketMessage)
