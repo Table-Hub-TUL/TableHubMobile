@@ -36,7 +36,7 @@ class MainViewViewModel @Inject constructor(
     val userLocation: StateFlow<Location> = _userLocation
 
     init {
-        val serviceIntent: Intent = Intent(application, MockTableService::class.java)
+        val serviceIntent: Intent = Intent(application, TablesServiceImplementation::class.java)
         application.startService(serviceIntent)
         Log.d("CO", "JEST")
         fetchUserLocation()

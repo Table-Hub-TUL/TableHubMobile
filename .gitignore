@@ -36,3 +36,10 @@ google-services.json
 # Mapbox API Token
 app/src/main/res/values/mapbox-access-token.xml
 
+# Other
+.gradle/
+.github/
+.kotlin/
+settings.gradle.kts
+.idea/
+*.pro
