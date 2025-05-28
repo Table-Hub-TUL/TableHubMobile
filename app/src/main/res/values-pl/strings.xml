@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Table Hub</string>
     <string name="password">Hasło</string>
+    <string name="email">Email</string>
     <string name="log_in">Zaloguj się</string>
     <string name="create_account">Załóż konto</string>
     <string name="forgot_password">Zapomniałeś hasła?</string>
@@ -9,6 +10,7 @@
     <string name="sign_in_to_cont">Zaloguj się, żeby kontynuować</string>
     <string name="filter">Filtruj</string>
     <string name="report_free_tables">Zgłoś stoliki</string>
+    <string name="menu">Menu</string>
     <string name="current_location">Obecna lokazlizacja</string>
     <string name="profile">Moje Konto</string>
     <string name="settings">Ustawienia</string>
@@ -31,4 +33,19 @@
     <string name="occupied">Zajęty</string>
     <string name="free">Dostępny</string>
     <string name="report_tables">Zgłoś Stoliki</string>
+    <string name="username">Nazwa Użytkownika</string>
+    <string name="confirm_password">Potwierdź Hasło</string>
+    <string name="join_us_today">Dołącz Do Nas</string>
+    <string name="back_to_login">Powrót</string>
+    <string name="already_have_account">Masz już konto?</string>
+    <string name="create_new_account">Stwórz nowe konto</string>
+    <string name="error_username_empty">Nazwa Użytkownika nie może być pusta</string>
+    <string name="error_username_too_short">Nazwa Użytwkownika musi mieć przynajmniej 3 znaki</string>
+    <string name="error_username_too_long">Nazwa Użytwkownika musi mieć mniej niż 20 znaków</string>
+    <string name="error_username_invalid_characters">Nazwa Użytwkownika może składać się wyłącznie z liter, cyfr i \"podłóg\"</string>
+    <string name="error_email_empty">Email nie może być pusty</string>
+    <string name="error_email_invalid">Proszę wpisać prawidłowy adres email</string>
+    <string name="error_password_empty">Hasło nie może być puste</string>
+    <string name="error_confirm_password_empty">Proszę potwierdzić hasło</string>
+    <string name="error_passwords_dont_match">Hasła różnią się</string>
 </resources>
