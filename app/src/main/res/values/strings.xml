@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Table Hub</string>
     <string name="password">Password</string>
-    <string name="email" translatable="false">Email</string>
+    <string name="email">Email</string>
     <string name="log_in">Log in</string>
     <string name="create_account">Create account</string>
     <string name="forgot_password">Forgot password?</string>
@@ -9,7 +9,7 @@
     <string name="sign_in_to_cont">Sing in to continue</string>
     <string name="filter">FIlter</string>
     <string name="report_free_tables">Report tables</string>
-    <string name="menu" translatable="false">Menu</string>
+    <string name="menu">Menu</string>
     <string name="current_location">Current location</string>
     <string name="profile">My Account</string>
     <string name="settings">Settings</string>
@@ -32,4 +32,19 @@
     <string name="occupied">Occupied</string>
     <string name="free">Free</string>
     <string name="report_tables">Report Tables</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="join_us_today">Join Us Today</string>
+    <string name="back_to_login">Back To Login</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="error_username_empty">Username cannot be empty</string>
+    <string name="error_username_too_short">Username must be at least 3 characters</string>
+    <string name="error_username_too_long">Username must be less than 20 characters</string>
+    <string name="error_username_invalid_characters">Username can only contain letters, numbers, and underscores</string>
+    <string name="error_email_empty">Email cannot be empty</string>
+    <string name="error_email_invalid">Please enter a valid email address</string>
+    <string name="error_password_empty">Password cannot be empty</string>
+    <string name="error_confirm_password_empty">Please confirm your password</string>
+    <string name="error_passwords_dont_match">Passwords do not match</string>
 </resources>

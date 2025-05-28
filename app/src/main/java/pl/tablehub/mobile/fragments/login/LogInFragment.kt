@@ -25,7 +25,8 @@ class LogInFragment : Fragment() {
             setContent {
                 MainLoginView(
                     onRegister = {
-                        findNavController().navigate(R.id.action_logInFragment_to_mainViewFragment)
+                        //findNavController().navigate(R.id.action_logInFragment_to_mainViewFragment)
+                        findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
                     }
                 )
             }
