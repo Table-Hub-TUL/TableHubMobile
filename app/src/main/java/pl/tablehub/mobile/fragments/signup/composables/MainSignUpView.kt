@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -35,10 +36,11 @@ fun MainSignUpView(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     val validationState by remember {
         derivedStateOf {
-            SignUpValidator.validateSignUpForm(username, email, password, confirmPassword)
+            SignUpValidator.validateSignUpForm(username, email, password, confirmPassword, context)
         }
     }
 

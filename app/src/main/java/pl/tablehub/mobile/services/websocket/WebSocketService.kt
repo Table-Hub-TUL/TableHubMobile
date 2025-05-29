@@ -13,6 +13,7 @@ import org.hildan.krossbow.stomp.config.StompConfig
 import org.hildan.krossbow.websocket.*
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.model.websocket.WebSocketMessage
+import pl.tablehub.mobile.util.Constants.BACKEND_IP
 import pl.tablehub.mobile.util.WSMessageRelay
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,7 +27,7 @@ class WebSocketService @Inject constructor(
 ) {
 
     companion object ServiceContract {
-        private const val SERVER_URL: String = "ws://192.168.18.35:8080/ws"
+        private const val SERVER_URL: String = "ws://${BACKEND_IP}/ws"
         private const val DEBUG_TAG: String = "WEB_SOCKET"
         private const val DEST_SEND_UPDATE_TABLE = "/app/updateTableStatus"
         private const val DEST_INITIAL_STATUS = "/app/initialStatus"

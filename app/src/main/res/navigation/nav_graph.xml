@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_mainViewFragment_to_reportViewFragment"
             app:destination="@id/reportViewFragment" />
+        <argument
+            android:name="JWT"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"
