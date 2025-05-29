@@ -30,7 +30,7 @@ fun MainLoginView(
     onRegister: () -> Unit = {},
     onForgotPassword: () -> Unit = {}
 ) {
-    var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     val configuration = LocalConfiguration.current
@@ -60,13 +60,13 @@ fun MainLoginView(
         Spacer(modifier = Modifier.height(smallSpacing))
         SignInText()
         Spacer(modifier = Modifier.height(mediumSpacing))
-        EmailInput(onValueChange = { newValue -> email = newValue })
+        UserNameInput(onValueChange = { newValue -> username = newValue })
         Spacer(modifier = Modifier.height(mediumSpacing))
         PasswordInput(onValueChange = { newValue -> password = newValue})
         Spacer(modifier = Modifier.height(smallSpacing))
         ForgotPasswordButton(onForgotPassword)
         Spacer(modifier = Modifier.height(largeSpacing))
-        LogInButton { onLogin(email, password) }
+        LogInButton { onLogin(username, password) }
         Spacer(modifier = Modifier.height(mediumSpacing))
         RegisterButton(onRegister)
         Spacer(modifier = Modifier.height(smallSpacing))
