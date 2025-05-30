@@ -91,7 +91,8 @@ fun TableLayout(
                 containerColor = SECONDARY_COLOR,
                 onDismissRequest = { selectedTable = null },
                 title = {
-                    Text(text = stringResource(R.string.change_table_states),
+                    Text(
+                        text = stringResource(R.string.change_table_states),
                         fontWeight = FontWeight.Medium,
                         textAlign = TextAlign.Center,
                         color = TERTIARY_COLOR
@@ -101,13 +102,30 @@ fun TableLayout(
                     Column {
                         listOf(TableStatus.AVAILABLE, TableStatus.OCCUPIED).forEach { status ->
                             Button(
-                                onClick = { chosenStatus = status },
+                                onClick = {
+                                    selectedTable?.let { table ->
+                                        table.status = status
+                                    }
+                                    selectedTable = null
+                                },
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (chosenStatus == status) PRIMARY_COLOR else TERTIARY_COLOR
+                                    containerColor = if (selectedTable?.status == status) PRIMARY_COLOR else TERTIARY_COLOR
                                 ),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                                    .height(48.dp)
                             ) {
-                                Text(text = status.name, color = SECONDARY_COLOR)
+                                Text(
+                                    text = when (status) {
+                                        TableStatus.AVAILABLE -> stringResource(R.string.free)
+                                        TableStatus.OCCUPIED -> stringResource(R.string.occupied)
+                                        else -> status.name
+                                    },
+                                    color = SECONDARY_COLOR,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
                             }
                         }
                     }
@@ -116,35 +134,15 @@ fun TableLayout(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                     ) {
                         Button(
                             onClick = { selectedTable = null },
-                            colors = ButtonDefaults.buttonColors(containerColor = TERTIARY_COLOR),
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 8.dp)
-                                .height(48.dp)
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Gray),
+                            modifier = Modifier.height(40.dp)
                         ) {
                             Text(stringResource(R.string.cancel), color = SECONDARY_COLOR)
-                        }
-                        Button(
-                            onClick = {
-                                selectedTable?.let { table ->
-                                    chosenStatus?.let { newStatus ->
-                                        table.status = newStatus
-                                    }
-                                }
-                                selectedTable = null
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = TERTIARY_COLOR),
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 8.dp)
-                                .height(48.dp)
-                        ) {
-                            Text(stringResource(R.string.confirm), color = SECONDARY_COLOR)
                         }
                     }
                 }

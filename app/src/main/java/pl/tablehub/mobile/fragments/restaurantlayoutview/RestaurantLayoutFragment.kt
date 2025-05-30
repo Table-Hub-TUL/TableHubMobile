@@ -31,6 +31,9 @@ class RestaurantLayoutFragment : Fragment() {
                         onBack = {
                             findNavController().popBackStack()
                         },
+                        onFinishChanges = {
+                            findNavController().popBackStack()
+                        },
                         restaurant = restaurant
                     )
                 }
