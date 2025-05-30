@@ -45,8 +45,8 @@ class LogInFragment : Fragment() {
                     onRegister = {
                         findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
                     },
-                    onLogin = { email, password ->
-                        handleLogin(email, password)
+                    onLogin = { username, password ->
+                        handleLogin(username, password)
                     }
                 )
             }
