@@ -1,6 +1,7 @@
 package pl.tablehub.mobile.fragments.signup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.client.IAuthService
 import pl.tablehub.mobile.client.RetrofitClient
 import pl.tablehub.mobile.client.model.SignUpRequest
+import pl.tablehub.mobile.client.model.SignUpResponse
 import pl.tablehub.mobile.fragments.signup.composables.MainSignUpView
 import pl.tablehub.mobile.ui.theme.TableHubTheme
 import retrofit2.Call
@@ -54,8 +56,8 @@ class SignUpFragment : Fragment() {
     private fun handleSignUp(username: String, email: String, password: String, nickname: String) {
         val signUpRequest = SignUpRequest(username = username, email = email, password = password, nickname = nickname)
         lifecycleScope.launch {
-            authService.signupUser(signUpRequest).enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+            authService.signupUser(signUpRequest).enqueue(object : Callback<SignUpResponse> {
+                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                     if (response.isSuccessful) {
                         Toast.makeText(context, "Signup successful!", Toast.LENGTH_SHORT).show()
                         navigateToLogin()
@@ -65,7 +67,8 @@ class SignUpFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+                    Log.d("ERORR", t.message!!)
                     Toast.makeText(context, "Signup error: ${t.message}", Toast.LENGTH_LONG).show()
                 }
             })

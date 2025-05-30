@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -21,9 +22,14 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.jvm.Throws
 
-class EncryptedDataStore(private val context: Context) {
+@Singleton
+class EncryptedDataStore @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
     companion object {
         private const val DATASTORE_NAME = "encrypted_preferences"
         private const val KEY_ALIAS = "DataStoreSecretKey"

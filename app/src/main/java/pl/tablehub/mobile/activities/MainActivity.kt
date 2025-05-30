@@ -1,6 +1,7 @@
 package pl.tablehub.mobile.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
@@ -11,11 +12,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val encryptedPreferences = EncryptedDataStore(this)
+    @Inject
+    lateinit var encryptedPreferences: EncryptedDataStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +30,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleAuth() {
         val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.logInFragment) as? NavHostFragment
+            .findFragmentById(R.id.nav_host_fragment_activity_main) as? NavHostFragment
         lifecycleScope.launch {
             if (encryptedPreferences.hasValidToken()) {
-                navHostFragment?.navController?.navigate(R.id.mainViewFragment, bundleOf(
+                navHostFragment?.navController?.navigate(R.id.action_logInFragment_to_mainViewFragment, bundleOf(
                     Pair(NavArgs.JWT, encryptedPreferences.getJWT().first()!!)
                 ))
             } else {

@@ -19,15 +19,20 @@ import pl.tablehub.mobile.client.IAuthService
 import pl.tablehub.mobile.client.RetrofitClient
 import pl.tablehub.mobile.client.model.LoginRequest
 import pl.tablehub.mobile.client.model.LoginResponse
+import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.login.composables.MainLoginView
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
+
+    @Inject
+    lateinit var encryptedPreferences: EncryptedDataStore
 
     private val authService: IAuthService by lazy {
         RetrofitClient.client.create(IAuthService::class.java)
@@ -60,6 +65,7 @@ class LogInFragment : Fragment() {
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
                         lifecycleScope.launch {
+                            encryptedPreferences.storeJWT(loginResponse.token)
                             findNavController().navigate(R.id.action_logInFragment_to_mainViewFragment, bundleOf(
                                 Pair(NavArgs.JWT, loginResponse.token)
                             ))
