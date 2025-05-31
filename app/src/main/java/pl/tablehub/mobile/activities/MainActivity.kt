@@ -15,9 +15,10 @@ import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity @Inject constructor(
-    private val encryptedPreferences: EncryptedDataStore
-) : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var encryptedPreferences: EncryptedDataStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,7 @@ class MainActivity @Inject constructor(
             .findFragmentById(R.id.nav_host_fragment_activity_main) as? NavHostFragment
 
         lifecycleScope.launch {
-        navHostFragment?.navController?.let { navController ->
+            navHostFragment?.navController?.let { navController ->
                 if (encryptedPreferences.hasValidToken()) {
                     navController.navigate(
                         R.id.mainViewFragment,

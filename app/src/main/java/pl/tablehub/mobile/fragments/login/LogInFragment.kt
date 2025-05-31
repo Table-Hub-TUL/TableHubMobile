@@ -31,9 +31,10 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LogInFragment @Inject constructor(
-    private val encryptedPreferences: EncryptedDataStore
-) : Fragment() {
+class LogInFragment : Fragment() {
+
+    @Inject
+    lateinit var encryptedPreferences: EncryptedDataStore
 
     private val authService: IAuthService by lazy {
         RetrofitClient.client.create(IAuthService::class.java)
