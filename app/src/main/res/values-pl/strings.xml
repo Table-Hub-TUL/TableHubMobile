@@ -48,4 +48,5 @@
     <string name="error_password_empty">Hasło nie może być puste</string>
     <string name="error_confirm_password_empty">Proszę potwierdzić hasło</string>
     <string name="error_passwords_dont_match">Hasła różnią się</string>
+    <string name="finish_changes">Zakończ Zmiany</string>
 </resources>

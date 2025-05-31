@@ -47,4 +47,5 @@
     <string name="error_password_empty">Password cannot be empty</string>
     <string name="error_confirm_password_empty">Please confirm your password</string>
     <string name="error_passwords_dont_match">Passwords do not match</string>
+    <string name="finish_changes">Finish Changes</string>
 </resources>
