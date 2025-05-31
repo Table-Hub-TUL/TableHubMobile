@@ -12,7 +12,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.client.IAuthService
@@ -29,10 +31,9 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LogInFragment : Fragment() {
-
-    @Inject
-    lateinit var encryptedPreferences: EncryptedDataStore
+class LogInFragment @Inject constructor(
+    private val encryptedPreferences: EncryptedDataStore
+) : Fragment() {
 
     private val authService: IAuthService by lazy {
         RetrofitClient.client.create(IAuthService::class.java)
@@ -66,22 +67,25 @@ class LogInFragment : Fragment() {
                     response.body()?.let { loginResponse ->
                         lifecycleScope.launch {
                             encryptedPreferences.storeJWT(loginResponse.token)
-                            findNavController().navigate(R.id.action_logInFragment_to_mainViewFragment, bundleOf(
-                                Pair(NavArgs.JWT, loginResponse.token)
-                            ))
+                            findNavController().navigate(
+                                R.id.mainViewFragment,
+                                bundleOf(Pair(NavArgs.JWT, encryptedPreferences.getJWT().first()!!)),
+                                navOptions {
+                                    popUpTo(R.id.logInFragment) {
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
+                                }
+                            )
                         }
-                    } ?: run {
-                        Toast.makeText(context, "Login failed: Empty response", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     val errorBody = response.errorBody()?.string()
-                    Log.e("LOGIN ERROR", errorBody!!)
                     Toast.makeText(context, "Login failed: ${errorBody ?: "Invalid credentials"}", Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Log.e("LOGIN ERROR", t.message!!)
                 Toast.makeText(context, "Login error: ${t.message}", Toast.LENGTH_LONG).show()
             }
         })
