@@ -55,7 +55,9 @@ fun SignUpInput(
         },
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = if (isError) androidx.compose.ui.graphics.Color.Red else PRIMARY_COLOR,
-            unfocusedBorderColor = if (isError) androidx.compose.ui.graphics.Color.Red else TERTIARY_COLOR
+            unfocusedBorderColor = if (isError) androidx.compose.ui.graphics.Color.Red else TERTIARY_COLOR,
+            focusedTextColor = TERTIARY_COLOR,
+            unfocusedTextColor = TERTIARY_COLOR
         ),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         isError = isError,

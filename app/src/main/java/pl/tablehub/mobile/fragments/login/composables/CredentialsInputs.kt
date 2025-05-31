@@ -64,12 +64,12 @@ fun LogInInput(
 }
 
 @Composable
-fun EmailInput(
+fun UserNameInput(
     onValueChange: (String) -> Unit = {}
 ) {
     LogInInput(
         onValueChange = onValueChange,
-        strRes = R.string.email,
+        strRes = R.string.username,
         keyboardType = KeyboardType.Text
     )
 }
