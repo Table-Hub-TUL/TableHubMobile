@@ -3,13 +3,7 @@ package pl.tablehub.mobile.services.implementation
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import dagger.hilt.EntryPoints
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.EntryPointAccessors
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
-import pl.tablehub.mobile.model.websocket.RestaurantSubscriptionResponse
-import pl.tablehub.mobile.model.websocket.RestaurantsRequest
-import pl.tablehub.mobile.model.websocket.RestaurantsResponse
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.processing.interfaces.IWebsocketMessageProcessor
 import pl.tablehub.mobile.services.interfaces.TablesService

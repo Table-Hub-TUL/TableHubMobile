@@ -5,12 +5,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.hildan.krossbow.stomp.*
 import org.hildan.krossbow.stomp.config.HeartBeat
 import org.hildan.krossbow.stomp.config.StompConfig
+import org.hildan.krossbow.stomp.headers.StompHeaders
 import org.hildan.krossbow.websocket.*
+import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
 import pl.tablehub.mobile.model.websocket.WebSocketMessage
 import pl.tablehub.mobile.util.Constants.BACKEND_IP
@@ -33,29 +36,26 @@ class WebSocketService @Inject constructor(
         private const val DEST_INITIAL_STATUS = "/app/initialStatus"
         //private const val DEST_SUBSCRIBE_INITIAL_STATUS = "/user/queue/initialStatus"
         private const val DEST_SUBSCRIBE_INITIAL_STATUS = "/topic/restaurant/status"
-        private const val DEST_SUBSCRIBE_UPDATE_TABLE = "/user/queue/updateTableStatus"
+        private const val DEST_SUBSCRIBE_UPDATE_TABLE = "/topic/restaurant/updates"
     }
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private lateinit var stompSession: StompSession
 
-    private val config = StompConfig().apply {
-        connectionTimeout = 20.seconds
-        heartBeat = HeartBeat(
-            minSendPeriod = 5.seconds,
-            expectedPeriod = 5.seconds
-        )
-    }
+    @Inject
+    lateinit var dataStore: EncryptedDataStore
 
     fun connectWebSocket() {
         serviceScope.launch {
             try {
+                val token = dataStore.getJWT().first()!!
+                val urlWithToken = "$SERVER_URL?token=$token"
                 val stompClient = StompClient(client)
-                stompSession = stompClient.connect(url = SERVER_URL, login = "alice", passcode = "hunter2")
-                Log.d(DEBUG_TAG, "Connected")
-                //requestInitialStatus()
+                Log.d("WEB_SOCKET", "CONNECTED")
+                stompSession = stompClient.connect(url = urlWithToken)
+                requestInitialStatus()
                 subscribeToInitialStatus()
-                subscribeToUpdateTableStatus()
+                //subscribeToUpdateTableStatus()
             } catch (e: Exception) {
                 Log.e(DEBUG_TAG, "WebSocket connection failed", e)
             }

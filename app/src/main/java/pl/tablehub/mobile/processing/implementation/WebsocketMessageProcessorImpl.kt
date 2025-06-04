@@ -7,6 +7,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.encodeToJsonElement
 import pl.tablehub.mobile.model.websocket.MessageType
 import pl.tablehub.mobile.model.websocket.RestaurantSubscriptionResponse
 import pl.tablehub.mobile.model.websocket.RestaurantsResponse
@@ -51,18 +54,25 @@ class WebsocketMessageProcessorImpl @Inject constructor(
     }
 
     private suspend fun processRestaurantsResponse(webSocketMessage: WebSocketMessage) {
-        val restaurantsResponse = webSocketMessage.body as RestaurantsResponse
+        val bodyJson = Json.encodeToJsonElement(webSocketMessage.body)
+        val restaurantsResponse = Json.decodeFromJsonElement<RestaurantsResponse>(bodyJson)
         restaurantsRepository.processRestaurantList(restaurantsResponse.restaurants)
     }
 
     private suspend fun processSubscriptionResponse(webSocketMessage: WebSocketMessage) {
-        (webSocketMessage.body as? RestaurantSubscriptionResponse)?.takeIf { it.success }?.let { response ->
-            restaurantsRepository.processInitialRestaurantData(response.initialState.id, response.initialState)
+        val bodyJson = Json.encodeToJsonElement(webSocketMessage.body)
+        val response = runCatching {
+            Json.decodeFromJsonElement<RestaurantSubscriptionResponse>(bodyJson)
+        }.getOrNull()
+
+        response?.takeIf { it.success }?.let {
+            restaurantsRepository.processInitialRestaurantData(it.initialState.id, it.initialState)
         }
     }
 
     private suspend fun processTableStatusChangedEvent(webSocketMessage: WebSocketMessage) {
-        val tableStatusChangedEvent = webSocketMessage.body as TableStatusChange
+        val bodyJson = Json.encodeToJsonElement(webSocketMessage.body)
+        val tableStatusChangedEvent = Json.decodeFromJsonElement<TableStatusChange>(bodyJson)
         restaurantsRepository.processTableStatusChange(tableStatusChangedEvent)
     }
 

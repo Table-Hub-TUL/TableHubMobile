@@ -1,16 +1,15 @@
 package pl.tablehub.mobile.processing.mock
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonElement
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Position
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.Table
 import pl.tablehub.mobile.model.TableStatus
-import pl.tablehub.mobile.model.websocket.Error
 import pl.tablehub.mobile.model.websocket.MessageHeader
 import pl.tablehub.mobile.model.websocket.MessageType
 import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
@@ -30,7 +29,7 @@ class MockWebsocketMessageProcessor @Inject constructor(
 
     override fun start() {
         processorScope.launch {
-            process(stubWebSocketErrorMessage)
+            //process(stubWebSocketErrorMessage)
         }
     }
 
@@ -46,17 +45,17 @@ class MockWebsocketMessageProcessor @Inject constructor(
 }
 
 
-val stubWebSocketErrorMessage: WebSocketMessage = WebSocketMessage(
-    header = MessageHeader(
-        messageId = UUID.randomUUID().toString(),
-        correlationId = null,
-        sender = "stub-sender",
-        type = MessageType.ERROR_RESPONSE, // Or any appropriate default/stub type
-        accessToken = null,
-        timestamp = System.currentTimeMillis()
-    ),
-    body = Error("Dupa", "Kupa")
-)
+//val stubWebSocketErrorMessage: WebSocketMessage = WebSocketMessage(
+//    header = MessageHeader(
+//        messageId = UUID.randomUUID().toString(),
+//        correlationId = null,
+//        sender = "stub-sender",
+//        type = MessageType.ERROR_RESPONSE, // Or any appropriate default/stub type
+//        accessToken = null,
+//        timestamp = System.currentTimeMillis()
+//    ),
+//    body = JsonElement("{}")
+//)
 
 object Mocks {
     private val lodzLatitude = 51.759445

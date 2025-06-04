@@ -15,6 +15,6 @@ object MessageProcessorModule {
     @Provides
     @Singleton
     fun provideMessageProcessor(
-        impl: MockWebsocketMessageProcessor
+        impl: WebsocketMessageProcessorImpl
     ): IWebsocketMessageProcessor = impl
 }

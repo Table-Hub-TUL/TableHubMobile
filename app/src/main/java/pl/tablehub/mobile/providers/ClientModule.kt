@@ -21,7 +21,7 @@ object ClientModule {
     fun provideWebSocketClient() : WebSocketClient {
         val okHttpClient = OkHttpClient.Builder()
             .callTimeout(Duration.ofMinutes(1))
-            .pingInterval(Duration.ofSeconds(5))
+            .pingInterval(Duration.ofSeconds(90))
             .build()
         return OkHttpWebSocketClient(okHttpClient)
     }
