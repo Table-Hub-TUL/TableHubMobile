@@ -34,12 +34,8 @@ fun FilterMenu(
         onFilterResult(filteredList)
     }
 
-    LaunchedEffect(selectedRating, selectedCuisine, minFreeTables) {
+    LaunchedEffect(restaurants, selectedRating, selectedCuisine, minFreeTables) {
         applyFilters()
-    }
-
-    LaunchedEffect(Unit) {
-        onFilterResult(restaurants)
     }
 
     LaunchedEffect(drawerState.currentValue) {
