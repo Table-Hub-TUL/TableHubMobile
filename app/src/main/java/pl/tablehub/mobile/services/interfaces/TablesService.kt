@@ -9,6 +9,6 @@ import pl.tablehub.mobile.model.websocket.TableUpdateResponse
 
 interface TablesService {
     fun updateTableStatus (
-        requestParams: List<TableUpdateRequest>
+        requestParams: TableUpdateRequest
     )
 }

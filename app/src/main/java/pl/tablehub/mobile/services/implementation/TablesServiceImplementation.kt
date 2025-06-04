@@ -2,6 +2,7 @@ package pl.tablehub.mobile.services.implementation
 
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.model.websocket.TableUpdateRequest
@@ -19,8 +20,14 @@ class TablesServiceImplementation : Service(), TablesService {
     @Inject
     internal lateinit var webSocketService: WebSocketService
 
+    private val binder = LocalBinder()
+
+    inner class LocalBinder: Binder() {
+        fun getService(): TablesServiceImplementation = this@TablesServiceImplementation
+    }
+
     override fun onBind(intent: Intent?): IBinder? {
-        return null
+        return binder
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -29,8 +36,8 @@ class TablesServiceImplementation : Service(), TablesService {
         return START_NOT_STICKY
     }
 
-    override fun updateTableStatus(requestParams: List<TableUpdateRequest>) {
-        requestParams.forEach { param -> webSocketService.sendStatusUpdate(param) }
+    override fun updateTableStatus(requestParams: TableUpdateRequest) {
+        webSocketService.sendStatusUpdate(requestParams)
     }
 
     override fun onDestroy() {
