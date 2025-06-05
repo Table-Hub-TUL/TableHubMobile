@@ -94,6 +94,7 @@ fun RestaurantDetailsPopup(
     restaurant: Restaurant,
     sections: List<Section>,
     onDismissRequest: () -> Unit,
+    onReportTable: (Restaurant) -> Unit,
     onMoreDetailsClick: (Restaurant) -> Unit
 ) {
     val availableTables by remember { mutableIntStateOf(sections.flatMap { it.tables }.count { it.status == TableStatus.AVAILABLE }) }
@@ -128,7 +129,7 @@ fun RestaurantDetailsPopup(
                 )
                 Spacer(modifier = Modifier.weight(0.25f))
                 PopUpButton(
-                    onClick = onDismissRequest,
+                    onClick = { onReportTable(restaurant) },
                     strRes = R.string.report_free_tables,
                     modifier = Modifier.weight(1f)
                 )

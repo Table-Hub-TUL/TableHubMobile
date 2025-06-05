@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.mainview.composables.MainMapView
 import pl.tablehub.mobile.fragments.mainview.composables.snackbar.PermissionSnackbar
+import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
 
@@ -33,6 +34,11 @@ class MainViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val onReportSpecific = {restaurant: Restaurant -> findNavController()
+            .navigate(R.id.action_mainViewFragment_to_restaurantLayoutFragment,
+                bundleOf(Pair(NavArgs.SELECTED_RESTAURANT, restaurant)))
+        }
+
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
@@ -41,12 +47,13 @@ class MainViewFragment : Fragment() {
                 MainMapView(
                     restaurants = restaurants,
                     userLocation = userLocation,
-                    onReport = {
+                    onReportGeneral = {
                         findNavController().navigate(R.id.action_mainViewFragment_to_reportViewFragment, bundleOf(
                             Pair(NavArgs.RESTAURANTS, restaurants.toTypedArray()),
                             Pair(NavArgs.USER_LOCATION, userLocation)
-                        ))
-                })
+                    ))},
+                    onReportSpecific = onReportSpecific
+                )
             }
         }
     }
