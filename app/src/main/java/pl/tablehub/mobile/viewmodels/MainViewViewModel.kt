@@ -30,6 +30,7 @@ import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.services.implementation.TablesServiceImplementation
 import pl.tablehub.mobile.services.interfaces.TablesService
 import pl.tablehub.mobile.services.mock.MockTableService
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,7 +43,7 @@ class MainViewViewModel @Inject constructor(
     private val _userLocation = MutableStateFlow(Location(0.0, 0.0))
     val userLocation: StateFlow<Location> = _userLocation
 
-    private var tablesService: TablesServiceImplementation? = null
+    private var tablesServiceRef: WeakReference<TablesService>? = null
     private var isServiceBound = false
     private val _serviceConnected = MutableStateFlow(false)
     val serviceConnected: StateFlow<Boolean> = _serviceConnected
@@ -50,14 +51,15 @@ class MainViewViewModel @Inject constructor(
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             val binder = service as TablesServiceImplementation.LocalBinder
-            tablesService = binder.getService()
+            val serviceInstance = binder.getService()
+            tablesServiceRef = WeakReference(serviceInstance)
             isServiceBound = true
             _serviceConnected.value = true
             Log.d("MainViewViewModel", "Service connected successfully")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            tablesService = null
+            tablesServiceRef = null
             isServiceBound = false
             _serviceConnected.value = false
             Log.d("MainViewViewModel", "Service disconnected")
@@ -98,10 +100,19 @@ class MainViewViewModel @Inject constructor(
         }
     }
 
+    private fun getService(): TablesService? {
+        return if (isServiceBound) {
+            tablesServiceRef?.get()
+        } else {
+            null
+        }
+    }
+
     fun updateTableStatus(updates: TableUpdateRequest) {
+        val tablesService = getService()
         if(isServiceBound && tablesService != null) {
             viewModelScope.launch {
-                tablesService!!.updateTableStatus(updates)
+                tablesService.updateTableStatus(updates)
             }
         }
     }

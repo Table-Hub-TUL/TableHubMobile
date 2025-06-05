@@ -26,7 +26,7 @@ class TablesServiceImplementation : Service(), TablesService {
         fun getService(): TablesServiceImplementation = this@TablesServiceImplementation
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
         return binder
     }
 

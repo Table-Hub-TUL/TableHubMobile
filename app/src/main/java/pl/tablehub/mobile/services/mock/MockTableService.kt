@@ -36,7 +36,7 @@ class MockTableService : Service(), TablesService {
         return START_NOT_STICKY
     }
 
-    override fun updateTableStatus(requestParams: List<TableUpdateRequest>) {
+    override fun updateTableStatus(requestParams: TableUpdateRequest) {
         TODO("Not yet implemented")
     }
 

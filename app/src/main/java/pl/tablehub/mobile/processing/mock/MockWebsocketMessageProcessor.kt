@@ -29,7 +29,13 @@ class MockWebsocketMessageProcessor @Inject constructor(
 
     override fun start() {
         processorScope.launch {
-            //process(stubWebSocketErrorMessage)
+            process()
+        }
+    }
+
+    suspend fun process() {
+        Mocks.mockRestaurants.forEach {
+            restaurantsRepository.addOrUpdateRestaurantFromDTO(it, Mocks.mockSections)
         }
     }
 
