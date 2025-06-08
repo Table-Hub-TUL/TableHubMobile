@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import pl.tablehub.mobile.fragments.mainview.composables.map.calculateFreeTablesText
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.model.TableStatus
 
 @Composable
 fun FilterMenu(
@@ -21,7 +21,7 @@ fun FilterMenu(
 
     var selectedRating by remember { mutableDoubleStateOf(0.0) }
     var selectedCuisine by remember { mutableStateOf<String?>(null) }
-    var minFreeTables by remember { mutableIntStateOf(0) }
+    var minFreeSeats by remember { mutableIntStateOf(0) }
 
     val cuisines = restaurants.flatMap { it.cuisine }.distinct().sorted()
 
@@ -29,12 +29,12 @@ fun FilterMenu(
         val filteredList = restaurants.filter { restaurant ->
             restaurant.rating >= selectedRating &&
                     (selectedCuisine == null || restaurant.cuisine.contains(selectedCuisine)) &&
-                    (calculateFreeTablesText(restaurant.id, tables).toIntOrNull() ?: 0) >= minFreeTables
+                    (hasTableWithMinimumSeats(restaurant.id, tables, minFreeSeats))
         }
         onFilterResult(filteredList)
     }
 
-    LaunchedEffect(restaurants, selectedRating, selectedCuisine, minFreeTables) {
+    LaunchedEffect(restaurants, selectedRating, selectedCuisine, minFreeSeats) {
         applyFilters()
     }
 
@@ -63,9 +63,21 @@ fun FilterMenu(
                 cuisines = cuisines,
                 selectedCuisine = selectedCuisine,
                 onCuisineSelected = { selectedCuisine = it },
-                minFreeTables = minFreeTables,
-                onMinFreeTablesChanged = { minFreeTables = it }
+                minFreeSeats = minFreeSeats,
+                onMinFreeSeatsChanged = { minFreeSeats = it }
             )
         }
     }
+}
+
+private fun hasTableWithMinimumSeats(restaurantId: Long, tables: Map<Long, List<Section>>, minSeats: Int): Boolean {
+    val restaurantSections = tables[restaurantId] ?: return false
+    restaurantSections.forEach { section ->
+        section.tables.forEach { table ->
+            if (table.status == TableStatus.AVAILABLE && table.capacity >= minSeats) {
+                return true
+            }
+        }
+    }
+    return false
 }
