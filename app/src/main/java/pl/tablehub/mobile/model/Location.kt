@@ -1,15 +1,14 @@
 package pl.tablehub.mobile.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 @Parcelize
 data class Location(
-    @SerialName("lng")
+    @SerializedName("lng")
     val longitude: Double,
-    @SerialName("lat")
+
+    @SerializedName("lat")
     val latitude: Double
 ) : Parcelable

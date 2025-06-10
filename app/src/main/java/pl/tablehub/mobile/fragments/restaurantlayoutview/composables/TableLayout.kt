@@ -34,7 +34,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.Table
 import pl.tablehub.mobile.model.TableStatus
-import pl.tablehub.mobile.model.websocket.TableUpdateRequest
+import pl.tablehub.mobile.client.model.TableStatusChange
 import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
 import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
@@ -52,7 +52,7 @@ fun TableLayout(
     restaurantID: Long = -1,
     selectedSection: Section?,
     modifier: Modifier = Modifier,
-    onTableStatusChanged: ((TableUpdateRequest) -> Unit) = {_: TableUpdateRequest -> }
+    onTableStatusChanged: ((TableStatusChange) -> Unit) = { _: TableStatusChange -> }
 ) {
     var selectedTable by remember { mutableStateOf<Table?>(null) }
 
@@ -77,7 +77,7 @@ fun TableLayout(
                 onStatusChange = { newStatus ->
                     table.status = newStatus
                     onTableStatusChanged (
-                        TableUpdateRequest(
+                        TableStatusChange(
                             restaurantID,
                             selectedSection!!.id,
                             table.id,
@@ -97,8 +97,8 @@ private fun TableItem(
     onTableClick: (Table) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val xOffset = (table.position.x * POSITION_SCALE_FACTOR).dp
-    val yOffset = (table.position.y * POSITION_SCALE_FACTOR).dp
+    val xOffset = (table.positionX * POSITION_SCALE_FACTOR).dp
+    val yOffset = (table.positionY * POSITION_SCALE_FACTOR).dp
     val tableColor = getTableColor(table.status)
 
     Box(

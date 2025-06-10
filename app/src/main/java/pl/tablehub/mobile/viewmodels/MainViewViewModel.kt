@@ -1,7 +1,6 @@
 package pl.tablehub.mobile.viewmodels
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.ComponentName
 import android.content.Context
@@ -20,16 +19,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
-import pl.tablehub.mobile.model.Section
-import pl.tablehub.mobile.model.Table
-import pl.tablehub.mobile.model.TableStatus
-import pl.tablehub.mobile.model.websocket.RestaurantsRequest
-import pl.tablehub.mobile.model.websocket.TableUpdateRequest
+import pl.tablehub.mobile.client.model.TableStatusChange
 import pl.tablehub.mobile.repository.IRestaurantsRepository
-import pl.tablehub.mobile.services.implementation.TablesServiceImplementation
-import pl.tablehub.mobile.services.interfaces.TablesService
-import pl.tablehub.mobile.services.mock.MockTableService
+import pl.tablehub.mobile.services.TablesService
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -46,23 +38,20 @@ class MainViewViewModel @Inject constructor(
     private var tablesServiceRef: WeakReference<TablesService>? = null
     private var isServiceBound = false
     private val _serviceConnected = MutableStateFlow(false)
-    val serviceConnected: StateFlow<Boolean> = _serviceConnected
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as TablesServiceImplementation.LocalBinder
+            val binder = service as TablesService.LocalBinder
             val serviceInstance = binder.getService()
             tablesServiceRef = WeakReference(serviceInstance)
             isServiceBound = true
             _serviceConnected.value = true
-            Log.d("MainViewViewModel", "Service connected successfully")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
             tablesServiceRef = null
             isServiceBound = false
             _serviceConnected.value = false
-            Log.d("MainViewViewModel", "Service disconnected")
         }
     }
 
@@ -72,7 +61,7 @@ class MainViewViewModel @Inject constructor(
     }
 
     private fun bindService() {
-        val serviceIntent: Intent = Intent(application, TablesServiceImplementation::class.java)
+        val serviceIntent: Intent = Intent(application, TablesService::class.java)
         application.startService(serviceIntent)
         application.bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
     }
@@ -108,11 +97,11 @@ class MainViewViewModel @Inject constructor(
         }
     }
 
-    fun updateTableStatus(updates: TableUpdateRequest) {
+    fun updateTableStatus(update: TableStatusChange) {
         val tablesService = getService()
         if(isServiceBound && tablesService != null) {
             viewModelScope.launch {
-                tablesService.updateTableStatus(updates)
+                tablesService.updateTableStatus(update)
             }
         }
     }

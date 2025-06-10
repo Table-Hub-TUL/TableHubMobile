@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ import pl.tablehub.mobile.viewmodels.MainViewViewModel
 @AndroidEntryPoint
 class MainViewFragment : Fragment() {
 
-    private val viewModel: MainViewViewModel by viewModels()
+    private val viewModel: MainViewViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

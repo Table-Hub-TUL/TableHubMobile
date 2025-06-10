@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.client.IAuthService
-import pl.tablehub.mobile.client.RetrofitClient
+import pl.tablehub.mobile.client.rest.interfaces.IAuthService
+import pl.tablehub.mobile.client.rest.RetrofitClient
 import pl.tablehub.mobile.client.model.SignUpRequest
 import pl.tablehub.mobile.client.model.SignUpResponse
 import pl.tablehub.mobile.fragments.signup.composables.MainSignUpView

@@ -26,10 +26,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".services.implementation.TablesServiceImplementation"
-            android:exported="false"/>
-        <service
-            android:name=".services.mock.MockTableService"
+            android:name=".services.TablesService"
             android:exported="false"/>
     </application>
 

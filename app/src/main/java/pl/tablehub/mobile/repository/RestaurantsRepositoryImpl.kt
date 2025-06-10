@@ -6,11 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.mapNotNull
+import pl.tablehub.mobile.client.model.TableStatusChange
 import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.Section
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
-import pl.tablehub.mobile.model.websocket.RestaurantSubscriptionInitialState
-import pl.tablehub.mobile.model.websocket.TableStatusChange
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,7 +20,7 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
     override fun getRestaurantById(id: Long): Flow<Restaurant?> =
         _restaurantsMap.mapNotNull { it[id] }
 
-    override suspend fun processRestaurantList(dtos: List<RestaurantResponseDTO>) {
+    override suspend fun processRestaurantList(dtos: List<Restaurant>) {
         val currentMap = _restaurantsMap.value.toMutableMap()
         dtos.forEach { dto ->
             currentMap[dto.id] = Restaurant(
@@ -33,32 +30,10 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
                 location = dto.location,
                 cuisine = dto.cuisine,
                 rating = dto.rating,
-                sections = currentMap[dto.id]?.sections ?: emptyList()
+                sections = dto.sections
             )
         }
         _restaurantsMap.value = currentMap
-    }
-
-    override suspend fun addOrUpdateRestaurantFromDTO(dto: RestaurantResponseDTO, sections: List<Section>) {
-        val currentMap = _restaurantsMap.value.toMutableMap()
-        currentMap[dto.id] = Restaurant(
-            id = dto.id,
-            name = dto.name,
-            address = dto.address,
-            location = dto.location,
-            cuisine = dto.cuisine,
-            rating = dto.rating,
-            sections = sections
-        )
-        _restaurantsMap.value = currentMap
-    }
-
-    override suspend fun processInitialRestaurantData(restaurantId: Long, initialState: RestaurantSubscriptionInitialState) {
-        val currentMap = _restaurantsMap.value.toMutableMap()
-        currentMap[restaurantId]?.let { existingRestaurant ->
-            currentMap[restaurantId] = existingRestaurant.copy(sections = initialState.sections)
-            _restaurantsMap.value = currentMap
-        }
     }
 
     override suspend fun processTableStatusChange(tableStatusChange: TableStatusChange) {
@@ -68,7 +43,7 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
                 if (section.id == tableStatusChange.sectionId) {
                     section.copy(tables = section.tables.map { table ->
                         if (table.id == tableStatusChange.tableId) {
-                            table.copy(status = tableStatusChange.newStatus)
+                            table.copy(status = tableStatusChange.requestedStatus)
                         } else {
                             table
                         }

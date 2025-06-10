@@ -8,7 +8,8 @@ import kotlinx.serialization.Serializable
 @Parcelize
 data class Table(
     val id: Long,
-    val position: Position,
+    val positionX: Double,
+    val positionY: Double,
     val capacity: Int,
     var status: TableStatus
 ) : Parcelable

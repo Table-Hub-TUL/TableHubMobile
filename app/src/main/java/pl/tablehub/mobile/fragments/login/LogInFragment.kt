@@ -16,8 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.client.IAuthService
-import pl.tablehub.mobile.client.RetrofitClient
+import pl.tablehub.mobile.client.rest.interfaces.IAuthService
+import pl.tablehub.mobile.client.rest.RetrofitClient
 import pl.tablehub.mobile.client.model.LoginRequest
 import pl.tablehub.mobile.client.model.LoginResponse
 import pl.tablehub.mobile.datastore.EncryptedDataStore

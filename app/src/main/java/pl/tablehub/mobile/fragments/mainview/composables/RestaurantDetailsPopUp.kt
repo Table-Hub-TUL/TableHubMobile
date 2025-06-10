@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.ui.shared.composables.PopUpWrapper
@@ -111,7 +110,7 @@ fun RestaurantDetailsPopup(
                 fontWeight = FontWeight.Bold,
                 fontSize = 24
             )
-            PopUpText(text = restaurant.address)
+            PopUpText(text = restaurant.address.toString())
             PopUpText(text = "${stringResource(R.string.cuisines)}: ${restaurant.cuisine.joinToString()}")
             Row {
                 PopUpText(text = stringResource(R.string.rating))
