@@ -36,7 +36,7 @@ fun RestaurantLayoutMainView(
     onTableStatusChanged: ((TableStatusChange) -> Unit) = { _: TableStatusChange -> },
     restaurant: Restaurant
 ) {
-    var selectedSection by remember { mutableStateOf<Section?>(null) }
+    var selectedSection by remember { mutableStateOf(restaurant.sections.firstOrNull()) }
     Column(
         modifier = modifier
             .fillMaxSize()

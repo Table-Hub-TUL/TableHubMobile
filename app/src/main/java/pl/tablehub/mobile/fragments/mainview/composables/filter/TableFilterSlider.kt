@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import kotlin.math.roundToInt
 
 @Composable
 fun TableFilterSlider(
@@ -26,7 +27,7 @@ fun TableFilterSlider(
     )
     Slider(
         value = minFreeSeats.toFloat(),
-        onValueChange = { onMinFreeSeatsChanged(it.toInt()) },
+        onValueChange = { onMinFreeSeatsChanged(it.roundToInt()) },
         valueRange = 0f..7f,
         steps = 6,
         modifier = Modifier.padding(vertical = 8.dp),

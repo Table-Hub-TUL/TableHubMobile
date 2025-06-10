@@ -80,7 +80,7 @@ fun CuisineFilter(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = cuisine,
+                            text = cuisine.lowercase().replaceFirstChar { it.uppercaseChar() },
                             color = SECONDARY_COLOR,
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center

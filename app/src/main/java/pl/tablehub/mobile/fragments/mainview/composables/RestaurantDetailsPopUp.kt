@@ -110,8 +110,20 @@ fun RestaurantDetailsPopup(
                 fontWeight = FontWeight.Bold,
                 fontSize = 24
             )
-            PopUpText(text = restaurant.address.toString())
-            PopUpText(text = "${stringResource(R.string.cuisines)}: ${restaurant.cuisine.joinToString()}")
+            PopUpText(
+                text = buildString {
+                    append("${restaurant.address.street} ${restaurant.address.streetNumber}")
+                    restaurant.address.apartmentNumber?.let {
+                        append("/$it")
+                    }
+                    append(", ${restaurant.address.postalCode}, ${restaurant.address.city}, ${restaurant.address.country}")
+                }
+            )
+            PopUpText(
+                text = "${stringResource(R.string.cuisines)}: ${
+                    restaurant.cuisine.joinToString() { it.lowercase().replaceFirstChar { c -> c.uppercaseChar() } }
+                }"
+            )
             Row {
                 PopUpText(text = stringResource(R.string.rating))
                 RatingStars(restaurant.rating)

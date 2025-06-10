@@ -118,12 +118,18 @@ fun RestaurantItem(
                     fontSize = 16.sp
                 )
                 Text(
-                    text = restaurant.address.toString(),
+                    text = buildString {
+                        append("${restaurant.address.street} ${restaurant.address.streetNumber}")
+                        restaurant.address.apartmentNumber?.let {
+                            append("/$it")
+                        }
+                        append(", ${restaurant.address.postalCode}, ${restaurant.address.city}, ${restaurant.address.country}")
+                    },
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 14.sp
                 )
                 Text(
-                    text = restaurant.cuisine.joinToString(", "),
+                    text = restaurant.cuisine.joinToString(", "){ it.lowercase().replaceFirstChar { c -> c.uppercaseChar() } },
                     color = Color.White.copy(alpha = 0.6f),
                     fontSize = 12.sp
                 )
