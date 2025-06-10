@@ -14,7 +14,6 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.reportview.composables.MainReportView
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 
 @AndroidEntryPoint

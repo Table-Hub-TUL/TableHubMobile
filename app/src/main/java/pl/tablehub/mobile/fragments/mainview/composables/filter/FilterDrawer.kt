@@ -20,8 +20,8 @@ fun FilterDrawer(
     cuisines: List<String>,
     selectedCuisine: String?,
     onCuisineSelected: (String?) -> Unit,
-    minFreeTables: Int,
-    onMinFreeTablesChanged: (Int) -> Unit
+    minFreeSeats: Int,
+    onMinFreeSeatsChanged: (Int) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterEnd) {
         Box(
@@ -50,7 +50,7 @@ fun FilterDrawer(
 
                 Spacer(modifier = Modifier.height(VERTICAL_PADDING.dp * 2))
 
-                TableFilter(minFreeTables, onMinFreeTablesChanged)
+                TableFilterSlider(minFreeSeats, onMinFreeSeatsChanged)
             }
         }
     }

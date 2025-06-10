@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.krossbow.stomp.core.v930)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.hilt.common)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation(libs.krossbow.stomp.core)
     implementation(libs.androidx.datastore)
     implementation(libs.krossbow.websocket.builtin)

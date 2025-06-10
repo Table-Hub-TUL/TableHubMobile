@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.ui.shared.composables.PopUpWrapper
@@ -94,6 +93,7 @@ fun RestaurantDetailsPopup(
     restaurant: Restaurant,
     sections: List<Section>,
     onDismissRequest: () -> Unit,
+    onReportTable: (Restaurant) -> Unit,
     onMoreDetailsClick: (Restaurant) -> Unit
 ) {
     val availableTables by remember { mutableIntStateOf(sections.flatMap { it.tables }.count { it.status == TableStatus.AVAILABLE }) }
@@ -110,7 +110,7 @@ fun RestaurantDetailsPopup(
                 fontWeight = FontWeight.Bold,
                 fontSize = 24
             )
-            PopUpText(text = restaurant.address)
+            PopUpText(text = restaurant.address.toString())
             PopUpText(text = "${stringResource(R.string.cuisines)}: ${restaurant.cuisine.joinToString()}")
             Row {
                 PopUpText(text = stringResource(R.string.rating))
@@ -128,7 +128,7 @@ fun RestaurantDetailsPopup(
                 )
                 Spacer(modifier = Modifier.weight(0.25f))
                 PopUpButton(
-                    onClick = onDismissRequest,
+                    onClick = { onReportTable(restaurant) },
                     strRes = R.string.report_free_tables,
                     modifier = Modifier.weight(1f)
                 )

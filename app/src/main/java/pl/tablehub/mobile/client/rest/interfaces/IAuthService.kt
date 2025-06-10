@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.client
+package pl.tablehub.mobile.client.rest.interfaces
 
 import pl.tablehub.mobile.client.model.LoginRequest
 import pl.tablehub.mobile.client.model.LoginResponse

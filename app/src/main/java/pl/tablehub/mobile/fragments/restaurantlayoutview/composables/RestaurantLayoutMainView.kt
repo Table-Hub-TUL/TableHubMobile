@@ -15,16 +15,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.serialization.json.Json.Default.configuration
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.client.model.TableStatusChange
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
@@ -34,6 +33,7 @@ fun RestaurantLayoutMainView(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onFinishChanges: () -> Unit = {},
+    onTableStatusChanged: ((TableStatusChange) -> Unit) = { _: TableStatusChange -> },
     restaurant: Restaurant
 ) {
     var selectedSection by remember { mutableStateOf<Section?>(null) }
@@ -65,10 +65,12 @@ fun RestaurantLayoutMainView(
         )
 
         TableLayout(
+            restaurantID = restaurant.id,
             selectedSection = selectedSection,
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            onTableStatusChanged = onTableStatusChanged
         )
 
         Button(

@@ -27,7 +27,8 @@ import pl.tablehub.mobile.model.Restaurant
 fun MainMapView(
     restaurants: List<Restaurant>,
     userLocation: Location,
-    onReport: () -> Unit = {}
+    onReportGeneral: () -> Unit = {},
+    onReportSpecific: (Restaurant) -> Unit
 ) {
     val menuDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val filterDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -86,7 +87,7 @@ fun MainMapView(
                     )
                     Box(modifier = Modifier.weight(1f))
                     BottomButtons(
-                        onReportClick = onReport,
+                        onReportClick = onReportGeneral,
                         onLocationClick = {
                             scope.launch {
                                 locationTrigger.tryEmit(Unit)
@@ -99,6 +100,7 @@ fun MainMapView(
                         restaurant = restaurant,
                         onDismissRequest = { selectedRestaurant = null },
                         sections = tables[restaurant.id] ?: emptyList(),
+                        onReportTable = onReportSpecific,
                         onMoreDetailsClick = { _ -> Log.d("PLACEHOLDER", "PLACEHOLDER") })
                 }
             }

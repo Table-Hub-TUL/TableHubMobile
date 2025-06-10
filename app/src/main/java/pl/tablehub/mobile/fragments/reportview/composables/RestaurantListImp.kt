@@ -27,7 +27,6 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.websocket.RestaurantResponseDTO
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 
 @Composable
@@ -119,7 +118,7 @@ fun RestaurantItem(
                     fontSize = 16.sp
                 )
                 Text(
-                    text = restaurant.address,
+                    text = restaurant.address.toString(),
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 14.sp
                 )

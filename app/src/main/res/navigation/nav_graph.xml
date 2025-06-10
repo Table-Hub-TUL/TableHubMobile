@@ -25,6 +25,9 @@
         <argument
             android:name="JWT"
             app:argType="string" />
+        <action
+            android:id="@+id/action_mainViewFragment_to_restaurantLayoutFragment"
+            app:destination="@id/restaurantLayoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"
