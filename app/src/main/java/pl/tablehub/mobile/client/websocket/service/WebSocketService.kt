@@ -2,8 +2,6 @@ package pl.tablehub.mobile.client.websocket.service
 
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -40,7 +38,6 @@ class WebSocketService @Inject constructor(
                 val token = dataStore.getJWT().first()!!
                 val urlWithToken = "$SERVER_URL?token=$token"
                 val stompClient = StompClient(client)
-                Log.d("WEB_SOCKET", "CONNECTED")
                 stompSession = stompClient.connect(url = urlWithToken)
                 subscribeToUpdateTableStatus()
             } catch (e: Exception) {
@@ -52,15 +49,9 @@ class WebSocketService @Inject constructor(
     private fun subscribeToUpdateTableStatus() {
         serviceScope.launch {
             try {
-                Log.d(DEBUG_TAG, "Subscribing to $DEST_SUBSCRIBE_UPDATE_TABLE")
                 stompSession.subscribe(DEST_SUBSCRIBE_UPDATE_TABLE).collect { frame ->
                     val body = frame.bodyAsText
-                    Log.d(DEBUG_TAG, "Received table update: $body")
-                    try {
-                        messageRelay.emitMessage(body)
-                    } catch (e: Exception) {
-                        Log.e(DEBUG_TAG, "Failed to parse table update message", e)
-                    }
+                    messageRelay.emitMessage(body)
                 }
             } catch (e: Exception) {
                 Log.e(DEBUG_TAG, "Table update subscription failed", e)
