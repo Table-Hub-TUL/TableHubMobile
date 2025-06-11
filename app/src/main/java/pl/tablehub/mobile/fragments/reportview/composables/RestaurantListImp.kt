@@ -118,13 +118,7 @@ fun RestaurantItem(
                     fontSize = 16.sp
                 )
                 Text(
-                    text = buildString {
-                        append("${restaurant.address.street} ${restaurant.address.streetNumber}")
-                        restaurant.address.apartmentNumber?.let {
-                            append("/$it")
-                        }
-                        append(", ${restaurant.address.postalCode}, ${restaurant.address.city}, ${restaurant.address.country}")
-                    },
+                    text = restaurant.address.toString(),
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 14.sp
                 )

@@ -23,4 +23,9 @@ data class Address(
     val postalCode: String,
 
     val country: String
-) : Parcelable
+) : Parcelable {
+    override fun toString(): String {
+        val apartmentPart = apartmentNumber?.let { "/$it" } ?: ""
+        return "$street $streetNumber$apartmentPart, $postalCode $city, $country"
+    }
+}
