@@ -123,7 +123,7 @@ fun RestaurantItem(
                     fontSize = 14.sp
                 )
                 Text(
-                    text = restaurant.cuisine.joinToString(", "),
+                    text = restaurant.cuisine.joinToString(", "){ it.lowercase().replaceFirstChar { c -> c.uppercaseChar() } },
                     color = Color.White.copy(alpha = 0.6f),
                     fontSize = 12.sp
                 )
