@@ -80,13 +80,13 @@ class LogInFragment : Fragment() {
                         }
                     }
                 } else {
-                    val errorBody = response.errorBody()?.string()
-                    Toast.makeText(context, "Login failed: ${errorBody ?: "Invalid credentials"}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "${requireContext().getString(R.string.login_failed)}: " +
+                            "${R.string.invalid_cred}", Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(context, "Login error: ${t.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, requireContext().getString(R.string.login_failed), Toast.LENGTH_LONG).show()
             }
         })
     }

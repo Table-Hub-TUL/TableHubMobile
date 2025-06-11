@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.os.IBinder
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -61,7 +60,7 @@ class MainViewViewModel @Inject constructor(
     }
 
     private fun bindService() {
-        val serviceIntent: Intent = Intent(application, TablesService::class.java)
+        val serviceIntent = Intent(application, TablesService::class.java)
         application.startService(serviceIntent)
         application.bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
     }

@@ -24,7 +24,7 @@ fun CuisineFilter(
     onCuisineSelected: (String?) -> Unit
 ) {
     var cuisineDropdownExpanded by remember { mutableStateOf(false) }
-    var buttonWidth by remember { mutableStateOf(0) }
+    var buttonWidth by remember { mutableIntStateOf(0) }
 
     Text(
         text = stringResource(R.string.cuisines),

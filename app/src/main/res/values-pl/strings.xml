@@ -49,4 +49,8 @@
     <string name="error_confirm_password_empty">Proszę potwierdzić hasło</string>
     <string name="error_passwords_dont_match">Hasła różnią się</string>
     <string name="finish_changes">Zakończ Zmiany</string>
+    <string name="login_failed">Logowanie nieudane</string>
+    <string name="invalid_cred">Nieprawidłowe dane logowania</string>
+    <string name="signup_ok">Rejestracje udana</string>
+    <string name="signup_fail">Rejestracja nieudana</string>
 </resources>

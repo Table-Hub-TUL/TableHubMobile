@@ -48,4 +48,8 @@
     <string name="error_confirm_password_empty">Please confirm your password</string>
     <string name="error_passwords_dont_match">Passwords do not match</string>
     <string name="finish_changes">Finish Changes</string>
+    <string name="login_failed">Login failed</string>
+    <string name="invalid_cred">Invalid credentials</string>
+    <string name="signup_ok">Signup successful</string>
+    <string name="signup_fail">Signup failed</string>
 </resources>

@@ -2,7 +2,6 @@ package pl.tablehub.mobile.client.rest.interfaces
 
 import pl.tablehub.mobile.client.model.TableStatusChange
 import pl.tablehub.mobile.model.Restaurant
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

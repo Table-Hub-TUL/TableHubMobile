@@ -12,13 +12,21 @@ android {
     namespace = "pl.tablehub.mobile"
     compileSdk = 35
 
+    val backendIp: String = project.findProperty("BACKEND_IP") as? String
+        ?: project.rootProject.file("local.properties").readLines()
+            .find { it.startsWith("BACKEND_IP=") }
+            ?.split("=")
+            ?.get(1)
+            ?.trim()
+        ?: throw GradleException("Backend IP not found")
+
     defaultConfig {
         applicationId = "pl.tablehub.mobile"
         minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        buildConfigField("String", "BACKEND_IP", "\"$backendIp\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -53,7 +62,7 @@ dependencies {
     implementation(libs.krossbow.stomp.core.v930)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.hilt.common)
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation(libs.logging.interceptor)
     implementation(libs.krossbow.stomp.core)
     implementation(libs.androidx.datastore)
     implementation(libs.krossbow.websocket.builtin)

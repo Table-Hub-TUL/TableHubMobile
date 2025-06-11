@@ -59,17 +59,16 @@ class SignUpFragment : Fragment() {
             authService.signupUser(signUpRequest).enqueue(object : Callback<SignUpResponse> {
                 override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(context, "Signup successful!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, requireContext().getString(R.string.signup_ok), Toast.LENGTH_SHORT).show()
                         navigateToLogin()
                     } else {
-                        val errorBody = response.errorBody()?.string()
-                        Toast.makeText(context, "Signup failed: ${errorBody ?: "Unknown error"}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, requireContext().getString(R.string.signup_fail), Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
-                    Log.d("ERORR", t.message!!)
-                    Toast.makeText(context, "Signup error: ${t.message}", Toast.LENGTH_LONG).show()
+                    Log.e("ERROR", t.message!!)
+                    Toast.makeText(context, requireContext().getString(R.string.signup_fail), Toast.LENGTH_LONG).show()
                 }
             })
         }

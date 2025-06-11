@@ -1,5 +1,7 @@
 package pl.tablehub.mobile.util
 
+import pl.tablehub.mobile.BuildConfig
+
 object Constants {
-    const val BACKEND_IP = "192.168.18.35:8080"
+    const val BACKEND_IP = BuildConfig.BACKEND_IP
 }

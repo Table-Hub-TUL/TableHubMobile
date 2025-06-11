@@ -68,7 +68,7 @@ class TablesService : Service() {
             try {
                 restaurantClientService.updateTableStatus(update)
             } catch (e: Exception) {
-                Log.d("GUNWO", e.message!!)
+                Log.d("ERROR", e.message!!)
             }
         }
     }
@@ -79,7 +79,7 @@ class TablesService : Service() {
                 val decodedMessage = Json.decodeFromString<TableStatusChange>(message)
                 repository.processTableStatusChange(decodedMessage)
             } catch (e: Exception) {
-                Log.e("EXCEPTION", e.message!!)
+                Log.e("ERROR", e.message!!)
             }
         }.launchIn(messageScope)
     }
