@@ -53,4 +53,5 @@
     <string name="invalid_cred">Nieprawidłowe dane logowania</string>
     <string name="signup_ok">Rejestracje udana</string>
     <string name="signup_fail">Rejestracja nieudana</string>
+    <string name="logout">Wyloguj</string>
 </resources>
