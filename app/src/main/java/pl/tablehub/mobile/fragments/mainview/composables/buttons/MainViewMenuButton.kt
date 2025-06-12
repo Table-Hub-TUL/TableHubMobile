@@ -39,8 +39,8 @@ fun MainViewMenuButton(
             .fillMaxWidth()
             .clip(RoundedCornerShape(CORNER_ROUND_SIZE.dp))
             .background(PRIMARY_COLOR)
-            .padding(vertical = 12.dp, horizontal = 8.dp)
-            .noRippleClickable(onClick = onClick),
+            .clickable{ onClick() }
+            .padding(vertical = 12.dp, horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
@@ -58,14 +58,5 @@ fun MainViewMenuButton(
             fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(start = 18.dp),
         )
-    }
-}
-
-fun Modifier.noRippleClickable(onClick: () -> Unit) = composed {
-    clickable(
-        indication = null,
-        interactionSource = remember { MutableInteractionSource() }
-    ) {
-        onClick()
     }
 }

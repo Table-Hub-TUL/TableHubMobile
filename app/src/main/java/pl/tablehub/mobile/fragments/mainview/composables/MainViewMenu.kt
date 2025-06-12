@@ -14,6 +14,9 @@ import kotlinx.coroutines.launch
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Arrangement
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuButton
 import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuReturnButton
@@ -25,6 +28,7 @@ fun MainViewMenu(
     onProfileClick: () -> Unit = {},
     onHistoryClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {},
     content: @Composable () -> Unit = {}
 ) {
     val scope = rememberCoroutineScope()
@@ -37,30 +41,42 @@ fun MainViewMenu(
                 Box(modifier = Modifier
                     .fillMaxSize()
                     .background(SECONDARY_COLOR)) {
-                    Column {
-                        MainViewMenuReturnButton(onReturnClick = {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        })
-                        Spacer(modifier = Modifier.height(8.dp))
-                        MainViewMenuButton(
-                            onClick = onProfileClick,
-                            imgName = R.drawable.profile,
-                            stringFromRes = R.string.profile
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        MainViewMenuButton(
-                            onClick = onHistoryClick,
-                            imgName = R.drawable.history,
-                            stringFromRes = R.string.history
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        MainViewMenuButton(
-                            onClick = onSettingsClick,
-                            imgName = R.drawable.settings,
-                            stringFromRes = R.string.settings
-                        )
+                    Column(
+                        modifier = Modifier.fillMaxHeight(),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            MainViewMenuReturnButton(onReturnClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            })
+                            Spacer(modifier = Modifier.height(8.dp))
+                            MainViewMenuButton(
+                                onClick = onProfileClick,
+                                imgName = R.drawable.profile,
+                                stringFromRes = R.string.profile
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            MainViewMenuButton(
+                                onClick = onHistoryClick,
+                                imgName = R.drawable.history,
+                                stringFromRes = R.string.history
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            MainViewMenuButton(
+                                onClick = onSettingsClick,
+                                imgName = R.drawable.settings,
+                                stringFromRes = R.string.settings
+                            )
+                        }
+                        Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                            MainViewMenuButton(
+                                onClick = onLogoutClick,
+                                imgName = R.drawable.marker,
+                                stringFromRes = R.string.logout
+                            )
+                        }
                     }
                 }
             }
