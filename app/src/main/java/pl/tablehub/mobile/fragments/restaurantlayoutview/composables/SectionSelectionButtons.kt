@@ -21,7 +21,7 @@ fun SectionSelectionButtons(
     restaurant: Restaurant,
     onSectionSelected: (Section) -> Unit
 ) {
-    var selectedSectionId by remember { mutableStateOf<Long?>(null) }
+    var selectedSectionId by remember { mutableStateOf<Long>(restaurant.sections?.firstOrNull()?.id ?: -1L) }
     val sections = restaurant.sections
 
     val configuration = LocalConfiguration.current
