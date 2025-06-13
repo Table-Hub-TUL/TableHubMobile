@@ -29,7 +29,8 @@ fun MainMapView(
     restaurants: List<Restaurant>,
     userLocation: Location,
     onReportGeneral: () -> Unit = {},
-    onReportSpecific: (Restaurant) -> Unit
+    onReportSpecific: (Restaurant) -> Unit,
+    menuOnClicks: Map<String, () -> Unit> = emptyMap()
 ) {
     val menuDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val filterDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -41,7 +42,13 @@ fun MainMapView(
     val tables = restaurants.associateBy( { it.id }, { it.sections })
     var firstLaunch by rememberSaveable { mutableStateOf(true) }
 
-    MainViewMenu(drawerState = menuDrawerState) {
+    MainViewMenu(
+        drawerState = menuDrawerState,
+        onProfileClick = menuOnClicks["PROFILE"] ?: {},
+        onHistoryClick = menuOnClicks["HISTORY"] ?: {},
+        onLogoutClick = menuOnClicks["LOGOUT"] ?: {},
+        onSettingsClick = menuOnClicks["SETTINGS"] ?: {}
+    ) {
         FilterMenu(
             drawerState = filterDrawerState,
             restaurants = restaurants,

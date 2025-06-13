@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_mainViewFragment_to_restaurantLayoutFragment"
             app:destination="@id/restaurantLayoutFragment" />
+        <action
+            android:id="@+id/action_mainViewFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"

@@ -70,6 +70,12 @@ class EncryptedDataStore @Inject constructor(
         return jwt?.let { isTokenValid(it) } ?: false
     }
 
+    suspend fun clearJWT() {
+        context.dataStore.edit { prefs ->
+            prefs.remove(JWT_TOKEN_KEY)
+        }
+    }
+
     private fun isTokenValid(token: String): Boolean {
         val exp = getExpirationFromJWT(token)
         return exp > (System.currentTimeMillis() / 1_000)
