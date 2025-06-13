@@ -49,12 +49,7 @@ class RestaurantLayoutFragment : Fragment() {
                             findNavController().popBackStack()
                         },
                         onFinishChanges = {
-                            lifecycleScope.launch {
-                                findNavController().navigate(
-                                    R.id.action_restaurantLayoutFragment_to_mainViewFragment,
-                                    bundleOf(Pair(NavArgs.JWT, encryptedDataStore.getJWT().first()!!))
-                                )
-                            }
+                            findNavController().popBackStack(R.id.mainViewFragment, false)
                         },
                         onTableStatusChanged = onTableStatusChanged,
                         restaurant = restaurant

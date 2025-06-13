@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.mapbox.geojson.Point
@@ -38,7 +39,7 @@ fun MainMapView(
     var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
     var visibleRestaurants by remember { mutableStateOf(restaurants) }
     val tables = restaurants.associateBy( { it.id }, { it.sections })
-
+    var firstLaunch by rememberSaveable { mutableStateOf(true) }
 
     MainViewMenu(drawerState = menuDrawerState) {
         FilterMenu(
@@ -47,9 +48,13 @@ fun MainMapView(
             tables = tables,
             onFilterResult = { filteredList -> visibleRestaurants = filteredList }
         ) {
+            val (lng, lat) = userLocation
             LaunchedEffect(userLocation) {
-                scope.launch {
-                    locationTrigger.emit(Unit)
+                if(firstLaunch && lng != 0.0 && lat != 0.0) {
+                    scope.launch {
+                        locationTrigger.emit(Unit)
+                        firstLaunch = false
+                    }
                 }
             }
 
