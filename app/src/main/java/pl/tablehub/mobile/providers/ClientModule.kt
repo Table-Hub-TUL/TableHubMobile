@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import org.hildan.krossbow.websocket.WebSocketClient
 import org.hildan.krossbow.websocket.okhttp.OkHttpWebSocketClient
 import java.time.Duration
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +19,10 @@ object ClientModule {
     fun provideWebSocketClient() : WebSocketClient {
         val okHttpClient = OkHttpClient.Builder()
             .callTimeout(Duration.ofMinutes(1))
-            .pingInterval(Duration.ofSeconds(90))
+            .pingInterval(Duration.ofSeconds(20))
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
         return OkHttpWebSocketClient(okHttpClient)
     }
