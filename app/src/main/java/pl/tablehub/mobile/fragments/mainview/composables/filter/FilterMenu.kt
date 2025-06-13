@@ -76,6 +76,8 @@ private fun hasTableWithMinimumSeats(restaurantId: Long, tables: Map<Long, List<
         section.tables.forEach { table ->
             if (table.status == TableStatus.AVAILABLE && table.capacity >= minSeats) {
                 return true
+            } else if (minSeats == 0) {
+                return true
             }
         }
     }
