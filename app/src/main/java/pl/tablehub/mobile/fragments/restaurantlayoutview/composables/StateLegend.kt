@@ -57,7 +57,7 @@ fun LegendItem(status: String, color: Color) {
         Text(
             text = status,
             color = TERTIARY_COLOR,
-            fontSize = 24.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Medium
         )
     }

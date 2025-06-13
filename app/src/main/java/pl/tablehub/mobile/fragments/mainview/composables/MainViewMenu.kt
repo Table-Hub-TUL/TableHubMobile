@@ -26,7 +26,7 @@ import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 fun MainViewMenu(
     drawerState: DrawerState,
     onProfileClick: () -> Unit = {},
-    onHistoryClick: () -> Unit = {},
+    onGuideClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     content: @Composable () -> Unit = {}
@@ -59,9 +59,9 @@ fun MainViewMenu(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             MainViewMenuButton(
-                                onClick = onHistoryClick,
-                                imgName = R.drawable.history,
-                                stringFromRes = R.string.history
+                                onClick = onGuideClick,
+                                imgName = R.drawable.info,
+                                stringFromRes = R.string.user_guide
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             MainViewMenuButton(
@@ -73,7 +73,7 @@ fun MainViewMenu(
                         Column(modifier = Modifier.padding(bottom = 16.dp)) {
                             MainViewMenuButton(
                                 onClick = onLogoutClick,
-                                imgName = R.drawable.marker,
+                                imgName = R.drawable.logout,
                                 stringFromRes = R.string.logout
                             )
                         }

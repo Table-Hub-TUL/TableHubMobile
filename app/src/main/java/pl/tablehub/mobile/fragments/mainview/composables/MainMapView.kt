@@ -45,7 +45,7 @@ fun MainMapView(
     MainViewMenu(
         drawerState = menuDrawerState,
         onProfileClick = menuOnClicks["PROFILE"] ?: {},
-        onHistoryClick = menuOnClicks["HISTORY"] ?: {},
+        onGuideClick = menuOnClicks["GUIDE"] ?: {},
         onLogoutClick = menuOnClicks["LOGOUT"] ?: {},
         onSettingsClick = menuOnClicks["SETTINGS"] ?: {}
     ) {
