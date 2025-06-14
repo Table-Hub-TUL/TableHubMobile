@@ -53,4 +53,5 @@
     <string name="invalid_cred">Invalid credentials</string>
     <string name="signup_ok">Signup successful</string>
     <string name="signup_fail">Signup failed</string>
+    <string name="user_guide">User Guide</string>
 </resources>
