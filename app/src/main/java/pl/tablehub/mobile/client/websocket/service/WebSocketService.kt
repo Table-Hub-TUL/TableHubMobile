@@ -20,7 +20,7 @@ class WebSocketService @Inject constructor(
 ) {
 
     companion object ServiceContract {
-        private const val SERVER_URL: String = "ws://${BACKEND_IP}/ws"
+        private const val SERVER_URL: String = "wss://${BACKEND_IP}/ws"
         private const val DEBUG_TAG: String = "WEB_SOCKET"
         private const val DEST_SUBSCRIBE_UPDATE_TABLE = "/topic/table-updates"
     }

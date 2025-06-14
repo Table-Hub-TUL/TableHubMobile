@@ -3,16 +3,13 @@ package pl.tablehub.mobile.fragments.mainview
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
@@ -26,7 +23,6 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.mainview.composables.MainMapView
-import pl.tablehub.mobile.fragments.mainview.composables.MainViewMenu
 import pl.tablehub.mobile.fragments.mainview.composables.snackbar.PermissionSnackbar
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
@@ -57,6 +53,9 @@ class MainViewFragment : Fragment() {
                     encryptedDataStore.clearJWT()
                     findNavController().navigate(R.id.action_mainViewFragment_to_logInFragment)
                 }
+            },
+            "SETTINGS" to {
+                Toast.makeText(requireContext(), getString(R.string.app_in_dev), Toast.LENGTH_LONG).show()
             }
         )
 

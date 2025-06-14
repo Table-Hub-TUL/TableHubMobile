@@ -19,12 +19,12 @@
     <string name="back">Powrót</string>
     <string name="search">Szukaj</string>
     <string name="rating">Opinie</string>
-    <string name="cuisines">kuchnie</string>
+    <string name="cuisines">Rodzaje Kuchni w restauracji</string>
     <string name="available_tables">Wolne stoliki</string>
     <string name="more_details">Więcej szczegółów</string>
     <string name="any">Wszystkie</string>
-    <string name="minimum_free_seats">Minimalne wolne miejsca</string>
-    <string name="minimum_rating">Minimalna ocena</string>
+    <string name="minimum_free_seats">Min. ilość wolnych miejsc przy stoliku</string>
+    <string name="minimum_rating">Minimalna ocena restauracji</string>
     <string name="location_denied">Odmówiłe/aś dostępu do lokalizacji. Jeśli zmienisz zdanie udaj się do ustawień aplikacji</string>
     <string name="change_table_states">Zmień Stany Stolików</string>
     <string name="cancel">Anuluj</string>
@@ -55,4 +55,5 @@
     <string name="signup_fail">Rejestracja nieudana</string>
     <string name="logout">Wyloguj</string>
     <string name="user_guide">Przewodnik Użytkownika</string>
+    <string name="app_in_dev">Nie zaimplemtowane</string>
 </resources>
