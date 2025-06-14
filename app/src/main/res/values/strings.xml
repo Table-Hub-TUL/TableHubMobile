@@ -23,8 +23,8 @@
     <string name="available_tables">Available tables</string>
     <string name="more_details">More details</string>
     <string name="any">Any</string>
-    <string name="minimum_free_seats">Minimum free seats</string>
-    <string name="minimum_rating">Minimum rating</string>
+    <string name="minimum_free_seats">Min. number of free seats at the table</string>
+    <string name="minimum_rating">Minimum restaurant\'s rating</string>
     <string name="location_denied">You denied permission to use your location. If you change your mind please go to app settings</string>
     <string name="change_table_states">Change Table States</string>
     <string name="cancel">Cancel</string>
@@ -54,4 +54,5 @@
     <string name="signup_ok">Signup successful</string>
     <string name="signup_fail">Signup failed</string>
     <string name="user_guide">User Guide</string>
+    <string name="app_in_dev">Not ready yet, app in dev</string>
 </resources>
