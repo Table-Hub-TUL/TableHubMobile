@@ -56,21 +56,19 @@ class SignUpFragment : Fragment() {
     private fun handleSignUp(username: String, email: String, password: String, nickname: String) {
         val signUpRequest = SignUpRequest(username = username, email = email, password = password, nickname = nickname)
         lifecycleScope.launch {
-            authService.signupUser(signUpRequest).enqueue(object : Callback<SignUpResponse> {
-                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(context, requireContext().getString(R.string.signup_ok), Toast.LENGTH_SHORT).show()
-                        navigateToLogin()
-                    } else {
-                        Toast.makeText(context, requireContext().getString(R.string.signup_fail), Toast.LENGTH_LONG).show()
-                    }
+            try {
+                val response = authService.signupUser(signUpRequest)
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.signup_ok), Toast.LENGTH_SHORT).show()
+                    navigateToLogin()
+                } else {
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.signup_fail), Toast.LENGTH_LONG).show()
                 }
-
-                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
-                    Log.e("ERROR", t.message!!)
-                    Toast.makeText(context, requireContext().getString(R.string.signup_fail), Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                if (isAdded) {
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.signup_fail), Toast.LENGTH_LONG).show()
                 }
-            })
+            }
         }
     }
 

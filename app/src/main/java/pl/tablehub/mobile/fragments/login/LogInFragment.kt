@@ -61,15 +61,20 @@ class LogInFragment : Fragment() {
 
     private fun handleLogin(username: String, password: String) {
         val loginRequest = LoginRequest(username = username, password = password)
-        authService.loginUser(loginRequest)?.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
+        lifecycleScope.launch {
+            try {
+                val response = authService.loginUser(loginRequest)
+
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
-                        lifecycleScope.launch {
-                            encryptedPreferences.storeJWT(loginResponse.token)
+                        encryptedPreferences.storeJWT(loginResponse.token)
+                        val storedToken = encryptedPreferences.getJWT().first()
+
+                        if (storedToken != null) {
                             findNavController().navigate(
                                 R.id.mainViewFragment,
-                                bundleOf(Pair(NavArgs.JWT, encryptedPreferences.getJWT().first()!!)),
+                                bundleOf(Pair(NavArgs.JWT, storedToken)),
                                 navOptions {
                                     popUpTo(R.id.logInFragment) {
                                         inclusive = true
@@ -80,14 +85,14 @@ class LogInFragment : Fragment() {
                         }
                     }
                 } else {
-                    Toast.makeText(context, "${requireContext().getString(R.string.login_failed)}: " +
-                            "${R.string.invalid_cred}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "${requireContext().getString(R.string.login_failed)}: ${requireContext().getString(R.string.invalid_cred)}",
+                        Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                if (isAdded) {
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.login_failed), Toast.LENGTH_LONG).show()
                 }
             }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(context, requireContext().getString(R.string.login_failed), Toast.LENGTH_LONG).show()
-            }
-        })
+        }
     }
 }
