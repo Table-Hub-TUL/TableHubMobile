@@ -7,7 +7,7 @@ import pl.tablehub.mobile.R
 
 data class ValidationResult(
     val isValid: Boolean,
-    val errorMessage: String? = null
+    val errorMessage: Int? = null
 )
 
 data class SignUpValidationState(
@@ -21,38 +21,35 @@ data class SignUpValidationState(
 }
 
 object SignUpValidator {
-    private fun getStr(id: Int, context: Context): String {
-        return context.getString(id)
-    }
-    private fun validateUsername(username: String, context: Context): ValidationResult {
+    private fun validateUsername(username: String): ValidationResult {
         return when {
-            username.isBlank() -> ValidationResult(false, getStr(R.string.error_password_empty, context))
-            username.length < 3 -> ValidationResult(false, getStr(R.string.error_username_too_short, context))
-            username.length > 20 -> ValidationResult(false, getStr(R.string.error_username_too_long, context))
-            !username.matches(Regex("^[a-zA-Z0-9_]+$")) -> ValidationResult(false, getStr(R.string.error_username_invalid_characters, context))
+            username.isBlank() -> ValidationResult(false, R.string.error_password_empty)
+            username.length < 3 -> ValidationResult(false, R.string.error_username_too_short)
+            username.length > 20 -> ValidationResult(false, R.string.error_username_too_long)
+            !username.matches(Regex("^[a-zA-Z0-9_]+$")) -> ValidationResult(false, R.string.error_username_invalid_characters)
             else -> ValidationResult(true)
         }
     }
 
-    private fun validateEmail(email: String, context: Context): ValidationResult {
+    private fun validateEmail(email: String): ValidationResult {
         return when {
-            email.isBlank() -> ValidationResult(false, getStr(R.string.error_email_empty, context))
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> ValidationResult(false, getStr(R.string.error_email_invalid, context))
+            email.isBlank() -> ValidationResult(false, R.string.error_email_empty)
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> ValidationResult(false, R.string.error_email_invalid)
             else -> ValidationResult(true)
         }
     }
 
-    private fun validatePassword(password: String, context: Context): ValidationResult {
+    private fun validatePassword(password: String): ValidationResult {
         return when {
-            password.isBlank() -> ValidationResult(false, getStr(R.string.error_password_empty, context))
+            password.isBlank() -> ValidationResult(false, R.string.error_password_empty)
             else -> ValidationResult(true)
         }
     }
 
-    private fun validateConfirmPassword(password: String, confirmPassword: String, context: Context): ValidationResult {
+    private fun validateConfirmPassword(password: String, confirmPassword: String): ValidationResult {
         return when {
-            confirmPassword.isBlank() -> ValidationResult(false, getStr(R.string.error_confirm_password_empty, context))
-            password != confirmPassword -> ValidationResult(false, getStr(R.string.error_passwords_dont_match, context))
+            confirmPassword.isBlank() -> ValidationResult(false, R.string.error_confirm_password_empty)
+            password != confirmPassword -> ValidationResult(false, R.string.error_passwords_dont_match)
             else -> ValidationResult(true)
         }
     }
@@ -61,13 +58,13 @@ object SignUpValidator {
         username: String,
         email: String,
         password: String,
-        confirmPassword: String, context: Context
+        confirmPassword: String
     ): SignUpValidationState {
         return SignUpValidationState(
-            username = validateUsername(username, context),
-            email = validateEmail(email, context),
-            password = validatePassword(password, context),
-            confirmPassword = validateConfirmPassword(password, confirmPassword, context)
+            username = validateUsername(username),
+            email = validateEmail(email),
+            password = validatePassword(password),
+            confirmPassword = validateConfirmPassword(password, confirmPassword)
         )
     }
 }

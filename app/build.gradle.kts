@@ -20,9 +20,14 @@ android {
             ?.trim()
         ?: throw GradleException("Backend IP not found")
 
+    lint {
+        disable.add("NullSafeMutableLiveData")
+    }
+
     defaultConfig {
         applicationId = "pl.tablehub.mobile"
-        minSdk = 33
+        minSdk = 30
+        //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

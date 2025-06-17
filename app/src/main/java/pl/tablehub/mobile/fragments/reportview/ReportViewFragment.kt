@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.fragments.reportview
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,10 +27,22 @@ class ReportViewFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val restaurants: List<Restaurant> =
-                    (arguments?.getParcelableArray(NavArgs.RESTAURANTS, Restaurant::class.java)?.map { it as Restaurant }
-                        ?: emptyList())
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        requireArguments().getParcelableArray(NavArgs.RESTAURANTS, Restaurant::class.java)
+                            ?.map { it as Restaurant } ?: emptyList()
+                    } else {
+                        @Suppress("DEPRECATION")
+                        requireArguments().getParcelableArray(NavArgs.RESTAURANTS)
+                            ?.map { it as Restaurant } ?: emptyList()
+                    }
+
                 val userLocation: Location =
-                    arguments?.getParcelable(NavArgs.USER_LOCATION, Location::class.java)!!
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        requireArguments().getParcelable(NavArgs.USER_LOCATION, Location::class.java)!!
+                    } else {
+                        @Suppress("DEPRECATION")
+                        requireArguments().getParcelable(NavArgs.USER_LOCATION)!!
+                    }
                 MainReportView (
                     onBack = {
                         findNavController().navigate(R.id.action_reportViewFragment_to_mainViewFragment2)

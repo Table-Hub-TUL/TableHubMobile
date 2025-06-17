@@ -28,7 +28,7 @@ fun SignUpInput(
     strRes: Int,
     keyboardType: KeyboardType,
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: Int? = null
 ) {
     var value by remember { mutableStateOf("") }
 
@@ -64,7 +64,7 @@ fun SignUpInput(
         supportingText = if (isError && errorMessage != null) {
             {
                 Text(
-                    text = errorMessage,
+                    text = stringResource(errorMessage),
                     color = androidx.compose.ui.graphics.Color.Red,
                     fontSize = 12.sp
                 )
@@ -77,7 +77,7 @@ fun SignUpInput(
 fun UsernameInput(
     onValueChange: (String) -> Unit = {},
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: Int? = null
 ) {
     SignUpInput(
         onValueChange = onValueChange,
@@ -92,7 +92,7 @@ fun UsernameInput(
 fun EmailSignUpInput(
     onValueChange: (String) -> Unit = {},
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: Int? = null
 ) {
     SignUpInput(
         onValueChange = onValueChange,
@@ -107,7 +107,7 @@ fun EmailSignUpInput(
 fun PasswordSignUpInput(
     onValueChange: (String) -> Unit = {},
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: Int? = null
 ) {
     SignUpInput(
         onValueChange = onValueChange,
@@ -122,7 +122,7 @@ fun PasswordSignUpInput(
 fun ConfirmPasswordInput(
     onValueChange: (String) -> Unit = {},
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: Int? = null
 ) {
     SignUpInput(
         onValueChange = onValueChange,

@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.fragments.restaurantlayoutview
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,10 +38,12 @@ class RestaurantLayoutFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                val restaurant = requireArguments().getParcelable(
-                    NavArgs.SELECTED_RESTAURANT,
-                    Restaurant::class.java
-                )
+                val restaurant: Restaurant? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    requireArguments().getParcelable(NavArgs.SELECTED_RESTAURANT, Restaurant::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
+                    requireArguments().getParcelable(NavArgs.SELECTED_RESTAURANT)
+                }
                 val onTableStatusChanged = {update: TableStatusChange -> viewModel.updateTableStatus(update)}
 
                 if (restaurant != null) {

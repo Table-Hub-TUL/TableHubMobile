@@ -36,11 +36,10 @@ fun MainSignUpView(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
     val validationState by remember {
         derivedStateOf {
-            SignUpValidator.validateSignUpForm(username, email, password, confirmPassword, context)
+            SignUpValidator.validateSignUpForm(username, email, password, confirmPassword)
         }
     }
 
