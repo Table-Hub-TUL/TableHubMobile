@@ -22,10 +22,12 @@ data class SignUpValidationState(
 
 object SignUpValidator {
     private fun validateUsername(username: String): ValidationResult {
+        val minNameLen = 3
+        val maxNameLen = 20
         return when {
             username.isBlank() -> ValidationResult(false, R.string.error_password_empty)
-            username.length < 3 -> ValidationResult(false, R.string.error_username_too_short)
-            username.length > 20 -> ValidationResult(false, R.string.error_username_too_long)
+            username.length < minNameLen -> ValidationResult(false, R.string.error_username_too_short)
+            username.length > maxNameLen -> ValidationResult(false, R.string.error_username_too_long)
             !username.matches(Regex("^[a-zA-Z0-9_]+$")) -> ValidationResult(false, R.string.error_username_invalid_characters)
             else -> ValidationResult(true)
         }
@@ -40,8 +42,10 @@ object SignUpValidator {
     }
 
     private fun validatePassword(password: String): ValidationResult {
+        val minPasswordLength = 6
         return when {
             password.isBlank() -> ValidationResult(false, R.string.error_password_empty)
+            password.length < minPasswordLength -> ValidationResult(false, R.string.error_password_too_short)
             else -> ValidationResult(true)
         }
     }

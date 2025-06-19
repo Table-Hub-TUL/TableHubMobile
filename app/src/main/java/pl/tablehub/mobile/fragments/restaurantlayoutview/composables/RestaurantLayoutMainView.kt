@@ -24,6 +24,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.client.model.TableStatusChange
+import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
@@ -54,6 +55,8 @@ fun RestaurantLayoutMainView(
             textAlign = TextAlign.Center,
             color = TERTIARY_COLOR
         )
+
+        TableLegendItem(4, GREEN_FREE_COLOR, stringResource(R.string.table_number_eq_seats))
 
         StateLegend()
 

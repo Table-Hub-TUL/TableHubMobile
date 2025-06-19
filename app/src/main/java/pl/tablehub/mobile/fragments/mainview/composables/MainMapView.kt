@@ -30,6 +30,7 @@ fun MainMapView(
     userLocation: Location,
     onReportGeneral: () -> Unit = {},
     onReportSpecific: (Restaurant) -> Unit,
+    onMoreDetails: (Restaurant) -> Unit,
     menuOnClicks: Map<String, () -> Unit> = emptyMap()
 ) {
     val menuDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -111,7 +112,7 @@ fun MainMapView(
                         onDismissRequest = { selectedRestaurant = null },
                         sections = tables[restaurant.id] ?: emptyList(),
                         onReportTable = onReportSpecific,
-                        onMoreDetailsClick = { _ -> Log.d("PLACEHOLDER", "PLACEHOLDER") })
+                        onMoreDetailsClick = onMoreDetails)
                 }
             }
         }

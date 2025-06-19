@@ -55,4 +55,6 @@
     <string name="signup_fail">Signup failed</string>
     <string name="user_guide">User Guide</string>
     <string name="app_in_dev">Not ready yet, app in dev</string>
+    <string name="error_password_too_short">Password must be at least 6 characters long</string>
+    <string name="table_number_eq_seats">The number shows the number of seats</string>
 </resources>

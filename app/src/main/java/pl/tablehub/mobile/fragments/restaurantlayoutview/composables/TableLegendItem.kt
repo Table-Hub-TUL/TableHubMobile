@@ -4,32 +4,28 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import pl.tablehub.mobile.R
-import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
-import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 
 @Composable
-fun StateLegend() {
+fun TableLegendItem(
+    capacity: Int,
+    color: Color,
+    description: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,30 +33,31 @@ fun StateLegend() {
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        LegendItem(status = stringResource(R.string.unknown), color = Color.Gray)
+        Box(
+            modifier = Modifier.size((TABLE_SIZE_DP).dp)
+        ) {
+            IconButton(
+                onClick = {},
+                modifier = Modifier
+                    .size((TABLE_SIZE_DP).dp)
+                    .background(
+                        color = color,
+                        shape = RoundedCornerShape(90.dp)
+                    )
+                    .padding(10.dp),
+                enabled = false
+            ) {}
 
-        LegendItem(status = stringResource(R.string.occupied), color = Color.Red)
-
-        LegendItem(status = stringResource(R.string.free), color = GREEN_FREE_COLOR)
-    }
-}
-
-@Composable
-fun LegendItem(status: String, color: Color) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        Spacer(
-            modifier = Modifier
-                .width(24.dp)
-                .height(24.dp)
-                .clip(RoundedCornerShape(2.dp))
-                .background(color)
-        )
+            Text(
+                text = capacity.toString(),
+                modifier = Modifier.align(Alignment.Center),
+                color = SECONDARY_COLOR,
+                fontSize = TABLE_CAPACITY_TEXT_SIZE_SP.sp
+            )
+        }
 
         Text(
-            text = status,
+            text = description,
             color = TERTIARY_COLOR,
             fontSize = 18.sp,
             fontWeight = FontWeight.Medium
