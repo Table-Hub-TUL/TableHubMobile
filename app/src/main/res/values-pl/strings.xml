@@ -56,4 +56,6 @@
     <string name="logout">Wyloguj</string>
     <string name="user_guide">Przewodnik Użytkownika</string>
     <string name="app_in_dev">Nie zaimplemtowane</string>
+    <string name="error_password_too_short">Hasło musi mieć przynajmniej 6 znaków</string>
+    <string name="table_number_eq_seats">Liczba wskazuje na ilość krzeseł</string>
 </resources>

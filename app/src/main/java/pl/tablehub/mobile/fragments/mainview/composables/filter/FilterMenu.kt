@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
 import pl.tablehub.mobile.model.TableStatus
@@ -18,6 +19,7 @@ fun FilterMenu(
     content: @Composable () -> Unit
 ) {
     val isOpen = drawerState.isOpen
+    val scope = rememberCoroutineScope()
 
     var selectedRating by remember { mutableDoubleStateOf(0.0) }
     var selectedCuisine by remember { mutableStateOf<String?>(null) }
@@ -47,15 +49,18 @@ fun FilterMenu(
     Box(modifier = Modifier.fillMaxSize()) {
         content()
 
-        if (isOpen) {
-            FilterOverlay()
-        }
-
         AnimatedVisibility(
             visible = isOpen,
             enter = FilterAnimations.enterTransition(),
             exit = FilterAnimations.exitTransition()
         ) {
+            if (isOpen) {
+                FilterOverlay {
+                    scope.launch {
+                        drawerState.close()
+                    }
+                }
+            }
             FilterDrawer(
                 drawerState = drawerState,
                 selectedRating = selectedRating,

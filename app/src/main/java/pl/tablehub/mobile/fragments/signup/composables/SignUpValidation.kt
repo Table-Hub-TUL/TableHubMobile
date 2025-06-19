@@ -42,6 +42,7 @@ object SignUpValidator {
     private fun validatePassword(password: String): ValidationResult {
         return when {
             password.isBlank() -> ValidationResult(false, R.string.error_password_empty)
+            password.length < 6 -> ValidationResult(false, R.string.error_password_too_short)
             else -> ValidationResult(true)
         }
     }

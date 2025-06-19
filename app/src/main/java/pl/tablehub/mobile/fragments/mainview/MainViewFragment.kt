@@ -1,7 +1,9 @@
 package pl.tablehub.mobile.fragments.mainview
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +49,13 @@ class MainViewFragment : Fragment() {
                 bundleOf(Pair(NavArgs.SELECTED_RESTAURANT, restaurant)))
         }
 
+        val onMoreDetails: (Restaurant) -> Unit = { restaurant ->
+            val searchQuery = Uri.encode(restaurant.name)
+            val searchUrl = "https://www.google.com/search?q=$searchQuery"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl))
+            context?.startActivity(intent)
+        }
+
         val menuOnClicks: Map<String, () -> Unit> = mapOf(
             "LOGOUT" to {
                 lifecycleScope.launch {
@@ -73,6 +82,7 @@ class MainViewFragment : Fragment() {
                             Pair(NavArgs.USER_LOCATION, userLocation)
                     ))},
                     onReportSpecific = onReportSpecific,
+                    onMoreDetails = onMoreDetails,
                     menuOnClicks = menuOnClicks
                 )
             }

@@ -42,8 +42,8 @@ import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 
 private const val POSITION_SCALE_FACTOR = 10
-private const val TABLE_SIZE_DP = 32
-private const val TABLE_CAPACITY_TEXT_SIZE_SP = 24
+const val TABLE_SIZE_DP = 32
+const val TABLE_CAPACITY_TEXT_SIZE_SP = 24
 private const val BUTTON_HEIGHT_DP = 48
 private const val BUTTON_TEXT_SIZE_SP = 16
 
@@ -111,7 +111,7 @@ private fun TableItem(
             modifier = Modifier
                 .background(
                     color = tableColor,
-                    shape = RoundedCornerShape(CORNER_ROUND_SIZE.dp)
+                    shape = RoundedCornerShape(90.dp)
                 )
         ) {}
 
