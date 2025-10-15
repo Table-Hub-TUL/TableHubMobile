@@ -31,7 +31,10 @@ data class GlobalDimensions(
     val buttonCornerRadius: Dp,
     val textFieldCornerRadius: Dp,
     val tableTextSize: TextUnit,
-    val verticalButtonPadding: Dp
+    val paddingSmall: Dp,
+    val paddingMedium: Dp,
+    val paddingLarge: Dp,
+    val paddingHuge: Dp,
 )
 
 // the values for sizes are for a approximately typical screen(width = 400, height = 800)
@@ -55,10 +58,11 @@ fun rememberGlobalDimensions(): GlobalDimensions {
         val textSizeLarge = (screenWidth * 0.06f).sp // ~24sp
         val textSizeHuge = (screenWidth * 0.12f).sp // ~48sp
 
-        // Button dimensions
+        // UI elements dimensions
         val buttonHeight = (screenHeight * 0.07f).coerceIn(48f, 64f).dp //56dp
         val buttonCornerRadius = (screenWidth * 0.03f).coerceIn(8f, 16f).dp //12dp
         val textFieldCornerRadius = (screenWidth * 0.03f).coerceIn(8f, 16f).dp
+        val iconSize = (screenWidth * 0.09f).coerceIn(34f, 38f).dp // 36.dp
 
         // Text sizes for UI elements
         val logoSize = (screenWidth * 0.5f).coerceIn(160f, 240f) //200dp
@@ -66,7 +70,10 @@ fun rememberGlobalDimensions(): GlobalDimensions {
 
         // Padding for UI elements
         val horizontalPadding = (screenWidth * 0.06f).coerceIn(22f, 26f).dp // 24dp
-        val verticalButtonPadding = (screenHeight * 0.01f).coerceIn(6f, 12f).dp //8dp
+        val paddingSmall = (screenWidth * 0.02f).coerceIn(8f, 12f).dp // 8dp
+        val paddingMedium = (screenWidth * 0.025f).coerceIn(8f, 12f).dp // 10dp
+        val paddingLarge = (screenWidth * 0.03f).coerceIn(8f, 12f).dp // 12dp
+        val paddingHuge = (screenWidth * 0.045f).coerceIn(8f, 12f).dp // 18dp
 
         GlobalDimensions(
             horizontalPadding = horizontalPadding,
@@ -82,8 +89,11 @@ fun rememberGlobalDimensions(): GlobalDimensions {
             buttonHeight = buttonHeight,
             buttonCornerRadius = buttonCornerRadius,
             textFieldCornerRadius = textFieldCornerRadius,
-            tableTextSize =tableTextSize,
-            verticalButtonPadding = verticalButtonPadding
+            tableTextSize = tableTextSize,
+            paddingSmall = paddingSmall,
+            paddingMedium = paddingMedium,
+            paddingLarge = paddingLarge,
+            paddingHuge = paddingHuge
         )
     }
 }

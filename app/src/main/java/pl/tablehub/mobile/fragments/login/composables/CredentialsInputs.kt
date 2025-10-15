@@ -151,7 +151,7 @@ fun ForgotPasswordButton(
     TextButton(
         onClick = onClick,
         modifier = modifier
-            .padding(vertical = dims.verticalButtonPadding)
+            .padding(vertical = dims.paddingSmall)
     ) {
         Text(
             text = stringResource(R.string.forgot_password),
