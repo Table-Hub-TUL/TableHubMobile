@@ -18,17 +18,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun LogInInput(
@@ -36,20 +34,25 @@ fun LogInInput(
     strRes: Int,
     keyboardType: KeyboardType
 ) {
+    val dims = rememberGlobalDimensions()
     var value by remember { mutableStateOf("")}
+
     OutlinedTextField(
         value = value,
         onValueChange = {
             value = it
             onValueChange(it)
         },
-        label = { Text(text = stringResource(strRes),
-            fontSize = 16.sp,
-            color = TERTIARY_COLOR
-        ) },
+        label = {
+            Text(
+                text = stringResource(strRes),
+                fontSize = dims.textSizeMedium,
+                color = TERTIARY_COLOR
+            )
+        },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(dims.textFieldCornerRadius),
         visualTransformation = if (keyboardType == KeyboardType.Password) {
             PasswordVisualTransformation()
         } else {
@@ -89,27 +92,27 @@ fun PasswordInput(
 fun MainButtonText(
     strRes: Int
 ) {
+    val dims = rememberGlobalDimensions()
+
     Text(
         text = stringResource(strRes),
-        fontSize = 16.sp,
+        fontSize = dims.buttonTextSize,
         fontWeight = FontWeight.Bold
     )
 }
-
-val MAIN_BUTTONS_MODIFIER: Modifier = Modifier
-    .fillMaxWidth()
-    .height(56.dp)
-
-val MAIN_BUTTONS_SHAPE: Shape = RoundedCornerShape(12.dp)
 
 @Composable
 fun LogInButton(
     onLogin: () -> Unit = {}
 ) {
+    val dims = rememberGlobalDimensions()
+
     Button(
         onClick = onLogin,
-        modifier = MAIN_BUTTONS_MODIFIER,
-        shape = MAIN_BUTTONS_SHAPE,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(dims.buttonHeight),
+        shape = RoundedCornerShape(dims.buttonCornerRadius),
         colors = ButtonDefaults.buttonColors(
             containerColor = PRIMARY_COLOR
         )
@@ -122,10 +125,14 @@ fun LogInButton(
 fun RegisterButton(
     onRegister: () -> Unit = {}
 ) {
+    val dims = rememberGlobalDimensions()
+
     OutlinedButton(
         onClick = { onRegister() },
-        modifier = MAIN_BUTTONS_MODIFIER,
-        shape = MAIN_BUTTONS_SHAPE,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(dims.buttonHeight),
+        shape = RoundedCornerShape(dims.buttonCornerRadius),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = TERTIARY_COLOR
         )
@@ -139,10 +146,12 @@ fun ForgotPasswordButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val dims = rememberGlobalDimensions()
+
     TextButton(
         onClick = onClick,
         modifier = modifier
-            .padding(vertical = 8.dp)
+            .padding(vertical = dims.verticalButtonPadding)
     ) {
         Text(
             text = stringResource(R.string.forgot_password),
@@ -153,18 +162,22 @@ fun ForgotPasswordButton(
 
 @Composable
 fun SignInText() {
+    val dims = rememberGlobalDimensions()
+
     Text(
         text = stringResource(R.string.sign_in_to_cont),
-        fontSize = 16.sp,
+        fontSize = dims.textSizeMedium,
         color = TERTIARY_COLOR.copy(alpha = 0.7f)
     )
 }
 
 @Composable
 fun WelcomeText() {
+    val dims = rememberGlobalDimensions()
+
     Text(
         text = stringResource(R.string.welcome_back),
-        fontSize = 24.sp,
+        fontSize = dims.textSizeLarge,
         fontWeight = FontWeight.Bold,
         color = TERTIARY_COLOR
     )
