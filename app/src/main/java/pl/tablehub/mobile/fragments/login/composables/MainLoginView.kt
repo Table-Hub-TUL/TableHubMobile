@@ -16,60 +16,51 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.ui.shared.composables.AppLogo
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TableHubTheme
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions // ✅ import your shared dimensions
 
 @Composable
 fun MainLoginView(
     modifier: Modifier = Modifier,
-    onLogin: (String, String) -> Unit = { _: String, _: String -> },
+    onLogin: (String, String) -> Unit = { _, _ -> },
     onRegister: () -> Unit = {},
     onForgotPassword: () -> Unit = {}
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp
-    val screenWidth = configuration.screenWidthDp
-
-    val horizontalPadding = (screenWidth * 0.06f).coerceAtLeast(16f).coerceAtMost(24f).dp
-    val logoSize = (screenWidth * 0.6f).coerceAtLeast(160f).coerceAtMost(240f)
-
-    val smallSpacing = (screenHeight * 0.01f).coerceAtLeast(8f).dp
-    val mediumSpacing = (screenHeight * 0.02f).coerceAtLeast(16f).dp
-    val largeSpacing = (screenHeight * 0.03f).coerceAtLeast(24f).dp
+    // ✅ Use your shared global dimensions
+    val dims = rememberGlobalDimensions()
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(SECONDARY_COLOR)
-            .padding(horizontal = horizontalPadding)
+            .padding(horizontal = dims.horizontalPadding)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(largeSpacing))
-        AppLogo(imgSize = logoSize.toInt())
-        Spacer(modifier = Modifier.height(mediumSpacing))
-        WelcomeText()
-        Spacer(modifier = Modifier.height(smallSpacing))
+        Spacer(modifier = Modifier.height(dims.largeSpacing))
+        AppLogo(imgSize = dims.logoSize.toInt())
+        Spacer(modifier = Modifier.height(dims.mediumSpacing))
+        WelcomeText() // optional use of shared text size
+        Spacer(modifier = Modifier.height(dims.smallSpacing))
         SignInText()
-        Spacer(modifier = Modifier.height(mediumSpacing))
-        UserNameInput(onValueChange = { newValue -> username = newValue })
-        Spacer(modifier = Modifier.height(mediumSpacing))
-        PasswordInput(onValueChange = { newValue -> password = newValue})
-        Spacer(modifier = Modifier.height(smallSpacing))
+        Spacer(modifier = Modifier.height(dims.mediumSpacing))
+        UserNameInput(onValueChange = { username = it })
+        Spacer(modifier = Modifier.height(dims.mediumSpacing))
+        PasswordInput(onValueChange = { password = it })
+        Spacer(modifier = Modifier.height(dims.smallSpacing))
         ForgotPasswordButton(onForgotPassword)
-        Spacer(modifier = Modifier.height(largeSpacing))
+        Spacer(modifier = Modifier.height(dims.largeSpacing))
         LogInButton { onLogin(username, password) }
-        Spacer(modifier = Modifier.height(mediumSpacing))
+        Spacer(modifier = Modifier.height(dims.mediumSpacing))
         RegisterButton(onRegister)
-        Spacer(modifier = Modifier.height(smallSpacing))
+        Spacer(modifier = Modifier.height(dims.smallSpacing))
     }
 }
 
