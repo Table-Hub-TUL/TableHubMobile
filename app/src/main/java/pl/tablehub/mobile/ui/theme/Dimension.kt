@@ -22,6 +22,7 @@ data class GlobalDimensions(
     val smallSpacing: Dp,
     val mediumSpacing: Dp,
     val largeSpacing: Dp,
+    val textSizeMinimal: TextUnit,
     val textSizeSmall: TextUnit,
     val textSizeMedium: TextUnit,
     val textSizeLarge: TextUnit,
@@ -29,7 +30,6 @@ data class GlobalDimensions(
     val buttonHeight: Dp,
     val buttonCornerRadius: Dp,
     val textFieldCornerRadius: Dp,
-    val buttonTextSize: TextUnit,
     val tableTextSize: TextUnit,
     val verticalButtonPadding: Dp
 )
@@ -49,6 +49,7 @@ fun rememberGlobalDimensions(): GlobalDimensions {
         val largeSpacing = (screenHeight * 0.03f).coerceAtLeast(24f).dp // 24dp
 
         // text sizes
+        val textSizeMinimal = (screenWidth * 0.035f).sp // 14dp
         val textSizeSmall = (screenWidth * 0.04f).sp // ~16sp
         val textSizeMedium = (screenWidth * 0.05f).sp // ~20sp
         val textSizeLarge = (screenWidth * 0.06f).sp // ~24sp
@@ -61,7 +62,6 @@ fun rememberGlobalDimensions(): GlobalDimensions {
 
         // Text sizes for UI elements
         val logoSize = (screenWidth * 0.5f).coerceIn(160f, 240f) //200dp
-        val buttonTextSize = (screenWidth * 0.05f).coerceIn(18f, 22f).sp // 20sp
         val tableTextSize = (screenWidth * 0.075f).coerceIn(28f, 32f).sp // 30sp
 
         // Padding for UI elements
@@ -74,6 +74,7 @@ fun rememberGlobalDimensions(): GlobalDimensions {
             smallSpacing = smallSpacing,
             mediumSpacing = mediumSpacing,
             largeSpacing = largeSpacing,
+            textSizeMinimal = textSizeMinimal,
             textSizeSmall = textSizeSmall,
             textSizeMedium = textSizeMedium,
             textSizeLarge = textSizeLarge,
@@ -81,7 +82,6 @@ fun rememberGlobalDimensions(): GlobalDimensions {
             buttonHeight = buttonHeight,
             buttonCornerRadius = buttonCornerRadius,
             textFieldCornerRadius = textFieldCornerRadius,
-            buttonTextSize = buttonTextSize,
             tableTextSize =tableTextSize,
             verticalButtonPadding = verticalButtonPadding
         )

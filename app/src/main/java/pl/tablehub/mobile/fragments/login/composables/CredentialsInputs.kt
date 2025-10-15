@@ -96,7 +96,7 @@ fun MainButtonText(
 
     Text(
         text = stringResource(strRes),
-        fontSize = dims.buttonTextSize,
+        fontSize = dims.textSizeLarge,
         fontWeight = FontWeight.Bold
     )
 }
