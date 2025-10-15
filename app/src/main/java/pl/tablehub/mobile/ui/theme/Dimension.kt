@@ -35,6 +35,8 @@ data class GlobalDimensions(
     val paddingMedium: Dp,
     val paddingLarge: Dp,
     val paddingHuge: Dp,
+    val menuIconSize: Dp,
+    val iconSize: Dp
 )
 
 // the values for sizes are for a approximately typical screen(width = 400, height = 800)
@@ -63,6 +65,7 @@ fun rememberGlobalDimensions(): GlobalDimensions {
         val buttonCornerRadius = (screenWidth * 0.03f).coerceIn(8f, 16f).dp //12dp
         val textFieldCornerRadius = (screenWidth * 0.03f).coerceIn(8f, 16f).dp
         val iconSize = (screenWidth * 0.09f).coerceIn(34f, 38f).dp // 36.dp
+        val menuIconSize = (screenWidth * 0.095f).coerceIn(36f, 40f).dp
 
         // Text sizes for UI elements
         val logoSize = (screenWidth * 0.5f).coerceIn(160f, 240f) //200dp
@@ -93,7 +96,9 @@ fun rememberGlobalDimensions(): GlobalDimensions {
             paddingSmall = paddingSmall,
             paddingMedium = paddingMedium,
             paddingLarge = paddingLarge,
-            paddingHuge = paddingHuge
+            paddingHuge = paddingHuge,
+            iconSize = iconSize,
+            menuIconSize = menuIconSize
         )
     }
 }
