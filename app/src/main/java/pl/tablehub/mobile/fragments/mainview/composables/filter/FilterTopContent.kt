@@ -15,18 +15,20 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewButton
 import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
 import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 
 @Composable
 fun FilterTopContent(drawerState: DrawerState) {
     val scope = rememberCoroutineScope()
+    val dims = rememberGlobalDimensions()
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = HORIZONTAL_PADDING.dp / 3,
-                vertical = VERTICAL_PADDING.dp / 2
+                horizontal = dims.paddingSmall,
+                vertical = dims.verticalPadding/2
             ),
         horizontalArrangement = Arrangement.End
     ) {

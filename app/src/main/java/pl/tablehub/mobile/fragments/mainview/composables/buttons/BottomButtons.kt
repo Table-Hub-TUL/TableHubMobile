@@ -24,16 +24,18 @@ import pl.tablehub.mobile.ui.shared.constants.ICON_SIZE
 import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun BottomButtons(
     onReportClick: () -> Unit,
     onLocationClick: () -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = HORIZONTAL_PADDING.dp, vertical = VERTICAL_PADDING.dp),
+            .padding(horizontal = dims.horizontalPadding, vertical = dims.paddingHuge),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.weight(1f))
@@ -44,16 +46,16 @@ fun BottomButtons(
         Spacer(modifier = Modifier.weight(0.5f))
         IconButton(onClick = onLocationClick,
             modifier = Modifier
-                .size(BUTTON_HEIGHT.dp)
+                .size(dims.buttonHeight)
                 .background(
                     color = SECONDARY_COLOR,
-                    shape = RoundedCornerShape(CORNER_ROUND_SIZE.dp))
+                    shape = RoundedCornerShape(dims.buttonCornerRadius))
         ) {
             Icon(
                 imageVector = Icons.Default.LocationOn,
                 contentDescription = stringResource(R.string.current_location),
                 tint = PRIMARY_COLOR,
-                modifier = Modifier.size(ICON_SIZE.dp)
+                modifier = Modifier.size(dims.iconSize)
             )
         }
     }

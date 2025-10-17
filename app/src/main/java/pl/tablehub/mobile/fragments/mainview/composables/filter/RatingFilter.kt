@@ -13,16 +13,19 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun RatingFilter(
     selectedRating: Double,
     onRatingChanged: (Double) -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
+
     Text(
         text = stringResource(R.string.minimum_rating) + ": ${"%.1f".format(selectedRating)}",
         color = TERTIARY_COLOR,
-        fontSize = 16.sp
+        fontSize = dims.textSizeSmall
     )
 
     Slider(
@@ -30,7 +33,7 @@ fun RatingFilter(
         onValueChange = { onRatingChanged(it.toDouble()) },
         valueRange = 0f..5f,
         steps = 4,
-        modifier = Modifier.padding(vertical = 8.dp),
+        modifier = Modifier.padding(vertical = dims.paddingSmall),
         colors = SliderDefaults.colors(
             activeTrackColor = PRIMARY_COLOR,
             inactiveTrackColor = Color.LightGray,

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun SignUpInput(
@@ -30,6 +31,7 @@ fun SignUpInput(
     isError: Boolean = false,
     errorMessage: Int? = null
 ) {
+    val dims = rememberGlobalDimensions()
     var value by remember { mutableStateOf("") }
 
     OutlinedTextField(
@@ -41,13 +43,13 @@ fun SignUpInput(
         label = {
             Text(
                 text = stringResource(strRes),
-                fontSize = 16.sp,
+                fontSize = dims.textSizeSmall,
                 color = if (isError) androidx.compose.ui.graphics.Color.Red else TERTIARY_COLOR
             )
         },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(dims.buttonCornerRadius),
         visualTransformation = if (keyboardType == KeyboardType.Password) {
             PasswordVisualTransformation()
         } else {
@@ -66,7 +68,7 @@ fun SignUpInput(
                 Text(
                     text = stringResource(errorMessage),
                     color = androidx.compose.ui.graphics.Color.Red,
-                    fontSize = 12.sp
+                    fontSize = dims.textSizeMinimal
                 )
             }
         } else null

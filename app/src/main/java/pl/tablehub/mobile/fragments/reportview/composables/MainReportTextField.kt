@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun RestaurantInput(
@@ -33,6 +34,7 @@ fun RestaurantInput(
     strRes: Int,
     keyboardType: KeyboardType
 ) {
+    val dims = rememberGlobalDimensions()
     var inputValue by remember { mutableStateOf(value) }
     OutlinedTextField(
         value = inputValue,
@@ -43,15 +45,15 @@ fun RestaurantInput(
         label = {
             Text(
                 text = stringResource(strRes),
-                fontSize = 16.sp,
+                fontSize = dims.textSizeSmall,
                 color = TERTIARY_COLOR
             )
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = dims.paddingHuge),
         singleLine = true,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(dims.buttonCornerRadius),
         visualTransformation = if (keyboardType == KeyboardType.Password) {
             PasswordVisualTransformation()
         } else {

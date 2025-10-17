@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun SectionSelectionButtons(
@@ -23,18 +24,14 @@ fun SectionSelectionButtons(
 ) {
     var selectedSectionId by remember { mutableStateOf<Long>(restaurant.sections?.firstOrNull()?.id ?: -1L) }
     val sections = restaurant.sections
+    val dims = rememberGlobalDimensions()
 
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp
-    val screenHeight = configuration.screenHeightDp
-    val horizontalPadding = (screenWidth * 0.06f).coerceAtLeast(16f).coerceAtMost(24f).dp
-    val smallSpacing = (screenHeight * 0.01f).coerceAtLeast(8f).dp
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = horizontalPadding, vertical = smallSpacing),
-        horizontalArrangement = Arrangement.spacedBy(horizontalPadding)
+            .padding(horizontal = dims.horizontalPadding, vertical = dims.paddingSmall),
+        horizontalArrangement = Arrangement.spacedBy(dims.horizontalPadding)
     ) {
         sections.forEach { section ->
             SectionButton(

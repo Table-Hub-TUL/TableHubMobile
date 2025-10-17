@@ -27,13 +27,15 @@ import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
 import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun StateLegend() {
+    val dims = rememberGlobalDimensions()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = dims.paddingBig, vertical = dims.paddingSmall),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -47,22 +49,23 @@ fun StateLegend() {
 
 @Composable
 fun LegendItem(status: String, color: Color) {
+    val dims = rememberGlobalDimensions()
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        horizontalArrangement = Arrangement.spacedBy(dims.smallSpacing/2)
     ) {
         Spacer(
             modifier = Modifier
-                .width(24.dp)
-                .height(24.dp)
-                .clip(RoundedCornerShape(2.dp))
+                .width(dims.contentIconSize)
+                .height(dims.contentIconSize)
+                .clip(RoundedCornerShape(dims.tinyCornerRadius))
                 .background(color)
         )
 
         Text(
             text = status,
             color = TERTIARY_COLOR,
-            fontSize = 18.sp,
+            fontSize = dims.textSizeBig,
             fontWeight = FontWeight.Medium
         )
     }

@@ -17,23 +17,25 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun SignUpButtonText(
     strRes: Int
 ) {
+    val dims = rememberGlobalDimensions()
     Text(
         text = stringResource(strRes),
-        fontSize = 16.sp,
+        fontSize = dims.textSizeSmall,
         fontWeight = FontWeight.Bold
     )
 }
 
 val SIGNUP_BUTTONS_MODIFIER: Modifier = Modifier
     .fillMaxWidth()
-    .height(56.dp)
+    .height(dims.buttonHeight)
 
-val SIGNUP_BUTTONS_SHAPE: Shape = RoundedCornerShape(12.dp)
+val SIGNUP_BUTTONS_SHAPE: Shape = RoundedCornerShape(dims.buttonCornerRadius)
 
 @Composable
 fun CreateAccountButton(

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun MainViewMenuButton(
@@ -33,14 +34,16 @@ fun MainViewMenuButton(
     stringFromRes: Int,
     modifier: Modifier = Modifier,
 ) {
+    val dims = rememberGlobalDimensions()
+
     Row(
         modifier = modifier
-            .padding(vertical = 12.dp, horizontal = 10.dp)
+            .padding(vertical = dims.paddingLarge, horizontal = dims.paddingMedium)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(CORNER_ROUND_SIZE.dp))
+            .clip(RoundedCornerShape(dims.buttonCornerRadius))
             .background(PRIMARY_COLOR)
             .clickable{ onClick() }
-            .padding(vertical = 12.dp, horizontal = 8.dp),
+            .padding(vertical = dims.paddingLarge, horizontal = dims.paddingSmall),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
@@ -48,15 +51,15 @@ fun MainViewMenuButton(
             painter = painterResource(id = imgName),
             contentDescription = stringResource(stringFromRes),
             modifier = modifier
-                .padding(start = 12.dp)
-                .size(38.dp)
+                .padding(start = dims.paddingLarge)
+                .size(dims.iconSize)
         )
         Text(
             text = stringResource(stringFromRes),
             color = SECONDARY_COLOR,
-            fontSize = 24.sp,
+            fontSize = dims.textSizeLarge,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(start = 18.dp),
+            modifier = Modifier.padding(start = dims.paddingHuge),
         )
     }
 }
