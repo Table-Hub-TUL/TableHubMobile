@@ -7,21 +7,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun CreateAccountText() {
+    val dims = rememberGlobalDimensions()
     Text(
         text = stringResource(R.string.create_new_account),
-        fontSize = 16.sp,
+        fontSize = dims.textSizeSmall,
         color = TERTIARY_COLOR.copy(alpha = 0.7f)
     )
 }
 
 @Composable
 fun JoinUsText() {
+    val dims = rememberGlobalDimensions()
     Text(
         text = stringResource(R.string.join_us_today),
-        fontSize = 24.sp,
+        fontSize = dims.textSizeLarge,
         fontWeight = FontWeight.Bold,
         color = TERTIARY_COLOR
     )

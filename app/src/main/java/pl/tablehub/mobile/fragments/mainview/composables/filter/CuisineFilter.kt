@@ -16,6 +16,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun CuisineFilter(
@@ -23,13 +24,14 @@ fun CuisineFilter(
     selectedCuisine: String?,
     onCuisineSelected: (String?) -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
     var cuisineDropdownExpanded by remember { mutableStateOf(false) }
     var buttonWidth by remember { mutableIntStateOf(0) }
 
     Text(
         text = stringResource(R.string.cuisines),
         color = TERTIARY_COLOR,
-        fontSize = 16.sp
+        fontSize = dims.textSizeSmall
     )
 
     Box {
@@ -44,17 +46,17 @@ fun CuisineFilter(
                 .onGloballyPositioned { coordinates ->
                     buttonWidth = coordinates.size.width
                 },
-            contentPadding = PaddingValues(vertical = 12.dp)
+            contentPadding = PaddingValues(vertical = dims.paddingLarge)
         ) {
             Text(
                 text = selectedCuisine ?: stringResource(R.string.any),
                 color = SECONDARY_COLOR,
-                fontSize = 16.sp
+                fontSize = dims.textSizeSmall
             )
         }
 
         DropdownMenu(
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(dims.buttonCornerRadius),
             expanded = cuisineDropdownExpanded,
             onDismissRequest = { cuisineDropdownExpanded = false },
             modifier = Modifier

@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun FilterOverlay(onOverlayClick: () -> Unit) {
+    val dims = rememberGlobalDimensions()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -23,15 +25,14 @@ fun FilterOverlay(onOverlayClick: () -> Unit) {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .fillMaxWidth(fraction = 1f)
-                .padding(end = 290.dp)
+                .width(Modifier.fillMaxWidth().minus(dims.drawerWidth))
                 .background(Color.Black.copy(alpha = 0.5f))
                 .clickable(onClick = onOverlayClick)
         )
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(290.dp)
+                .width(dims.drawerWidth)
                 .align(Alignment.CenterEnd)
                 .background(Color.Black.copy(alpha = 0.15f))
                 .clickable(onClick = { })

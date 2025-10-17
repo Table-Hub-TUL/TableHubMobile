@@ -24,28 +24,30 @@ import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
 import pl.tablehub.mobile.ui.shared.constants.ICON_SIZE
 import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun TopBarContent(
     onMenuClick: () -> Unit,
     onFilterClick: () -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = HORIZONTAL_PADDING.dp, vertical = VERTICAL_PADDING.dp),
+            .padding(horizontal = dims.horizontalPadding, vertical = dims.verticalPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         IconButton(
             onClick = onMenuClick,
             modifier = Modifier.background(color = SECONDARY_COLOR, shape = RoundedCornerShape(
-                CORNER_ROUND_SIZE.dp)),
+                dims.buttonCornerRadius)),
         ) {
             Icon(
                 imageVector = Icons.Default.Menu,
                 contentDescription = stringResource(R.string.menu),
-                modifier = Modifier.size(ICON_SIZE.dp)
+                modifier = Modifier.size(dims.iconSize)
             )
         }
         MainViewButton(

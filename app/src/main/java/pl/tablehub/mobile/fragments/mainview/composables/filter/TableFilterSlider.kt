@@ -14,15 +14,18 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 import kotlin.math.roundToInt
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun TableFilterSlider(
     minFreeSeats: Int,
     onMinFreeSeatsChanged: (Int) -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
+
     Text(
         text = stringResource(R.string.minimum_free_seats) + ": $minFreeSeats",
-        fontSize = 16.sp,
+        fontSize = dims.textSizeSmall,
         color = TERTIARY_COLOR
     )
     Slider(
@@ -30,7 +33,7 @@ fun TableFilterSlider(
         onValueChange = { onMinFreeSeatsChanged(it.roundToInt()) },
         valueRange = 0f..7f,
         steps = 6,
-        modifier = Modifier.padding(vertical = 8.dp),
+        modifier = Modifier.padding(vertical = dims.paddingSmall),
         colors = SliderDefaults.colors(
             activeTrackColor = PRIMARY_COLOR,
             inactiveTrackColor = Color.LightGray,

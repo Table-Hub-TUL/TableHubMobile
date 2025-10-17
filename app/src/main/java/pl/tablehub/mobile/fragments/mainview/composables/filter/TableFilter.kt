@@ -16,12 +16,15 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun TableFilter(
     minFreeTables: Int,
     onMinFreeTablesChanged: (Int) -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
+
     OutlinedTextField(
         value = minFreeTables.toString(),
         onValueChange = {
@@ -30,13 +33,13 @@ fun TableFilter(
         label = {
             Text(
                 text = stringResource(R.string.minimum_free_seats),
-                fontSize = 16.sp,
+                fontSize = dims.textSizeSmall,
                 color = TERTIARY_COLOR
             )
         },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(dims.buttonCornerRadius),
         visualTransformation = VisualTransformation.None,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = PRIMARY_COLOR,

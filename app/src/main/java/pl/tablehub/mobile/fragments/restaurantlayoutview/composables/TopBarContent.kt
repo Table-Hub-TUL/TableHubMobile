@@ -20,29 +20,31 @@ import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
 import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
 import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun TopBarContent(
     onBackClick: () -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = HORIZONTAL_PADDING.dp, vertical = VERTICAL_PADDING.dp),
+            .padding(horizontal = dims.horizontalPadding, vertical = dims.verticalPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         IconButton(
             onClick = onBackClick,
             modifier = Modifier.background(color = SECONDARY_COLOR, shape = RoundedCornerShape(
-                CORNER_ROUND_SIZE.dp)),
+                dims.buttonCornerRadius)),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.back),
                 contentDescription = stringResource(R.string.back),
                 modifier = Modifier
-                    .padding(start = 12.dp)
-                    .size(38.dp)
+                    .padding(start = dims.paddingLarge)
+                    .size(dims.iconSize)
             )
         }
     }

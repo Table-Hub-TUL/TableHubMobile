@@ -28,6 +28,7 @@ import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun RestaurantLayoutMainView(
@@ -37,6 +38,7 @@ fun RestaurantLayoutMainView(
     onTableStatusChanged: ((TableStatusChange) -> Unit) = { _: TableStatusChange -> },
     restaurant: Restaurant
 ) {
+    val dims = rememberGlobalDimensions()
     var selectedSection by remember { mutableStateOf(restaurant.sections.firstOrNull()) }
     Column(
         modifier = modifier
@@ -49,8 +51,8 @@ fun RestaurantLayoutMainView(
             text = stringResource(R.string.report_tables),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            fontSize = 42.sp,
+                .padding(horizontal = dims.paddingBig, vertical = dims.paddingSmall),
+            fontSize = dims.textSizeMedium * 2,
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center,
             color = TERTIARY_COLOR
@@ -72,7 +74,7 @@ fun RestaurantLayoutMainView(
             selectedSection = selectedSection,
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = dims.paddingBig, vertical = dims.paddingSmall),
             onTableStatusChanged = onTableStatusChanged
         )
 
@@ -81,13 +83,13 @@ fun RestaurantLayoutMainView(
             colors = ButtonDefaults.buttonColors(containerColor = PRIMARY_COLOR),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp)
-                .height(56.dp)
+                .padding(horizontal = dims.paddingBig, vertical = dims.paddingLarge)
+                .height(dims.buttonHeight)
         ) {
             Text(
                 text = stringResource(R.string.finish_changes),
                 color = SECONDARY_COLOR,
-                fontSize = 18.sp,
+                fontSize = dims.textSizeBig,
                 fontWeight = FontWeight.Medium
             )
         }

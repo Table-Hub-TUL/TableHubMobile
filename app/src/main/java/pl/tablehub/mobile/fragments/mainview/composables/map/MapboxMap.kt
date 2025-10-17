@@ -32,6 +32,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.Location
 import pl.tablehub.mobile.model.Restaurant
 import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 
 @SuppressLint("MissingPermission")
@@ -44,6 +45,7 @@ fun MapboxMapWrapper(
     tables: Map<Long, List<Section>>,
     onMarkerClick: (Restaurant) -> Unit = {}
 ) {
+    val dims = rememberGlobalDimensions()
     val context = LocalContext.current
     val baseMarkerBitmap = remember {
         BitmapFactory.decodeResource(context.resources, R.drawable.marker)
@@ -67,7 +69,7 @@ fun MapboxMapWrapper(
         compass = {
             Compass(
                 alignment = Alignment.BottomEnd,
-                modifier = Modifier.padding(start = 0.dp, bottom = 100.dp, end = 8.dp)
+                modifier = Modifier.padding.padding(start = 0.dp, bottom = dims.buttonHeight * 2, end = dims.paddingSmall)
             )
         }
     ) {

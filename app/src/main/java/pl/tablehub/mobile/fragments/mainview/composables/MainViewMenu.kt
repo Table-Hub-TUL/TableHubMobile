@@ -19,6 +19,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuButton
 import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuReturnButton
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun MainViewMenu(
@@ -28,6 +29,7 @@ fun MainViewMenu(
     content: @Composable () -> Unit = {}
 ) {
     val scope = rememberCoroutineScope()
+    val dims = rememberGlobalDimensions()
     ModalNavigationDrawer(
         modifier = Modifier.background(SECONDARY_COLOR),
         drawerState = drawerState,
@@ -53,7 +55,7 @@ fun MainViewMenu(
                                 stringFromRes = R.string.settings
                             )
                         }
-                        Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                        Column(modifier = Modifier.padding(bottom = dims.paddingBig)) {
                             MainViewMenuButton(
                                 onClick = onLogoutClick,
                                 imgName = R.drawable.logout,

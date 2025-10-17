@@ -32,7 +32,6 @@ fun MainLoginView(
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // ✅ Use your shared global dimensions
     val dims = rememberGlobalDimensions()
 
     Column(
@@ -47,7 +46,7 @@ fun MainLoginView(
         Spacer(modifier = Modifier.height(dims.largeSpacing))
         AppLogo(imgSize = dims.logoSize.toInt())
         Spacer(modifier = Modifier.height(dims.mediumSpacing))
-        WelcomeText() // optional use of shared text size
+        WelcomeText()
         Spacer(modifier = Modifier.height(dims.smallSpacing))
         SignInText()
         Spacer(modifier = Modifier.height(dims.mediumSpacing))

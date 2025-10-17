@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun SectionButton(
@@ -24,15 +25,16 @@ fun SectionButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val dims = rememberGlobalDimensions()
     val backgroundColor = if (isSelected) PRIMARY_COLOR else TERTIARY_COLOR
 
     Row(
         modifier = modifier
-            .requiredHeight(36.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .requiredHeight(dims.iconSize)
+            .clip(RoundedCornerShape(dims.buttonCornerRadius))
             .background(backgroundColor)
             .clickable(onClick = onClick)
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+            .padding(horizontal = dims.paddingSmall, vertical = dims.paddingSmall),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {

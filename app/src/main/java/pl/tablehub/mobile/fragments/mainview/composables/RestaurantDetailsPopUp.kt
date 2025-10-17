@@ -28,10 +28,12 @@ import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 import kotlin.math.round
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 
 @Composable
 fun RatingStars(rating: Double, maxRating: Int = 5) {
+    val dims = rememberGlobalDimensions()
     Row(
         modifier = Modifier.offset(y = (-2.5).dp)
     ) {
@@ -48,11 +50,12 @@ fun RatingStars(rating: Double, maxRating: Int = 5) {
 
 @Composable
 fun StarIcon(imageVector: ImageVector, tint: Color) {
+    val dims = rememberGlobalDimensions()
     Icon(
         imageVector = imageVector,
         contentDescription = null,
         tint = tint,
-        modifier = Modifier.size(24.dp)
+        modifier = Modifier.size(dims.contentIconSize)
     )
 }
 
@@ -78,13 +81,14 @@ internal fun PopUpButton(
     strRes: Int,
     modifier: Modifier = Modifier
 ) {
+    val dims = rememberGlobalDimensions()
     Button(
         onClick = onClick,
         modifier = modifier,
         shape = RoundedCornerShape(CORNER_ROUND_SIZE.dp),
         colors = ButtonDefaults.buttonColors(containerColor = PRIMARY_COLOR)
     ) {
-        Text(stringResource(strRes), color = SECONDARY_COLOR, fontSize = 13.sp)
+        Text(stringResource(strRes), color = SECONDARY_COLOR, fontSize = dims.textSizeMinimal)
     }
 }
 
@@ -96,19 +100,20 @@ fun RestaurantDetailsPopup(
     onReportTable: (Restaurant) -> Unit,
     onMoreDetailsClick: (Restaurant) -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
     val availableTables by remember { mutableIntStateOf(sections.flatMap { it.tables }.count { it.status == TableStatus.AVAILABLE }) }
     PopUpWrapper(
         onDismissRequest = onDismissRequest
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(dims.paddingBig),
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(dims.smallSpacing)
         ) {
             PopUpText(
                 text = restaurant.name,
                 fontWeight = FontWeight.Bold,
-                fontSize = 24
+                fontSize = dims.textSizeLarge
             )
             PopUpText(text = restaurant.address.toString())
             PopUpText(
@@ -122,7 +127,7 @@ fun RestaurantDetailsPopup(
             }
             PopUpText(
                 text = "${stringResource(R.string.available_tables)}: $availableTables",
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = dims.paddingSmall)
             )
             Row {
                 PopUpButton(

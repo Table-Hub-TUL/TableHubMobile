@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
 import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun FilterDrawer(
@@ -23,32 +24,34 @@ fun FilterDrawer(
     minFreeSeats: Int,
     onMinFreeSeatsChanged: (Int) -> Unit
 ) {
+    val dims = rememberGlobalDimensions()
+
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterEnd) {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(300.dp)
+                .width(dims.logoSize.dp * 1.5f)
                 .background(
                     color = SECONDARY_COLOR,
                     shape = RoundedCornerShape(
-                        topStart = VERTICAL_PADDING.dp / 2,
-                        bottomStart = HORIZONTAL_PADDING.dp / 3
+                        topStart = dims.buttonCornerRadius,
+                        bottomStart = dims.buttonCornerRadius
                     )
                 )
-                .padding(12.dp)
+                .padding(dims.paddingLarge)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 FilterTopContent(drawerState)
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(dims.mediumSpacing))
 
                 RatingFilter(selectedRating, onRatingChanged)
 
-                Spacer(modifier = Modifier.height(VERTICAL_PADDING.dp * 2))
+                Spacer(modifier = Modifier.height(dims.paddingLarge * 2))
 
                 CuisineFilter(cuisines, selectedCuisine, onCuisineSelected)
 
-                Spacer(modifier = Modifier.height(VERTICAL_PADDING.dp * 2))
+                Spacer(modifier = Modifier.height(dims.paddingLarge * 2))
 
                 TableFilterSlider(minFreeSeats, onMinFreeSeatsChanged)
             }

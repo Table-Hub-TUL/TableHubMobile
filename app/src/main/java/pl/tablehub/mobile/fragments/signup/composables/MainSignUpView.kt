@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.times
 import pl.tablehub.mobile.ui.shared.composables.AppLogo
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TableHubTheme
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun MainSignUpView(
@@ -32,6 +33,7 @@ fun MainSignUpView(
     onCreate: (String, String, String) -> Unit = { _: String, _: String, _: String -> },
     onBackToLogin: () -> Unit = {}
 ) {
+    val dims = rememberGlobalDimensions()
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -43,39 +45,28 @@ fun MainSignUpView(
         }
     }
 
-    val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp
-    val screenWidth = configuration.screenWidthDp
-
-    val horizontalPadding = (screenWidth * 0.06f).coerceAtLeast(16f).coerceAtMost(24f).dp
-    val logoSize = (screenWidth * 0.5f).coerceAtLeast(120f).coerceAtMost(180f)
-
-    val smallSpacing = (screenHeight * 0.01f).coerceAtLeast(8f).dp
-    val mediumSpacing = (screenHeight * 0.015f).coerceAtLeast(12f).dp
-    val largeSpacing = (screenHeight * 0.025f).coerceAtLeast(20f).dp
-
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(SECONDARY_COLOR)
-            .padding(horizontal = horizontalPadding)
+            .padding(horizontal = dims.horizontalPadding)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(largeSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingLarge))
 
         AppLogo(imgSize = logoSize.toInt())
 
-        Spacer(modifier = Modifier.height(mediumSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingLarge))
 
         JoinUsText()
 
-        Spacer(modifier = Modifier.height(smallSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingSmall))
 
         CreateAccountText()
 
-        Spacer(modifier = Modifier.height(largeSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingHuge))
 
         UsernameInput(
             onValueChange = { newValue -> username = newValue },
@@ -83,7 +74,7 @@ fun MainSignUpView(
             errorMessage = validationState.username.errorMessage
         )
 
-        Spacer(modifier = Modifier.height(mediumSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingLarge))
 
         EmailSignUpInput(
             onValueChange = { newValue -> email = newValue },
@@ -91,7 +82,7 @@ fun MainSignUpView(
             errorMessage = validationState.email.errorMessage
         )
 
-        Spacer(modifier = Modifier.height(mediumSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingLarge))
 
         PasswordSignUpInput(
             onValueChange = { newValue -> password = newValue },
@@ -99,7 +90,7 @@ fun MainSignUpView(
             errorMessage = validationState.password.errorMessage
         )
 
-        Spacer(modifier = Modifier.height(mediumSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingLarge))
 
         ConfirmPasswordInput(
             onValueChange = { newValue -> confirmPassword = newValue },
@@ -107,7 +98,7 @@ fun MainSignUpView(
             errorMessage = validationState.confirmPassword.errorMessage
         )
 
-        Spacer(modifier = Modifier.height(2 * largeSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingHuge *2))
 
         CreateAccountButton(
             onCreateAccount = { onCreate(username, email, password) },
@@ -118,11 +109,11 @@ fun MainSignUpView(
                     confirmPassword.isNotEmpty()
         )
 
-        Spacer(modifier = Modifier.height(mediumSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingLarge))
 
         BackToLoginButton(onBackToLogin)
 
-        Spacer(modifier = Modifier.height(smallSpacing))
+        Spacer(modifier = Modifier.height(dims.paddingSmall))
     }
 }
 

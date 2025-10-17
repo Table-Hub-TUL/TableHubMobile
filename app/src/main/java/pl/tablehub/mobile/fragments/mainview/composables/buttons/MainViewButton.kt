@@ -20,6 +20,7 @@ import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
 import pl.tablehub.mobile.ui.shared.constants.FONT_SIZE
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun MainViewButton (
@@ -28,24 +29,26 @@ fun MainViewButton (
     modifier: Modifier = Modifier,
     icon: ImageVector? = null
 ) {
+    val dims = rememberGlobalDimensions()
+
     Button(
         onClick = onClick,
-        modifier = modifier.height(BUTTON_HEIGHT.dp),
-        shape = RoundedCornerShape(CORNER_ROUND_SIZE.dp),
+        modifier = modifier.height(dims.buttonHeight),
+        shape = RoundedCornerShape(dims.buttonCornerRadius),
         colors = ButtonDefaults.buttonColors(
             containerColor = PRIMARY_COLOR,
             contentColor = SECONDARY_COLOR
         ),
-        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp)
+        contentPadding = PaddingValues(horizontal = dims.paddingSmall, vertical = dims.paddingSmall)
     ) {
         icon?.let {
             Icon(
                 imageVector = it,
                 contentDescription = null,
-                modifier = Modifier.size(FONT_SIZE.dp)
+                modifier = Modifier.size(dims.iconSize)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(dims.smallSpacing))
         }
-        Text(text = text, fontSize = FONT_SIZE.sp)
+        Text(text = text, fontSize = dims.textSizeMedium)
     }
 } 
