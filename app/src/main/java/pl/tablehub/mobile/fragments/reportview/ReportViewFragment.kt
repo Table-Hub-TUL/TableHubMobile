@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.reportview.composables.MainReportView
-import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Location
+import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 
 @AndroidEntryPoint

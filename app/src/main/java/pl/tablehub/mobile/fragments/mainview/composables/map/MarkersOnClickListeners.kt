@@ -3,7 +3,7 @@ package pl.tablehub.mobile.fragments.mainview.composables.map
 import android.util.Log
 import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Restaurant
 
 internal class MarkersOnClickListeners(
     private val restaurants: List<Restaurant>,

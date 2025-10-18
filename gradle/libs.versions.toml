@@ -1,6 +1,7 @@
 [versions]
 agp = "8.7.3"
 appcompat = "1.7.0"
+coilBom = "2.4.0"
 datastorePreferencesCore = "1.1.7"
 hildanKrossbowStompCore = "9.3.0"
 hiltAndroid = "2.56.1"
@@ -42,6 +43,7 @@ androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-p
 androidx-hilt-common = { module = "androidx.hilt:hilt-common", version.ref = "hiltCommon" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+coil-bom = { module = "io.coil-kt:coil-bom", version.ref = "coilBom" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }

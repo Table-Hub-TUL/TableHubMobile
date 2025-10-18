@@ -29,9 +29,9 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.model.v1.Location
+import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 
@@ -69,7 +69,7 @@ fun MapboxMapWrapper(
         compass = {
             Compass(
                 alignment = Alignment.BottomEnd,
-                modifier = Modifier.padding.padding(start = 0.dp, bottom = dims.buttonHeight * 2, end = dims.paddingSmall)
+                modifier = Modifier.padding(start = 0.dp, bottom = dims.buttonHeight * 2, end = dims.paddingSmall)
             )
         }
     ) {

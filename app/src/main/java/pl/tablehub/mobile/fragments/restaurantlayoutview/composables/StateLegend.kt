@@ -30,12 +30,15 @@ import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
-fun StateLegend() {
+fun StateLegend(
+    modifier: Modifier = Modifier
+) {
     val dims = rememberGlobalDimensions()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = dims.paddingBig, vertical = dims.paddingSmall),
+            .padding(horizontal = dims.paddingBig, vertical = dims.paddingSmall)
+            .background(SECONDARY_COLOR),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
