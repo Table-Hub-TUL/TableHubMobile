@@ -6,8 +6,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
 
 @Composable

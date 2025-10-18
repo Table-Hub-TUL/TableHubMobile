@@ -1,6 +1,5 @@
 package pl.tablehub.mobile.fragments.mainview.composables
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,8 +20,8 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.fragments.mainview.composables.buttons.BottomButtons
 import pl.tablehub.mobile.fragments.mainview.composables.filter.FilterMenu
 import pl.tablehub.mobile.fragments.mainview.composables.map.MapboxMapWrapper
-import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Location
+import pl.tablehub.mobile.model.v1.Restaurant
 
 @Composable
 fun MainMapView(

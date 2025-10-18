@@ -3,7 +3,7 @@ package pl.tablehub.mobile.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import pl.tablehub.mobile.client.model.TableStatusChange
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Restaurant
 
 interface IRestaurantsRepository {
     val restaurantsMap: StateFlow<Map<Long, Restaurant>>

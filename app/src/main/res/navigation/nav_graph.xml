@@ -41,10 +41,10 @@
             app:destination="@id/mainViewFragment" />
         <argument
             android:name="restaurants"
-            app:argType="pl.tablehub.mobile.model.Restaurant[]" />
+            app:argType="pl.tablehub.mobile.model.v1.Restaurant[]" />
         <argument
             android:name="user_location"
-            app:argType="pl.tablehub.mobile.model.Location" />
+            app:argType="pl.tablehub.mobile.model.v1.Location" />
         <action
             android:id="@+id/action_reportViewFragment_to_restaurantLayoutFragment"
             app:destination="@id/restaurantLayoutFragment" />
@@ -55,7 +55,7 @@
         android:label="RestaurantLayoutFragment" >
         <argument
             android:name="restaurant"
-            app:argType="pl.tablehub.mobile.model.Restaurant" />
+            app:argType="pl.tablehub.mobile.model.v1.Restaurant" />
         <action
             android:id="@+id/action_restaurantLayoutFragment_to_reportViewFragment"
             app:destination="@id/reportViewFragment" />

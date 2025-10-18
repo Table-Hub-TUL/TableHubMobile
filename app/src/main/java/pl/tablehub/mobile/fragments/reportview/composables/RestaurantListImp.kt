@@ -25,8 +25,8 @@ import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
-import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Location
+import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 

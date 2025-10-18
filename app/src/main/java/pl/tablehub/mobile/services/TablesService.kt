@@ -17,7 +17,7 @@ import pl.tablehub.mobile.client.model.TableStatusChange
 import pl.tablehub.mobile.client.rest.RetrofitClient
 import pl.tablehub.mobile.client.rest.interfaces.IRestaurantService
 import pl.tablehub.mobile.client.websocket.service.WebSocketService
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.util.WSMessageRelay
 import javax.inject.Inject

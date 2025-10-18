@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     private var retrofit: Retrofit? = null
-    private const val BASE_URL = "https://${BACKEND_IP}"
+    private const val BASE_URL = "http://192.168.18.35:8080"//"https://${BACKEND_IP}"
 
     val client: Retrofit
         get() {

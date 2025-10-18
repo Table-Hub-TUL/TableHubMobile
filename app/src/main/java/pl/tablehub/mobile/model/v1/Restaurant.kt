@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.model
+package pl.tablehub.mobile.model.v1
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

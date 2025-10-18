@@ -9,9 +9,12 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
@@ -21,52 +24,79 @@ import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun SignUpButtonText(
-    strRes: Int
+    strRes: Int,
+    fontSize: TextUnit
 ) {
-    val dims = rememberGlobalDimensions()
     Text(
         text = stringResource(strRes),
-        fontSize = dims.textSizeSmall,
+        fontSize = fontSize,
         fontWeight = FontWeight.Bold
     )
 }
 
-val SIGNUP_BUTTONS_MODIFIER: Modifier = Modifier
-    .fillMaxWidth()
-    .height(dims.buttonHeight)
+@Composable
+private fun SignUpBaseButton(
+    textResId: Int,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    isOutlined: Boolean = false,
+    containerColor: Color = PRIMARY_COLOR,
+    contentColor: Color = TERTIARY_COLOR
+) {
+    val dims = rememberGlobalDimensions()
+    val buttonModifier = Modifier
+        .fillMaxWidth()
+        .height(dims.buttonHeight)
 
-val SIGNUP_BUTTONS_SHAPE: Shape = RoundedCornerShape(dims.buttonCornerRadius)
+    val buttonShape = RoundedCornerShape(dims.buttonCornerRadius)
+
+    if (isOutlined) {
+        OutlinedButton(
+            onClick = onClick,
+            modifier = buttonModifier,
+            shape = buttonShape,
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = contentColor
+            ),
+            enabled = enabled
+        ) {
+            SignUpButtonText(textResId, dims.textSizeMedium)
+        }
+    } else {
+        Button(
+            onClick = onClick,
+            modifier = buttonModifier,
+            shape = buttonShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = containerColor
+            ),
+            enabled = enabled
+        ) {
+            SignUpButtonText(textResId, dims.textSizeMedium)
+        }
+    }
+}
 
 @Composable
 fun CreateAccountButton(
     onCreateAccount: () -> Unit = {},
     enabled: Boolean = true
 ) {
-    Button(
+    SignUpBaseButton(
+        textResId = R.string.create_account,
         onClick = onCreateAccount,
-        modifier = SIGNUP_BUTTONS_MODIFIER,
-        shape = SIGNUP_BUTTONS_SHAPE,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = PRIMARY_COLOR
-        ),
-        enabled = enabled
-    ) {
-        SignUpButtonText(R.string.create_account)
-    }
+        enabled = enabled,
+        isOutlined = false
+    )
 }
 
 @Composable
 fun BackToLoginButton(
     onBackToLogin: () -> Unit = {}
 ) {
-    OutlinedButton(
-        onClick = { onBackToLogin() },
-        modifier = SIGNUP_BUTTONS_MODIFIER,
-        shape = SIGNUP_BUTTONS_SHAPE,
-        colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = TERTIARY_COLOR
-        )
-    ) {
-        SignUpButtonText(R.string.back_to_login)
-    }
+    SignUpBaseButton(
+        textResId = R.string.back_to_login,
+        onClick = onBackToLogin,
+        isOutlined = true
+    )
 }

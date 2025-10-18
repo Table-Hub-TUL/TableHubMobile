@@ -8,7 +8,7 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
 
 @Composable
