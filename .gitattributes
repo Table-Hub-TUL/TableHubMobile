@@ -1,2 +1,2 @@
-*.env filter=git-crypt diff=git-crypt
+*.env.* filter=git-crypt diff=git-crypt
 app/src/main/res/values/mapbox-access-token.xml filter=git-crypt diff=git-crypt
