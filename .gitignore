@@ -33,9 +33,6 @@ google-services.json
 # Android Profiling
 *.hprof
 
-# Mapbox API Token
-app/src/main/res/values/mapbox-access-token.xml
-
 # Other
 .gradle/
 .github/
@@ -44,3 +41,5 @@ settings.gradle.kts
 .idea/
 *.pro
 local.properties
+
+.env
