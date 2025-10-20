@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import org.hildan.krossbow.stomp.*
 import org.hildan.krossbow.websocket.*
 import pl.tablehub.mobile.datastore.EncryptedDataStore
-import pl.tablehub.mobile.util.Constants.BACKEND_IP
+import pl.tablehub.mobile.util.Constants.BACKEND_WS_IP
 import pl.tablehub.mobile.util.WSMessageRelay
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,7 +20,7 @@ class WebSocketService @Inject constructor(
 ) {
 
     companion object ServiceContract {
-        private const val SERVER_URL: String = "wss://192.168.18.35/ws"//"wss://${BACKEND_IP}/ws"
+        private val SERVER_URL: String = BACKEND_WS_IP
         private const val DEBUG_TAG: String = "WEB_SOCKET"
         private const val DEST_SUBSCRIBE_UPDATE_TABLE = "/topic/table-updates"
     }

@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.client.model
+package pl.tablehub.mobile.client.model.auth
 
 import kotlinx.serialization.Serializable
 

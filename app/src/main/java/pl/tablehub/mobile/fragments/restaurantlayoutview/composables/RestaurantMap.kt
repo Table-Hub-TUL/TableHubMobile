@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.unit.dp
-import pl.tablehub.mobile.client.model.TableStatusChange
+import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.model.v2.Section
 import pl.tablehub.mobile.model.v2.Table
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR

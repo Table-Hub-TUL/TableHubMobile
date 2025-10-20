@@ -1,7 +1,6 @@
 package pl.tablehub.mobile.fragments.signup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +15,9 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.client.rest.RetrofitClient
-import pl.tablehub.mobile.client.model.SignUpRequest
-import pl.tablehub.mobile.client.model.SignUpResponse
+import pl.tablehub.mobile.client.model.auth.SignUpRequest
 import pl.tablehub.mobile.fragments.signup.composables.MainSignUpView
 import pl.tablehub.mobile.ui.theme.TableHubTheme
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {

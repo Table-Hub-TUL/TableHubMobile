@@ -22,10 +22,11 @@ import pl.tablehub.mobile.fragments.mainview.composables.filter.FilterMenu
 import pl.tablehub.mobile.fragments.mainview.composables.map.MapboxMapWrapper
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 
 @Composable
 fun MainMapView(
-    restaurants: List<Restaurant>,
+    restaurants: List<RestaurantListItem>,
     userLocation: Location,
     onReportGeneral: () -> Unit = {},
     onReportSpecific: (Restaurant) -> Unit,
@@ -39,7 +40,6 @@ fun MainMapView(
     val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
     var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
     var visibleRestaurants by remember { mutableStateOf(restaurants) }
-    val tables = restaurants.associateBy( { it.id }, { it.sections })
     var firstLaunch by rememberSaveable { mutableStateOf(true) }
 
     MainViewMenu(

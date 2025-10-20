@@ -1,15 +1,16 @@
 package pl.tablehub.mobile.client.rest
 
+import pl.tablehub.mobile.client.middleware.AuthMiddleware
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import pl.tablehub.mobile.util.Constants.BACKEND_IP
+import pl.tablehub.mobile.util.Constants.BACKEND_REST_IP
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitClient {
     private var retrofit: Retrofit? = null
-    private const val BASE_URL = "http://192.168.18.35:8080"//"https://${BACKEND_IP}"
+    private val BASE_URL = BACKEND_REST_IP
 
     val client: Retrofit
         get() {
@@ -18,6 +19,7 @@ object RetrofitClient {
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
                 val okHttpClient = OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
+                    .addInterceptor(AuthMiddleware())
                     .build()
 
                 retrofit = Retrofit.Builder()

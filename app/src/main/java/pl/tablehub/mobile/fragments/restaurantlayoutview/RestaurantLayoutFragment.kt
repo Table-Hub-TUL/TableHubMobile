@@ -2,7 +2,6 @@ package pl.tablehub.mobile.fragments.restaurantlayoutview
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.restaurantlayoutview.composables.RestaurantLayoutMainView
 import pl.tablehub.mobile.model.v1.Restaurant
-import pl.tablehub.mobile.client.model.TableStatusChange
+import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.fragments.restaurantlayoutview.temp.sampleSections
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
