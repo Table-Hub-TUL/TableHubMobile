@@ -16,8 +16,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import pl.tablehub.mobile.model.Location
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Location
+import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.client.model.TableStatusChange
 import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.services.TablesService

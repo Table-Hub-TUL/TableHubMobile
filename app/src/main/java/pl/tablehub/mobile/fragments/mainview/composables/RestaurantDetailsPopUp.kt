@@ -16,11 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.model.Restaurant
-import pl.tablehub.mobile.model.Section
+import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.ui.shared.composables.PopUpWrapper
 import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
@@ -62,12 +63,12 @@ fun StarIcon(imageVector: ImageVector, tint: Color) {
 @Composable
 internal fun PopUpText(
     text: String,
-    fontSize: Int = 16,
+    fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.Normal,
     modifier: Modifier = Modifier
 ) {
     Text (
-        fontSize = fontSize.sp,
+        fontSize = fontSize,
         fontWeight = fontWeight,
         text = text,
         color = TERTIARY_COLOR,

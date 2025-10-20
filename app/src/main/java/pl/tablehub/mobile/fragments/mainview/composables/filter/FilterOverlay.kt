@@ -3,6 +3,7 @@ package pl.tablehub.mobile.fragments.mainview.composables.filter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,14 +19,13 @@ import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 @Composable
 fun FilterOverlay(onOverlayClick: () -> Unit) {
     val dims = rememberGlobalDimensions()
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
+    BoxWithConstraints(
+        modifier = Modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(Modifier.fillMaxWidth().minus(dims.drawerWidth))
+                .width(maxWidth - dims.drawerWidth)
                 .background(Color.Black.copy(alpha = 0.5f))
                 .clickable(onClick = onOverlayClick)
         )

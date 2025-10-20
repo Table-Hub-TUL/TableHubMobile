@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.mapNotNull
 import pl.tablehub.mobile.client.model.TableStatusChange
-import pl.tablehub.mobile.model.Restaurant
+import pl.tablehub.mobile.model.v1.Restaurant
 import javax.inject.Inject
 import javax.inject.Singleton
 

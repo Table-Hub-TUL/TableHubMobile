@@ -56,7 +56,7 @@ fun MainSignUpView(
     ) {
         Spacer(modifier = Modifier.height(dims.paddingLarge))
 
-        AppLogo(imgSize = logoSize.toInt())
+        AppLogo(imgSize = dims.logoSize.toInt())
 
         Spacer(modifier = Modifier.height(dims.paddingLarge))
 
