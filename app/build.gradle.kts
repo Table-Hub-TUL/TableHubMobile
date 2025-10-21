@@ -6,19 +6,16 @@ plugins {
     alias(libs.plugins.hilt)
     id("kotlin-parcelize")
     alias(libs.plugins.kotlin.serialization)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+}
+
+secrets {
+    propertiesFileName = "app/src/main/assets/.env"
 }
 
 android {
     namespace = "pl.tablehub.mobile"
     compileSdk = 35
-
-    val backendIp: String = project.findProperty("BACKEND_IP") as? String
-        ?: project.rootProject.file("local.properties").readLines()
-            .find { it.startsWith("BACKEND_IP=") }
-            ?.split("=")
-            ?.get(1)
-            ?.trim()
-        ?: throw GradleException("Backend IP not found")
 
     lint {
         disable.add("NullSafeMutableLiveData")
@@ -31,7 +28,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "BACKEND_IP", "\"$backendIp\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -45,11 +41,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
