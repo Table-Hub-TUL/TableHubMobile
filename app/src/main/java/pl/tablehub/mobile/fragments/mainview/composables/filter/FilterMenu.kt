@@ -9,13 +9,15 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
+import pl.tablehub.mobile.model.v2.RestaurantListItem
+import pl.tablehub.mobile.model.v2.TableListItem
 
 @Composable
 fun FilterMenu(
     drawerState: DrawerState,
-    restaurants: List<Restaurant>,
-    tables: Map<Long, List<Section>>,
-    onFilterResult: (List<Restaurant>) -> Unit,
+    restaurants: List<RestaurantListItem>,
+    tables: Map<Long, List<TableListItem>>,
+    onFilterResult: (List<RestaurantListItem>) -> Unit,
     content: @Composable () -> Unit
 ) {
     val isOpen = drawerState.isOpen
@@ -75,15 +77,13 @@ fun FilterMenu(
     }
 }
 
-private fun hasTableWithMinimumSeats(restaurantId: Long, tables: Map<Long, List<Section>>, minSeats: Int): Boolean {
-    val restaurantSections = tables[restaurantId] ?: return false
-    restaurantSections.forEach { section ->
-        section.tables.forEach { table ->
-            if (table.status == TableStatus.AVAILABLE && table.capacity >= minSeats) {
-                return true
-            } else if (minSeats == 0) {
-                return true
-            }
+private fun hasTableWithMinimumSeats(restaurantId: Long, tables: Map<Long, List<TableListItem>>, minSeats: Int): Boolean {
+    val restaurantTables = tables[restaurantId] ?: return false
+    restaurantTables.forEach { table ->
+        if (table.tableStatus == TableStatus.AVAILABLE && table.capacity >= minSeats) {
+            return true
+        } else if (minSeats == 0) {
+            return true
         }
     }
     return false

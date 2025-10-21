@@ -27,6 +27,7 @@ import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.mainview.composables.MainMapView
 import pl.tablehub.mobile.fragments.mainview.composables.snackbar.PermissionSnackbar
 import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
 import javax.inject.Inject
@@ -44,12 +45,12 @@ class MainViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val onReportSpecific = { restaurant: Restaurant -> findNavController()
+        val onReportSpecific = { restaurant: RestaurantListItem -> findNavController()
             .navigate(R.id.action_mainViewFragment_to_restaurantLayoutFragment,
                 bundleOf(Pair(NavArgs.SELECTED_RESTAURANT, restaurant)))
         }
 
-        val onMoreDetails: (Restaurant) -> Unit = { restaurant ->
+        val onMoreDetails: (RestaurantListItem) -> Unit = { restaurant ->
             val searchQuery = Uri.encode(restaurant.name)
             val searchUrl = "https://www.google.com/search?q=$searchQuery"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl))

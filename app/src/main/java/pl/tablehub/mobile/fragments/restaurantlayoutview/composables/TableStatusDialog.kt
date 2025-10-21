@@ -20,8 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.TableStatus
-import pl.tablehub.mobile.model.v2.Table
-import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
+import pl.tablehub.mobile.model.v2.TableDetail
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
@@ -31,7 +30,7 @@ private const val BUTTON_TEXT_SIZE_SP = 16
 
 @Composable
 fun TableStatusDialog(
-    table: Table,
+    tableDetail: TableDetail,
     onDismiss: () -> Unit,
     onStatusChange: (TableStatus) -> Unit,
     modifier: Modifier = Modifier
@@ -51,7 +50,7 @@ fun TableStatusDialog(
         text = {
             Column {
                 TableStatusOptions(
-                    currentStatus = table.tableStatus,
+                    currentStatus = tableDetail.tableStatus,
                     onStatusSelect = onStatusChange
                 )
             }

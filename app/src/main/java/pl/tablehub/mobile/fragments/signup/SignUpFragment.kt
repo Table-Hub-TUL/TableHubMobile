@@ -13,18 +13,17 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.client.rest.interfaces.IAuthService
-import pl.tablehub.mobile.client.rest.RetrofitClient
 import pl.tablehub.mobile.client.model.auth.SignUpRequest
+import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.fragments.signup.composables.MainSignUpView
 import pl.tablehub.mobile.ui.theme.TableHubTheme
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
-    private val authService: IAuthService by lazy {
-        RetrofitClient.client.create(IAuthService::class.java)
-    }
+    @Inject
+    internal lateinit var authService: IAuthService
 
     override fun onCreateView(
         inflater: LayoutInflater,

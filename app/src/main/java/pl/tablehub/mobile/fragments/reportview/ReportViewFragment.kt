@@ -14,6 +14,8 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.reportview.composables.MainReportView
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v2.RestaurantDetail
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 
 @AndroidEntryPoint
@@ -25,14 +27,14 @@ class ReportViewFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                val restaurants: List<Restaurant> =
+                val restaurants: List<RestaurantListItem> =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        requireArguments().getParcelableArray(NavArgs.RESTAURANTS, Restaurant::class.java)
-                            ?.map { it as Restaurant } ?: emptyList()
+                        requireArguments().getParcelableArray(NavArgs.RESTAURANTS, RestaurantListItem::class.java)
+                            ?.map { it as RestaurantListItem } ?: emptyList()
                     } else {
                         @Suppress("DEPRECATION")
                         requireArguments().getParcelableArray(NavArgs.RESTAURANTS)
-                            ?.map { it as Restaurant } ?: emptyList()
+                            ?.map { it as RestaurantListItem } ?: emptyList()
                     }
 
                 val userLocation: Location =

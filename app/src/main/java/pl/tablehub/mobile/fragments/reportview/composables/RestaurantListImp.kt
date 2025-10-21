@@ -27,6 +27,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
@@ -34,8 +35,8 @@ import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 fun RestaurantList(
     searchText: String,
     userLocation: Location,
-    onRestaurantClick: (Restaurant) -> Unit = {},
-    restaurants: List<Restaurant> = emptyList()
+    onRestaurantClick: (RestaurantListItem) -> Unit = {},
+    restaurants: List<RestaurantListItem> = emptyList()
 ) {
     val dims = rememberGlobalDimensions()
 
@@ -80,7 +81,7 @@ fun RestaurantList(
 
 @Composable
 fun RestaurantItem(
-    restaurant: Restaurant,
+    restaurant: RestaurantListItem,
     distanceInMeters: Int,
     onClick: () -> Unit
 ) {

@@ -12,7 +12,7 @@ import retrofit2.http.QueryMap
 interface IRestaurantService {
     @GET("api/restaurants")
     suspend fun fetchRestaurants(
-        @QueryMap options: Map<String, Any?>
+        @QueryMap options: Map<String, @JvmSuppressWildcards Any>
     ) : List<RestaurantListItem>
 
     @GET("api/restaurants/{id}")
