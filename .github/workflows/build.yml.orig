@@ -1,0 +1,77 @@
+name: Gradle app build
+
+on:
+<<<<<<< HEAD
+=======
+  push:
+    branches:
+      - master
+>>>>>>> 7182334 (TH-11 workflow test)
+  pull_request: # All PR
+    branches:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Import GPG Key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GIT_CRYPT_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Install git-crypt
+        run: |
+          sudo apt-get update
+          sudo apt-get install git-crypt -y
+
+      - name: Unlock git-crypt Files (GPG)
+        run: git crypt unlock
+
+      - name: Load app/src/main/assets/.env
+        run: |
+          mkdir -p app/src/main/assets
+          cp .env.dev app/src/main/assets/.env
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant permissions for gradlew
+        run: chmod +x gradlew
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+<<<<<<< HEAD
+=======
+        with: 
+          SKIP_JDK_VERSION_CHECK: true 
+>>>>>>> 7182334 (TH-11 workflow test)
+
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+<<<<<<< HEAD
+      - name: Build gradle
+        run: ./gradlew build
+=======
+      - name: Build gradle (Verbose)
+        run: ./gradlew build --stacktrace --info
+>>>>>>> 7182334 (TH-11 workflow test)
