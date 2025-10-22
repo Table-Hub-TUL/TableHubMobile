@@ -41,7 +41,7 @@ android {
         }
         create("profile") {
             initWith(getByName("release"))
-            isMinifyEnabled = true
+            isMinifyEnabled = false
         }
     }
     compileOptions {

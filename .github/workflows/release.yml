@@ -10,6 +10,9 @@ jobs:
   release_pipeline:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -44,16 +47,17 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Decode and create keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
 
       - name: Grant gradle permissions
         run: chmod +x gradlew
 
       - name: Build release and profile APKs
         run: |
+          KEYSTORE_PATH=$(pwd)/app/keystore.jks
           ./gradlew clean
-          ./gradlew assembleRelease assembleProfile \
-            -Pandroid.injected.signing.store.file=keystore.jks \
+          ./gradlew assembleRelease \
+            -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
             -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
@@ -62,10 +66,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ github.run_number }}
-          name: "Release #${{ github.run_number }}"
+          name: "Release ${{ steps.timestamp.outputs.RELEASE_TIME }}"
           body: |
-            Automated modular release.
-            Includes signed and profiled APKs.
+            Automated release. Change log to be added
           files: app/build/outputs/apk/**/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
