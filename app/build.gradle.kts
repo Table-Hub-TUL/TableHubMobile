@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "pl.tablehub.mobile"
-        minSdk = 30
+        minSdk = 31
         //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 1
