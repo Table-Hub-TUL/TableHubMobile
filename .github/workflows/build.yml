@@ -1,9 +1,6 @@
 name: Gradle app build
 
 on:
-  push:
-    branches:
-      - master
   pull_request: # All PR
     branches:
 
@@ -60,5 +57,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build gradle (Verbose)
+      - name: Build gradle
         run: ./gradlew build
