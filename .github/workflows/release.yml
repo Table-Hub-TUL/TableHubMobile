@@ -1,0 +1,71 @@
+name: Android Release Pipeline
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  release_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Import GPG Key for git-crypt
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GIT_CRYPT_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Install git-crypt
+        run: |
+          sudo apt-get update
+          sudo apt-get install git-crypt -y
+
+      - name: Unlock encrypted files
+        run: git crypt unlock
+
+      - name: Prepare environment files
+        run: |
+          mkdir -p app/src/main/assets
+          cp .env.dev app/src/main/assets/.env
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Decode and create keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
+
+      - name: Grant gradle permissions
+        run: chmod +x gradlew
+
+      - name: Build release and profile APKs
+        run: |
+          ./gradlew clean
+          ./gradlew assembleRelease assembleProfile \
+            -Pandroid.injected.signing.store.file=keystore.jks \
+            -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+
+      - name: Create GitHub Release with APKs
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          name: "Release #${{ github.run_number }}"
+          body: |
+            Automated modular release.
+            Includes signed and profiled APKs.
+          files: app/build/outputs/apk/**/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
