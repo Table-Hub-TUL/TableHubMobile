@@ -28,6 +28,7 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
                 location = dto.location,
                 cuisine = dto.cuisine,
                 rating = dto.rating,
+                tables = emptyList()
             )
         }
         _restaurantsMap.value = currentMap
