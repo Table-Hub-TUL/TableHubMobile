@@ -1,10 +1,10 @@
 package pl.tablehub.mobile.client.rest.interfaces
 
 import retrofit2.Response
-import pl.tablehub.mobile.client.model.LoginRequest
-import pl.tablehub.mobile.client.model.LoginResponse
-import pl.tablehub.mobile.client.model.SignUpRequest
-import pl.tablehub.mobile.client.model.SignUpResponse
+import pl.tablehub.mobile.client.model.auth.LoginRequest
+import pl.tablehub.mobile.client.model.auth.LoginResponse
+import pl.tablehub.mobile.client.model.auth.SignUpRequest
+import pl.tablehub.mobile.client.model.auth.SignUpResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 

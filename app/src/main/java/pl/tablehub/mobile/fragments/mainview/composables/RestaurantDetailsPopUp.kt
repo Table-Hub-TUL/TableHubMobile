@@ -23,6 +23,8 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
+import pl.tablehub.mobile.model.v2.RestaurantListItem
+import pl.tablehub.mobile.model.v2.TableListItem
 import pl.tablehub.mobile.ui.shared.composables.PopUpWrapper
 import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
@@ -95,14 +97,14 @@ internal fun PopUpButton(
 
 @Composable
 fun RestaurantDetailsPopup(
-    restaurant: Restaurant,
-    sections: List<Section>,
+    restaurant: RestaurantListItem,
+    tables: List<TableListItem>,
     onDismissRequest: () -> Unit,
-    onReportTable: (Restaurant) -> Unit,
-    onMoreDetailsClick: (Restaurant) -> Unit
+    onReportTable: (RestaurantListItem) -> Unit,
+    onMoreDetailsClick: (RestaurantListItem) -> Unit
 ) {
     val dims = rememberGlobalDimensions()
-    val availableTables by remember { mutableIntStateOf(sections.flatMap { it.tables }.count { it.status == TableStatus.AVAILABLE }) }
+    val availableTables by remember { mutableIntStateOf(tables.count { it.tableStatus == TableStatus.AVAILABLE }) }
     PopUpWrapper(
         onDismissRequest = onDismissRequest
     ) {

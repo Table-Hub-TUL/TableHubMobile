@@ -17,8 +17,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.v1.Location
-import pl.tablehub.mobile.model.v1.Restaurant
-import pl.tablehub.mobile.client.model.TableStatusChange
+import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
+import pl.tablehub.mobile.model.v2.RestaurantDetail
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.services.TablesService
 import java.lang.ref.WeakReference
@@ -30,7 +31,7 @@ class MainViewViewModel @Inject constructor(
     repository: IRestaurantsRepository
 ) : AndroidViewModel(application) {
     private val _restaurants = repository.restaurantsMap
-    val restaurants: StateFlow<Map<Long, Restaurant>> = _restaurants
+    val restaurants: StateFlow<Map<Long, RestaurantListItem>> = _restaurants
     private val _userLocation = MutableStateFlow(Location(0.0, 0.0))
     val userLocation: StateFlow<Location> = _userLocation
 
@@ -103,6 +104,10 @@ class MainViewViewModel @Inject constructor(
                 tablesService.updateTableStatus(update)
             }
         }
+    }
+
+    suspend fun getRestaurantById(id: Long): RestaurantDetail {
+        return getService()?.getRestaurantById(id)!!
     }
 
     override fun onCleared() {

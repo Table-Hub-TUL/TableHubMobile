@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
+import pl.tablehub.mobile.model.v2.TableListItem
 
 @Composable
 fun rememberTextOnBitmap(baseBitmap: Bitmap, text: String): Bitmap {
@@ -32,8 +33,8 @@ fun rememberTextOnBitmap(baseBitmap: Bitmap, text: String): Bitmap {
     }
 }
 
-internal fun calculateFreeTablesText(restaurantId: Long, tables: Map<Long, List<Section>>): String {
-    val count: Int = (tables[restaurantId]?.flatMap { it.tables }?.count { it.status == TableStatus.AVAILABLE }
+internal fun calculateFreeTablesText(restaurantId: Long, tables: Map<Long, List<TableListItem>>): String {
+    val count: Int = (tables[restaurantId]?.count { it.tableStatus == TableStatus.AVAILABLE }
         ?: 0)
     return when(count < 100) {
         true -> count.toString()

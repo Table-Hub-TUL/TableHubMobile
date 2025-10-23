@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.client.model
+package pl.tablehub.mobile.client.model.restaurants
 
 import kotlinx.serialization.Serializable
 import pl.tablehub.mobile.model.TableStatus

@@ -5,9 +5,9 @@ import pl.tablehub.mobile.model.v2.POI
 import pl.tablehub.mobile.model.v2.Point
 import pl.tablehub.mobile.model.v2.Section
 import pl.tablehub.mobile.model.v2.SectionLayout
-import pl.tablehub.mobile.model.v2.Table
+import pl.tablehub.mobile.model.v2.TableDetail
 
-val exampleTable = Table(
+val exampleTableDetail = TableDetail(
     id = 1,
     tableStatus = TableStatus.OCCUPIED,
     position = Point(x = 100, y = 150),
@@ -19,20 +19,20 @@ val sampleSections = listOf(
     Section(
         id = 101,
         name = "Main Dining Hall",
-        tables = listOf(
-            Table(
+        tableDetails = listOf(
+            TableDetail(
                 id = 1,
                 tableStatus = TableStatus.OCCUPIED,
                 position = Point(x = 100, y = 150),
                 capacity = 4
             ),
-            Table(
+            TableDetail(
                 id = 2,
                 tableStatus = TableStatus.OCCUPIED,
                 position = Point(x = 350, y = 100),
                 capacity = 2
             ),
-            Table(
+            TableDetail(
                 id = 3,
                 tableStatus = TableStatus.AVAILABLE,
                 position = Point(x = 550, y = 300),
@@ -55,14 +55,14 @@ val sampleSections = listOf(
     Section(
         id = 102,
         name = "Outdoor Patio",
-        tables = listOf(
-            Table(
+        tableDetails = listOf(
+            TableDetail(
                 id = 4,
                 tableStatus = TableStatus.AVAILABLE,
                 position = Point(x = 120, y = 200),
                 capacity = 4
             ),
-            Table(
+            TableDetail(
                 id = 5,
                 tableStatus = TableStatus.AVAILABLE,
                 position = Point(x = 300, y = 250),

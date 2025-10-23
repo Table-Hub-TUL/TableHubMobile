@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TableHubTheme
 
@@ -23,8 +24,8 @@ import pl.tablehub.mobile.ui.theme.TableHubTheme
 fun MainReportView(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
-    onRestaurantSelected: (Restaurant) -> Unit = {},
-    restaurants: List<Restaurant> = emptyList(),
+    onRestaurantSelected: (RestaurantListItem) -> Unit = {},
+    restaurants: List<RestaurantListItem> = emptyList(),
     userLocation: Location = Location(0.0, 0.0)
 ) {
     var searchText by remember { mutableStateOf("") }

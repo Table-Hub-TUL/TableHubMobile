@@ -32,6 +32,8 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.model.v1.Section
+import pl.tablehub.mobile.model.v2.RestaurantListItem
+import pl.tablehub.mobile.model.v2.TableListItem
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 
@@ -41,9 +43,9 @@ fun MapboxMapWrapper(
     locationTrigger: SharedFlow<Unit>,
     centerOnPointTrigger: SharedFlow<Point>,
     potentialCenterLocation: Location,
-    restaurants: List<Restaurant>,
-    tables: Map<Long, List<Section>>,
-    onMarkerClick: (Restaurant) -> Unit = {}
+    restaurants: List<RestaurantListItem>,
+    tables: Map<Long, List<TableListItem>>,
+    onMarkerClick: (RestaurantListItem) -> Unit = {}
 ) {
     val dims = rememberGlobalDimensions()
     val context = LocalContext.current

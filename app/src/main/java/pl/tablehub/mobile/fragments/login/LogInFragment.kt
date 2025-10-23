@@ -17,15 +17,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.client.rest.interfaces.IAuthService
-import pl.tablehub.mobile.client.rest.RetrofitClient
-import pl.tablehub.mobile.client.model.LoginRequest
-import pl.tablehub.mobile.client.model.LoginResponse
+import pl.tablehub.mobile.client.model.auth.LoginRequest
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.login.composables.MainLoginView
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -35,9 +30,8 @@ class LogInFragment : Fragment() {
     @Inject
     lateinit var encryptedPreferences: EncryptedDataStore
 
-    private val authService: IAuthService by lazy {
-        RetrofitClient.client.create(IAuthService::class.java)
-    }
+    @Inject
+    lateinit var authService: IAuthService
 
     override fun onCreateView(
         inflater: LayoutInflater,
