@@ -18,9 +18,9 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.unit.dp
-import pl.tablehub.mobile.client.model.TableStatusChange
+import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.model.v2.Section
-import pl.tablehub.mobile.model.v2.Table
+import pl.tablehub.mobile.model.v2.TableDetail
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import rememberZoomPanState
 import zoomablePannable
@@ -39,7 +39,7 @@ fun RestaurantMapRenderer(
 ) {
     val mapPath = stringToPath(section.sectionLayout.shape)
     val transformState = rememberZoomPanState()
-    var selectedTable by remember { mutableStateOf<Table?>(null) }
+    var selectedTableDetail by remember { mutableStateOf<TableDetail?>(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(
@@ -71,19 +71,19 @@ fun RestaurantMapRenderer(
                     translationY = transformState.offset.y
                 )
         ) {
-            section.tables.forEach { table ->
+            section.tableDetails.forEach { table ->
                 TableItem(
-                    table = table,
-                    onTableClick = { selectedTable = it }
+                    tableDetail = table,
+                    onTableClick = { selectedTableDetail = it }
                 )
             }
             section.pois.forEach { poi ->
                 PointOfInterest(poi = poi)
             }
-            selectedTable?.let { table ->
+            selectedTableDetail?.let { table ->
                 TableStatusDialog(
-                    table = table,
-                    onDismiss = { selectedTable = null },
+                    tableDetail = table,
+                    onDismiss = { selectedTableDetail = null },
                     onStatusChange = { newStatus ->
                         table.tableStatus = newStatus
                         onTableStatusChanged(

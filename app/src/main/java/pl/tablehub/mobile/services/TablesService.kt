@@ -13,11 +13,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import pl.tablehub.mobile.client.model.TableStatusChange
-import pl.tablehub.mobile.client.rest.RetrofitClient
+import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
+
 import pl.tablehub.mobile.client.rest.interfaces.IRestaurantService
 import pl.tablehub.mobile.client.websocket.service.WebSocketService
 import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v2.RestaurantDetail
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.util.WSMessageRelay
 import javax.inject.Inject
@@ -33,9 +35,8 @@ class TablesService : Service() {
     internal lateinit var messageRelay: WSMessageRelay
     private val binder = LocalBinder()
 
-    private val restaurantClientService: IRestaurantService by lazy {
-        RetrofitClient.client.create(IRestaurantService::class.java)
-    }
+    @Inject
+    internal lateinit var restaurantClientService: IRestaurantService
 
     private val messageScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     @Inject
@@ -58,9 +59,13 @@ class TablesService : Service() {
 
     private fun fetchRestaurants() {
         connectionScope.launch {
-            val restaurants: List<Restaurant> = restaurantClientService.fetchRestaurants()
+            val restaurants: List<RestaurantListItem> = restaurantClientService.fetchRestaurants(options = emptyMap<String, Any>())
             repository.processRestaurantList(restaurants)
         }
+    }
+
+    suspend fun getRestaurantById(id: Long): RestaurantDetail {
+        return restaurantClientService.fetchRestaurant(id)
     }
 
     fun updateTableStatus(update: TableStatusChange) {

@@ -1,13 +1,11 @@
 package pl.tablehub.mobile.repository
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import pl.tablehub.mobile.client.model.TableStatusChange
-import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 
 interface IRestaurantsRepository {
-    val restaurantsMap: StateFlow<Map<Long, Restaurant>>
-    fun getRestaurantById(id: Long): Flow<Restaurant?>
-    suspend fun processRestaurantList(dtos: List<Restaurant>)
+    val restaurantsMap: StateFlow<Map<Long, RestaurantListItem>>
+    suspend fun processRestaurantList(dtos: List<RestaurantListItem>)
     suspend fun processTableStatusChange(tableStatusChange: TableStatusChange)
 }

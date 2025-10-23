@@ -16,10 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import pl.tablehub.mobile.fragments.restaurantlayoutview.temp.exampleTable
+import pl.tablehub.mobile.fragments.restaurantlayoutview.temp.exampleTableDetail
 import pl.tablehub.mobile.model.TableStatus
-import pl.tablehub.mobile.model.v2.Point
-import pl.tablehub.mobile.model.v2.Table
+import pl.tablehub.mobile.model.v2.TableDetail
 import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import kotlin.math.cos
 import kotlin.math.sin
@@ -49,15 +48,15 @@ private fun calculateChairDistance(tableSize: Dp): Dp {
 @Preview
 @Composable
 fun TableItem(
-    table: Table = exampleTable,
-    onTableClick: (Table) -> Unit = {},
+    tableDetail: TableDetail = exampleTableDetail,
+    onTableClick: (TableDetail) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val xOffset = (table.position.x).dp
-    val yOffset = (table.position.y).dp
-    val tableColor = getTableColor(table.tableStatus)
+    val xOffset = (tableDetail.position.x).dp
+    val yOffset = (tableDetail.position.y).dp
+    val tableColor = getTableColor(tableDetail.tableStatus)
 
-    val tableSize = calculateTableSize(table.capacity)
+    val tableSize = calculateTableSize(tableDetail.capacity)
     val chairDistance = calculateChairDistance(tableSize)
 
     Box(
@@ -65,8 +64,8 @@ fun TableItem(
             .offset(x = xOffset, y = yOffset)
             .size(tableSize)
     ) {
-        repeat(table.capacity) { index ->
-            val angle = (2 * PI * index / table.capacity) - (PI / 2)
+        repeat(tableDetail.capacity) { index ->
+            val angle = (2 * PI * index / tableDetail.capacity) - (PI / 2)
             val angleInDegrees = Math.toDegrees(angle).toFloat()
             val chairX = (chairDistance.value * cos(angle)).dp
             val chairY = (chairDistance.value * sin(angle)).dp
@@ -93,13 +92,13 @@ fun TableItem(
                 )
         ) {
             IconButton(
-                onClick = { onTableClick(table) },
+                onClick = { onTableClick(tableDetail) },
                 modifier = Modifier.size(tableSize)
             ) {}
         }
 
         Text(
-            text = table.capacity.toString(),
+            text = tableDetail.capacity.toString(),
             modifier = Modifier.align(Alignment.Center),
             color = Color.Black,
             fontSize = TABLE_CAPACITY_TEXT_SIZE_SP.sp

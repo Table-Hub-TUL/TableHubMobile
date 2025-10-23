@@ -22,14 +22,17 @@ import pl.tablehub.mobile.fragments.mainview.composables.filter.FilterMenu
 import pl.tablehub.mobile.fragments.mainview.composables.map.MapboxMapWrapper
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.model.v1.Table
+import pl.tablehub.mobile.model.v2.RestaurantListItem
+import pl.tablehub.mobile.model.v2.TableListItem
 
 @Composable
 fun MainMapView(
-    restaurants: List<Restaurant>,
+    restaurants: List<RestaurantListItem>,
     userLocation: Location,
     onReportGeneral: () -> Unit = {},
-    onReportSpecific: (Restaurant) -> Unit,
-    onMoreDetails: (Restaurant) -> Unit,
+    onReportSpecific: (RestaurantListItem) -> Unit,
+    onMoreDetails: (RestaurantListItem) -> Unit,
     menuOnClicks: Map<String, () -> Unit> = emptyMap()
 ) {
     val menuDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -37,9 +40,8 @@ fun MainMapView(
     val scope = rememberCoroutineScope()
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
     val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
-    var selectedRestaurant by remember { mutableStateOf<Restaurant?>(null) }
+    var selectedRestaurant by remember { mutableStateOf<RestaurantListItem?>(null) }
     var visibleRestaurants by remember { mutableStateOf(restaurants) }
-    val tables = restaurants.associateBy( { it.id }, { it.sections })
     var firstLaunch by rememberSaveable { mutableStateOf(true) }
 
     MainViewMenu(
@@ -50,7 +52,9 @@ fun MainMapView(
         FilterMenu(
             drawerState = filterDrawerState,
             restaurants = restaurants,
-            tables = tables,
+            tables = restaurants.associate {
+                it.id to (it.tables?: emptyList<TableListItem>())
+            },
             onFilterResult = { filteredList -> visibleRestaurants = filteredList }
         ) {
             val (lng, lat) = userLocation
@@ -69,7 +73,9 @@ fun MainMapView(
                     centerOnPointTrigger = centerOnPointTrigger,
                     restaurants = visibleRestaurants,
                     potentialCenterLocation = userLocation,
-                    tables = tables,
+                    tables = restaurants.associate { restaurant ->
+                        restaurant.id to (restaurant.tables?: emptyList<TableListItem>())
+                    },
                     onMarkerClick = { restaurant ->
                         selectedRestaurant = restaurant
                         scope.launch {
@@ -109,7 +115,7 @@ fun MainMapView(
                     RestaurantDetailsPopup(
                         restaurant = restaurant,
                         onDismissRequest = { selectedRestaurant = null },
-                        sections = tables[restaurant.id] ?: emptyList(),
+                        tables = restaurant.tables?: emptyList<TableListItem>(),
                         onReportTable = onReportSpecific,
                         onMoreDetailsClick = onMoreDetails)
                 }
