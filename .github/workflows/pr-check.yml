@@ -1,53 +1,48 @@
-name: Gradle app build
-
+name: Pull Request Build
 on:
-  pull_request: # All PR
+  pull_request:
     branches:
+      - master
+      - main
+      - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Import GPG Key
+      
+      - name: Import GPG Key for git-crypt
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.GIT_CRYPT_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
-
+      
       - name: Install git-crypt
         run: |
           sudo apt-get update
           sudo apt-get install git-crypt -y
-
-      - name: Unlock git-crypt Files (GPG)
+      
+      - name: Unlock encrypted files
         run: git crypt unlock
-
-      - name: Load app/src/main/assets/.env
+      
+      - name: Prepare environment files
         run: |
           mkdir -p app/src/main/assets
           cp .env.dev app/src/main/assets/.env
-
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+      
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
-      - name: Grant permissions for gradlew
-        run: chmod +x gradlew
-
+      
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Create local.properties
-        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
-
-      - name: Cache dependencies
+      
+      - name: Setup Gradle cache
         uses: actions/cache@v4
         with:
           path: |
@@ -56,6 +51,18 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Build gradle
-        run: ./gradlew build
+      
+      - name: Grant gradle permissions
+        run: chmod +x gradlew
+      
+      - name: Build debug APK
+        run: |
+          ./gradlew clean
+          ./gradlew assembleDebug
+      
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          retention-days: 7
