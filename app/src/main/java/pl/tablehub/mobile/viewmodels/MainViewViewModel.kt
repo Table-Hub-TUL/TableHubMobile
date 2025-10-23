@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
+import pl.tablehub.mobile.model.v2.RestaurantDetail
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.services.TablesService
@@ -103,6 +104,10 @@ class MainViewViewModel @Inject constructor(
                 tablesService.updateTableStatus(update)
             }
         }
+    }
+
+    suspend fun getRestaurantById(id: Long): RestaurantDetail {
+        return getService()?.getRestaurantById(id)!!
     }
 
     override fun onCleared() {

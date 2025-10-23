@@ -42,13 +42,12 @@ import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
-@Preview
 fun RestaurantLayoutMainView(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onFinishChanges: () -> Unit = {},
     onTableStatusChanged: ((TableStatusChange) -> Unit) = { _: TableStatusChange -> },
-    sections: List<Section> = sampleSections,
+    sections: List<Section>,
 ) {
     val dims = rememberGlobalDimensions()
     var selectedSection by remember { mutableStateOf(sections.firstOrNull()) }

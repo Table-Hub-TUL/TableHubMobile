@@ -33,7 +33,7 @@ fun FilterMenu(
         val filteredList = restaurants.filter { restaurant ->
             restaurant.rating >= selectedRating &&
                     (selectedCuisine == null || restaurant.cuisine.contains(selectedCuisine)) &&
-                    (hasTableWithMinimumSeats(restaurant.id, tables, minFreeSeats))
+                    (hasTableWithMinimumSeats(restaurant.id, tables, minFreeSeats) || minFreeSeats == 0) // TEMP
         }
         onFilterResult(filteredList)
     }
