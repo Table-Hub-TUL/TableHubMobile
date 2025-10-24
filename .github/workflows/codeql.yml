@@ -1,70 +1,85 @@
 name: "CodeQL"
-
 on:
   push:
     branches: [ "master", "develop" ]
   pull_request:
     branches: [ "master", "develop" ]
-
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
     permissions:
       actions: read
       contents: read
       security-events: write
-
+      packages: read
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java' ]
-
+        include:
+          - language: actions
+            build-mode: none
+          - language: java-kotlin
+            build-mode: manual
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-
+      
+    - name: Cache APT packages
+      if: matrix.language == 'java-kotlin'
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: git-crypt
+        version: 1.0
+        
     - name: Import GPG Key for git-crypt
+      if: matrix.language == 'java-kotlin'
       uses: crazy-max/ghaction-import-gpg@v6
       with:
         gpg_private_key: ${{ secrets.GIT_CRYPT_KEY }}
         passphrase: ${{ secrets.GPG_PASSPHRASE }}
-
-    - name: Install git-crypt
-      run: |
-        sudo apt-get update
-        sudo apt-get install git-crypt -y
-
+        
     - name: Unlock encrypted files
+      if: matrix.language == 'java-kotlin'
       run: git crypt unlock
-
+      
     - name: Prepare environment files
+      if: matrix.language == 'java-kotlin'
       run: |
         mkdir -p app/src/main/assets
         cp .env.dev app/src/main/assets/.env
         echo "sdk.dir=$ANDROID_HOME" > local.properties
-
+        
     - name: Set up JDK 17
+      if: matrix.language == 'java-kotlin'
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '17'
-
+        cache: 'gradle'
+        
     - name: Setup Android SDK
+      if: matrix.language == 'java-kotlin'
       uses: android-actions/setup-android@v3
-
+      
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
-
+        build-mode: ${{ matrix.build-mode }}
+        config: |
+          name: "CodeQL Config"
+          disable-default-queries: false
+        
     - name: Grant gradle permissions
+      if: matrix.language == 'java-kotlin'
       run: chmod +x gradlew
-
+      
     - name: Build with Gradle
-      run: ./gradlew clean assembleDebug --no-daemon
-
+      if: matrix.language == 'java-kotlin'
+      run: ./gradlew assembleDebug --build-cache --parallel --daemon
+      
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      uses: github/codeql-action/analyze@v4
       with:
         category: "/language:${{matrix.language}}"
