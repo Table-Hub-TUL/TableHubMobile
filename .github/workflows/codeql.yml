@@ -67,6 +67,9 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
+        config: |
+          name: "CodeQL Config"
+          disable-default-queries: false
         
     - name: Grant gradle permissions
       if: matrix.language == 'java-kotlin'
