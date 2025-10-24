@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.rollbar.android.Rollbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -84,6 +85,7 @@ class LogInFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 if (isAdded) {
+                    Rollbar.instance().log(e)
                     Toast.makeText(requireContext(), requireContext().getString(R.string.login_failed), Toast.LENGTH_LONG).show()
                 }
             }
