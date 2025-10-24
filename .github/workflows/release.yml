@@ -4,7 +4,6 @@ on:
     branches:
       - master
   workflow_dispatch:
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -13,81 +12,81 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 0
+          
+      - name: Cache APT packages
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: git-crypt
+          version: 1.0
+          
       - name: Import GPG Key for git-crypt
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.GIT_CRYPT_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      
-      - name: Install git-crypt
-        run: |
-          sudo apt-get update
-          sudo apt-get install git-crypt -y
-      
+          
       - name: Unlock encrypted files
         run: git crypt unlock
-      
+        
       - name: Prepare environment files
         run: |
           mkdir -p app/src/main/assets
           cp .env.stg app/src/main/assets/.env
           echo "sdk.dir=$ANDROID_HOME" > local.properties
-      
+          
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-      
+          cache: 'gradle'
+          
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-      
-      - name: Setup Gradle cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os}}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-      
+        
       - name: Grant gradle permissions
         run: chmod +x gradlew
-      
+        
       - name: Decode and create keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
-      
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
+        
       - name: Build signed release APK
         run: |
-          KEYSTORE_PATH=$(pwd)/app/keystore.jks
-          ./gradlew clean
           ./gradlew assembleRelease \
-            -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
+            --build-cache \
+            --parallel \
+            --daemon \
+            -Pandroid.injected.signing.store.file=$(pwd)/app/keystore.jks \
             -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
-      
-      - name: Generate timestamp
-        id: timestamp
-        run: echo "RELEASE_TIME=$(date +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_OUTPUT
-      
+            
+      - name: Generate release info
+        id: release_info
+        run: |
+          echo "timestamp=$(date +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "commit_msg=$(git log -1 --pretty=%B | head -n 1)" >> $GITHUB_OUTPUT
+          
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ github.run_number }}
-          name: "Release ${{ steps.timestamp.outputs.RELEASE_TIME }}"
+          name: "Release v${{ github.run_number }} - ${{ steps.release_info.outputs.short_sha }}"
           body: |
-            ## Automated Release v${{ github.run_number }}
+            ## 🚀 Release v${{ github.run_number }}
             
-            **Build Date:** ${{ steps.timestamp.outputs.RELEASE_TIME }}
-            **Commit:** ${{ github.sha }}
-            **Branch:** ${{ github.ref_name }}
+            **📅 Build Date:** ${{ steps.release_info.outputs.timestamp }}
+            **🔖 Commit:** [${{ steps.release_info.outputs.short_sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+            **🌿 Branch:** ${{ github.ref_name }}
+            **💬 Message:** ${{ steps.release_info.outputs.commit_msg }}
             
-            ### Changes
-            - Automated release from commit ${{ github.sha }}
+            ### 📦 Downloads
+            Download the APK below and install on your device.
           files: app/build/outputs/apk/release/*.apk
+          draft: false
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
