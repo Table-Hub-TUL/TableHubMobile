@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.rollbar.android.Rollbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
@@ -60,6 +61,7 @@ class SignUpFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 if (isAdded) {
+                    Rollbar.instance().log(e)
                     Toast.makeText(requireContext(), requireContext().getString(R.string.signup_fail), Toast.LENGTH_LONG).show()
                 }
             }

@@ -57,4 +57,11 @@
     <string name="app_in_dev">Not ready yet, app in dev</string>
     <string name="error_password_too_short">Password must be at least 6 characters long</string>
     <string name="table_number_eq_seats">The number shows the number of seats</string>
+    <string name="crash_title">⚠️ App Failure</string>
+    <string name="crash_message_network">A network error occurred. The issue may resolve itself.\n\nWould you like to report this? It helps us improve!</string>
+    <string name="crash_message_general">Something went wrong and the app needs to close.\n\nWould you like to report this? It helps us improve!</string>
+    <string name="crash_button_report">📤 Report &amp; Close</string>
+    <string name="crash_button_close">Close App</string>
+    <string name="crash_unknown_error">Unknown error</string>
+    <string name="crash_unknown_thread">Unknown</string>
 </resources>

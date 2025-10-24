@@ -58,4 +58,11 @@
     <string name="app_in_dev">Nie zaimplemtowane</string>
     <string name="error_password_too_short">Hasło musi mieć przynajmniej 6 znaków</string>
     <string name="table_number_eq_seats">Liczba wskazuje na ilość krzeseł</string>
+    <string name="crash_title">⚠️ Awaria aplikacji</string>
+    <string name="crash_message_network">Wystąpił błąd sieci. Problem może się sam rozwiązać.\n\nCzy chcesz zgłosić ten problem? To nam bardzo pomaga!</string>
+    <string name="crash_message_general">Coś poszło nie tak i aplikacja musi zostać zamknięta.\n\nCzy chcesz zgłosić ten problem? To nam bardzo pomaga!</string>
+    <string name="crash_button_report">📤 Zgłoś i zamknij</string>
+    <string name="crash_button_close">Zamknij aplikację</string>
+    <string name="crash_unknown_error">Nieznany błąd</string>
+    <string name="crash_unknown_thread">Nieznany</string>
 </resources>
