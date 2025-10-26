@@ -13,5 +13,7 @@ data class RestaurantSearchQuery(
     val userLongitude: Double,
     val radius: Double,
     @SerialName("restaurantAmount")
-    val limit: Int
+    val limit: Int,
+    @SerialName("minFreeSeats")
+    val minFreeSeats: Int? = null
 )

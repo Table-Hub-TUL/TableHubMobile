@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.client.rest.interfaces
 
+import pl.tablehub.mobile.client.model.restaurants.RestaurantSearchQuery
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.model.v2.RestaurantDetail
 import pl.tablehub.mobile.model.v2.RestaurantListItem
@@ -22,4 +23,9 @@ interface IRestaurantService {
 
     @POST("api/table/update-status")
     suspend fun updateTableStatus(@Body statusRequest: TableStatusChange)
+
+    @POST("restaurants/search")
+    suspend fun searchRestaurants(
+        @Body query: RestaurantSearchQuery
+    ): List<RestaurantListItem>
 }
