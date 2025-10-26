@@ -41,36 +41,33 @@ fun RestaurantMapRenderer(
     val transformState = rememberZoomPanState()
     var selectedTableDetail by remember { mutableStateOf<TableDetail?>(null) }
 
+    val contentWidthDp = section.sectionLayout.viewportWidth.dp
+    val contentHeightDp = section.sectionLayout.viewportHeight.dp
+
     Box(modifier = Modifier.fillMaxSize()) {
-        Canvas(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .width(section.sectionLayout.viewportWidth.dp)
-                .height(section.sectionLayout.viewportHeight.dp)
-                .zoomablePannable(
-                    contentWidth = section.sectionLayout.viewportWidth.dp,
-                    contentHeight = section.sectionLayout.viewportHeight.dp,
-                    state = transformState
-                )
-        ) {
-            drawPath(
-                path = mapPath,
-                color = PRIMARY_COLOR,
-                style = Stroke(width = 4.dp.toPx())
-            )
-        }
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .width(section.sectionLayout.viewportWidth.dp)
-                .height(section.sectionLayout.viewportHeight.dp)
-                .graphicsLayer(
-                    scaleX = transformState.scale,
-                    scaleY = transformState.scale,
-                    translationX = transformState.offset.x,
-                    translationY = transformState.offset.y
+                .width(contentWidthDp)
+                .height(contentHeightDp)
+
+                .zoomablePannable(
+                    contentWidth = contentWidthDp,
+                    contentHeight = contentHeightDp,
+                    state = transformState
                 )
         ) {
+            Canvas(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                drawPath(
+                    path = mapPath,
+                    color = PRIMARY_COLOR,
+                    style = Stroke(width = 4.dp.toPx())
+                )
+            }
+
             section.tableDetails.forEach { table ->
                 TableItem(
                     tableDetail = table,
@@ -80,6 +77,7 @@ fun RestaurantMapRenderer(
             section.pois.forEach { poi ->
                 PointOfInterest(poi = poi)
             }
+        }
             selectedTableDetail?.let { table ->
                 TableStatusDialog(
                     tableDetail = table,
@@ -99,4 +97,3 @@ fun RestaurantMapRenderer(
             }
         }
     }
-}
