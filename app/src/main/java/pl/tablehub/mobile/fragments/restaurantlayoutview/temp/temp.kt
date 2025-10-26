@@ -23,19 +23,19 @@ val sampleSections = listOf(
             TableDetail(
                 id = 1,
                 tableStatus = TableStatus.OCCUPIED,
-                position = Point(x = 100, y = 150),
+                position = Point(x = 160, y = 450),
                 capacity = 4
             ),
             TableDetail(
                 id = 2,
                 tableStatus = TableStatus.OCCUPIED,
-                position = Point(x = 350, y = 100),
+                position = Point(x = 450, y = 600),
                 capacity = 2
             ),
             TableDetail(
                 id = 3,
                 tableStatus = TableStatus.AVAILABLE,
-                position = Point(x = 550, y = 300),
+                position = Point(x = 680, y = 1000),
                 capacity = 6
             )
         ),
@@ -43,7 +43,7 @@ val sampleSections = listOf(
             POI(
                 description = "Hostess Stand / Entrance",
                 topLeft = Point(x = 50, y = 50),
-                bottomRight = Point(x = 150, y = 250),
+                bottomRight = Point(x = 400, y = 350),
             )
         ),
         sectionLayout = SectionLayout(
@@ -59,21 +59,21 @@ val sampleSections = listOf(
             TableDetail(
                 id = 4,
                 tableStatus = TableStatus.AVAILABLE,
-                position = Point(x = 120, y = 200),
+                position = Point(x = 60, y = 20),
                 capacity = 4
             ),
             TableDetail(
                 id = 5,
                 tableStatus = TableStatus.AVAILABLE,
-                position = Point(x = 300, y = 250),
+                position = Point(x = 150, y = 60),
                 capacity = 2
             )
         ),
         pois = listOf(
             POI(
                 description = "Washrooms Link",
-                topLeft = Point(x = 450, y = 50),
-                bottomRight = Point(x = 550, y = 150),
+                topLeft = Point(x = 230, y = 100),
+                bottomRight = Point(x = 330, y = 180),
             )
         ),
         sectionLayout = SectionLayout(

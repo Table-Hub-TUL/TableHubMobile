@@ -1,6 +1,7 @@
 import android.util.Log
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -15,6 +16,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import kotlin.math.max
+import androidx.compose.ui.graphics.TransformOrigin
 
 @Stable
 class ZoomPanState {
@@ -30,13 +33,15 @@ fun rememberZoomPanState(): ZoomPanState {
 private fun calculateZoomCentroid(
     centroid: Offset,
     currentOffset: Offset,
-    currentScale: Float,
     canvasWidth: Float,
-    canvasHeight: Float
+    canvasHeight: Float,
+    currentScale: Float
+
 ): Offset {
     return Offset(
         x = (centroid.x - canvasWidth / 2f - currentOffset.x) / currentScale,
         y = (centroid.y - canvasHeight / 2f - currentOffset.y) / currentScale
+
     )
 }
 
@@ -51,6 +56,8 @@ private fun calculateZoomOffsetAdjustment(
     )
 }
 
+private val HEADER_HEIGHT_DP: Dp = 250.dp
+
 @Composable
 fun Modifier.zoomablePannable(
     contentWidth: Dp,
@@ -59,40 +66,85 @@ fun Modifier.zoomablePannable(
     minZoom: Float = 0.333f,
     maxZoom: Float = 1f
 ): Modifier {
-    val (w, h) = with(LocalConfiguration.current) { screenWidthDp.dp to screenHeightDp.dp }
-    val (screenWidthPx, screenHeightPx) = with(LocalDensity.current) { w.toPx() to h.toPx() }
+
     val density = LocalDensity.current
-    val contentWidthPx = with(density) { contentWidth.toPx() }
-    val contentHeightPx = with(density) { contentHeight.toPx() } // these will be used to constrain view
+    val contentWidthPx = contentWidth.value
+    val contentHeightPx = contentHeight.value
+
+    val headerHeightPx: Float = with(LocalDensity.current) { HEADER_HEIGHT_DP.toPx() }
+
+    val screenWidthDp = androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp.dp
+    val screenWidthPx: Float = with(density) { screenWidthDp.toPx() }
+    val scaleToFitWidth: Float = (screenWidthPx / contentWidthPx).coerceAtMost(1f)
+
+    val effectiveMinZoom = max(minZoom, scaleToFitWidth)
 
     return this
         .pointerInput(Unit) {
             detectTransformGestures { centroid, pan, zoom, _ ->
+
+                val screenWidthPx = size.width.toFloat()
+                val screenHeightPx = size.height.toFloat()
+
+                val containerWidthPx = size.width.toFloat()
+                val containerHeightPx = size.height.toFloat()
+
                 val oldScale = state.scale
-                val newScale = (oldScale * zoom).coerceIn(minZoom, maxZoom)
+                val newScale = (oldScale * zoom).coerceIn(effectiveMinZoom, maxZoom)
 
                 val transformedCentroid = calculateZoomCentroid(
                     centroid = centroid,
                     currentOffset = state.offset,
-                    currentScale = oldScale,
                     canvasWidth = screenWidthPx,
-                    canvasHeight = screenHeightPx
-                )
+                    canvasHeight = screenHeightPx,
+                    currentScale = oldScale )
                 val zoomAdjustment = calculateZoomOffsetAdjustment(
                     transformedCentroid = transformedCentroid,
                     oldScale = oldScale,
                     newScale = newScale
                 )
-                val newOffset = state.offset + pan - zoomAdjustment
+                var newOffset = state.offset + pan - zoomAdjustment
+
+                val scaledContentWidth = contentWidthPx * newScale
+                val scaledContentHeight = contentHeightPx * newScale
+
+                val maxNegativeX = max(0f, scaledContentWidth - containerWidthPx)
+                val maxNegativeY = max(0f, scaledContentHeight - containerHeightPx)
+
+
+                val maxPositiveX: Float
+                val maxPositiveY: Float
+
+                if (scaledContentWidth <= containerWidthPx) {
+                     maxPositiveX = (containerWidthPx - scaledContentWidth) / 2f
+                    newOffset = newOffset.copy(x = maxPositiveX)
+                } else {
+                     maxPositiveX = 0f
+                }
+
+                if (scaledContentHeight <= containerHeightPx) {
+
+                    maxPositiveY = headerHeightPx
+
+                } else {
+                    maxPositiveY = headerHeightPx
+                }
+
+
+                val finalOffset = Offset(
+                    x = newOffset.x.coerceIn(-maxNegativeX, maxPositiveX),
+                    y = newOffset.y.coerceIn(-maxNegativeY, maxPositiveY)
+                )
 
                 state.scale = newScale
-                state.offset = newOffset
+                state.offset = finalOffset
             }
         }
         .graphicsLayer(
             scaleX = state.scale,
             scaleY = state.scale,
             translationX = state.offset.x,
-            translationY = state.offset.y
+            translationY = state.offset.y,
+            transformOrigin = TransformOrigin(0f, 0f)
         )
 }
