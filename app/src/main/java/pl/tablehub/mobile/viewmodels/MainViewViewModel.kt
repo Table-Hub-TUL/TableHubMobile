@@ -28,12 +28,13 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewViewModel @Inject constructor(
     private val application: Application,
-    repository: IRestaurantsRepository
+    private val repository: IRestaurantsRepository
 ) : AndroidViewModel(application) {
     private val _restaurants = repository.restaurantsMap
     val restaurants: StateFlow<Map<Long, RestaurantListItem>> = _restaurants
     private val _userLocation = MutableStateFlow(Location(0.0, 0.0))
     val userLocation: StateFlow<Location> = _userLocation
+    val restaurantsFilters = repository.restaurantsFilters
 
     private var tablesServiceRef: WeakReference<TablesService>? = null
     private var isServiceBound = false
@@ -103,6 +104,28 @@ class MainViewViewModel @Inject constructor(
             viewModelScope.launch {
                 tablesService.updateTableStatus(update)
             }
+        }
+    }
+
+    fun updateFilters(
+        rating: Double? = null,
+        cuisine: String? = null,
+        minSeats: Int? = null
+    ) {
+        viewModelScope.launch {
+            val currentFilters = restaurantsFilters.value
+            val currentLocation = _userLocation.value
+
+            repository.updateFilters(
+                currentFilters.copy(
+                    rating = rating ?: currentFilters.rating,
+                    cuisine = cuisine?.let { listOf(it) } ?: currentFilters.cuisine,
+                    minFreeSeats = minSeats ?: currentFilters.minFreeSeats,
+                    userLatitude = currentLocation.latitude,
+                    userLongitude = currentLocation.longitude,
+//                    radius = 10.0
+                )
+            )
         }
     }
 

@@ -72,6 +72,7 @@ class MainViewFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val restaurants = viewModel.restaurants.collectAsState().value.values.toList()
+                val restaurantFilters = viewModel.restaurantsFilters.collectAsState().value
                 val userLocation by viewModel.userLocation.collectAsState()
                 MainMapView(
                     restaurants = restaurants,
@@ -83,7 +84,11 @@ class MainViewFragment : Fragment() {
                     ))},
                     onReportSpecific = onReportSpecific,
                     onMoreDetails = onMoreDetails,
-                    menuOnClicks = menuOnClicks
+                    menuOnClicks = menuOnClicks,
+                    filters = restaurantFilters,
+                    onRatingChanged = { viewModel.updateFilters(rating = it) },
+                    onCuisineSelected = { viewModel.updateFilters(cuisine = it) },
+                    onMinFreeSeatsChanged = { viewModel.updateFilters(minSeats = it) },
                 )
             }
         }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import pl.tablehub.mobile.client.model.restaurants.RestaurantSearchQuery
 import pl.tablehub.mobile.client.model.restaurants.AggregateRestaurantStatus
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 
@@ -52,17 +54,10 @@ class TablesService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        fetchRestaurants()
+        observeFilterChanges()
         webSocketService.connectWebSocket()
         handleAggregateSubscriptions()
         return START_NOT_STICKY
-    }
-
-    private fun fetchRestaurants() {
-        connectionScope.launch {
-            val restaurants: List<RestaurantListItem> = restaurantClientService.fetchRestaurants(options = emptyMap<String, Any>())
-            repository.processRestaurantList(restaurants)
-        }
     }
 
     suspend fun getRestaurantById(id: Long): RestaurantDetail {
@@ -108,6 +103,36 @@ class TablesService : Service() {
                 Log.e("ERROR", e.message!!)
             }
         }.launchIn(messageScope)
+    }
+
+    private fun observeFilterChanges() {
+        connectionScope.launch {
+            repository.restaurantsFilters.collect { filters ->
+                val options = buildQueryMapFrom(filters)
+                try {
+                    val filteredRestaurants = restaurantClientService.fetchRestaurants(options)
+                    repository.processRestaurantList(filteredRestaurants)
+                } catch (e: Exception) {
+                    Log.e("FILTER_FETCH", "Failed to fetch filtered restaurants", e)
+                }
+            }
+        }
+    }
+
+    private fun buildQueryMapFrom(query: RestaurantSearchQuery): Map<String, Any> {
+        val map = mutableMapOf<String, Any>()
+        map["rating"] = query.rating
+        map["userLat"] = query.userLatitude
+        map["userLon"] = query.userLongitude
+        map["radius"] = query.radius // You'll need to set a default radius
+        map["limit"] = query.limit // You'll need to set a default limit
+        if (query.cuisine.isNotEmpty()) {
+            map["cuisine"] = query.cuisine.joinToString(",")
+        }
+        query.minFreeSeats?.let {
+            if (it > 0) map["minFreeSeats"] = it
+        }
+        return map
     }
 
     override fun onDestroy() {
