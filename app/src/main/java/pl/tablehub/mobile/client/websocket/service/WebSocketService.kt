@@ -11,6 +11,7 @@ import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.util.Constants.BACKEND_WS_IP
 import pl.tablehub.mobile.util.WSMessageRelay
 import javax.inject.Inject
+import kotlinx.coroutines.Job
 import javax.inject.Singleton
 
 @Singleton
@@ -20,14 +21,16 @@ class WebSocketService @Inject constructor(
 ) {
 
     companion object ServiceContract {
-        private val SERVER_URL: String = BACKEND_WS_IP
+        private const val SERVER_URL: String = BACKEND_WS_IP
         private const val DEBUG_TAG: String = "WEB_SOCKET"
-        private const val DEST_SUBSCRIBE_UPDATE_TABLE = "/topic/table-updates"
+        private const val AGGREGATE_TOPIC: String = "/topic/restaurant-aggregates"
+        private const val SPECIFIC_TOPIC: String = "/topic/table-updates/{restaurantId}"
     }
 
     @Inject
     lateinit var serviceScope: CoroutineScope
     private lateinit var stompSession: StompSession
+    private var specificSubscriptionJob: Job? = null
 
     @Inject
     lateinit var dataStore: EncryptedDataStore
@@ -38,25 +41,49 @@ class WebSocketService @Inject constructor(
                 val token = dataStore.getJWT().first()!!
                 val urlWithToken = "$SERVER_URL?token=$token"
                 val stompClient = StompClient(client)
-                stompSession = stompClient.connect(url = urlWithToken)
-                subscribeToUpdateTableStatus()
+                stompSession = stompClient.connect(
+                    url = urlWithToken,
+                    customStompConnectHeaders = mapOf("Authorization" to "Bearer $token")
+                )
+                Log.d(DEBUG_TAG, "WebSocket connection established")
+                subscribeToAggregateUpdate()
             } catch (e: Exception) {
                 Log.e(DEBUG_TAG, "WebSocket connection failed", e)
             }
         }
     }
 
-    private fun subscribeToUpdateTableStatus() {
+    private fun subscribeToAggregateUpdate() {
         serviceScope.launch {
-            try {
-                stompSession.subscribe(DEST_SUBSCRIBE_UPDATE_TABLE).collect { frame ->
-                    val body = frame.bodyAsText
-                    messageRelay.emitMessage(body)
-                }
-            } catch (e: Exception) {
-                Log.e(DEBUG_TAG, "Table update subscription failed", e)
+            stompSession.subscribe(AGGREGATE_TOPIC).collect { frame ->
+                val body = frame.bodyAsText
+                Log.d(DEBUG_TAG, "Received message: $body")
+                messageRelay.emitMessageAggregate(body)
             }
         }
+    }
+
+    fun subscribeToSpecificRestaurantUpdate(restaurantId: Long) {
+        specificSubscriptionJob?.cancel()
+
+        val topic = SPECIFIC_TOPIC.replace("{restaurantId}", restaurantId.toString())
+
+        specificSubscriptionJob = serviceScope.launch {
+            try {
+                stompSession.subscribe(topic).collect { frame ->
+                    val body = frame.bodyAsText
+                    Log.d(DEBUG_TAG, "Received message: $body")
+                    messageRelay.emitMessageSpecific(body)
+                }
+            } catch (e: Exception) {
+                Log.d(DEBUG_TAG, "Specific subscription for $topic cancelled or failed", e)
+            }
+        }
+    }
+
+    fun unsubscribeSpecificRestaurantUpdate() {
+        specificSubscriptionJob?.cancel()
+        specificSubscriptionJob = null
     }
 
     fun disconnect() {

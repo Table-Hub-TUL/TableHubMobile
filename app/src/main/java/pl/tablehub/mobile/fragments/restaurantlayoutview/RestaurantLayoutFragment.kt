@@ -52,15 +52,18 @@ class RestaurantLayoutFragment : Fragment() {
                 if (restaurant != null) {
                     LaunchedEffect(restaurant.id) {
                         restaurantDetail = viewModel.getRestaurantById(restaurant.id)
+                        viewModel.subscribeToSpecificRestaurant(restaurant.id)
                     }
                 }
                 val onTableStatusChanged = {update: TableStatusChange -> viewModel.updateTableStatus(update)}
                 if (restaurant != null) {
                     RestaurantLayoutMainView(
                         onBack = {
+                            viewModel.unSubscribeSpecificRestaurant()
                             findNavController().popBackStack()
                         },
                         onFinishChanges = {
+                            viewModel.unSubscribeSpecificRestaurant()
                             findNavController().popBackStack(R.id.mainViewFragment, false)
                         },
                         onTableStatusChanged = onTableStatusChanged,
