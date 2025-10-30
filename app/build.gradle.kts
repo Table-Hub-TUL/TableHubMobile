@@ -59,6 +59,7 @@ android {
 
 dependencies {
     implementation(platform(libs.coil.bom))
+    implementation(libs.kotlinx.datetime)
     implementation(libs.maps.compose)
     implementation(libs.mapbox.maps)
     implementation(libs.androidx.core.ktx)

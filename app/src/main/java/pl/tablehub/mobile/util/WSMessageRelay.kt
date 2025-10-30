@@ -8,15 +8,25 @@ import javax.inject.Singleton
 
 @Singleton
 class WSMessageRelay @Inject constructor() {
-    private val _messageFlow = MutableSharedFlow<String>(
+    private val _messageAggregateFlow = MutableSharedFlow<String>(
+        replay = 0,
+        extraBufferCapacity = 64,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    private val _messageSpecificFlow = MutableSharedFlow<String>(
         replay = 0,
         extraBufferCapacity = 64,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-    val messageFlow = _messageFlow.asSharedFlow()
+    val messageAggregateFlow = _messageAggregateFlow.asSharedFlow()
+    val messageSpecificFlow = _messageSpecificFlow.asSharedFlow()
 
-    suspend fun emitMessage(message: String) {
-        _messageFlow.emit(message)
+    suspend fun emitMessageAggregate(message: String) {
+        _messageAggregateFlow.emit(message)
+    }
+
+    suspend fun emitMessageSpecific(message: String) {
+        _messageSpecificFlow.emit(message)
     }
 }

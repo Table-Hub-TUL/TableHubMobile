@@ -110,6 +110,24 @@ class MainViewViewModel @Inject constructor(
         return getService()?.getRestaurantById(id)!!
     }
 
+    fun subscribeToSpecificRestaurant(id: Long) {
+        val tablesService = getService()
+        if(isServiceBound && tablesService != null) {
+            viewModelScope.launch {
+                tablesService.subscribeToSpecificRestaurant(id)
+            }
+        }
+    }
+
+    fun unSubscribeSpecificRestaurant() {
+        val tablesService = getService()
+        if (isServiceBound && tablesService != null) {
+            viewModelScope.launch {
+                tablesService.unsubscribeSpecificRestaurant()
+            }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (isServiceBound) {
