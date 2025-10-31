@@ -37,12 +37,12 @@ fun RestaurantMapRenderer(
     section: Section,
     onTableStatusChanged: (TableStatusChange) -> Unit
 ) {
-    val mapPath = stringToPath(section.sectionLayout.shape)
+    val mapPath = stringToPath(section.layout.shape)
     val transformState = rememberZoomPanState()
     var selectedTableDetail by remember { mutableStateOf<TableDetail?>(null) }
 
-    val contentWidthDp = section.sectionLayout.viewportWidth.dp
-    val contentHeightDp = section.sectionLayout.viewportHeight.dp
+    val contentWidthDp = section.layout.viewportWidth.dp
+    val contentHeightDp = section.layout.viewportHeight.dp
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -68,7 +68,7 @@ fun RestaurantMapRenderer(
                 )
             }
 
-            section.tableDetails.forEach { table ->
+            section.tables.forEach { table ->
                 TableItem(
                     tableDetail = table,
                     onTableClick = { selectedTableDetail = it }
@@ -83,7 +83,7 @@ fun RestaurantMapRenderer(
                     tableDetail = table,
                     onDismiss = { selectedTableDetail = null },
                     onStatusChange = { newStatus ->
-                        table.tableStatus = newStatus
+                        table.status = newStatus
                         onTableStatusChanged(
                             TableStatusChange(
                                 1,

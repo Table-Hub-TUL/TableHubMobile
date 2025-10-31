@@ -56,7 +56,7 @@ class RestaurantLayoutFragment : Fragment() {
                     }
                 }
                 val onTableStatusChanged = {update: TableStatusChange -> viewModel.updateTableStatus(update)}
-                if (restaurant != null) {
+                if (restaurantDetail != null) {
                     RestaurantLayoutMainView(
                         onBack = {
                             viewModel.unSubscribeSpecificRestaurant()

@@ -42,14 +42,14 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
             val restaurant = _specificRestaurantState.value ?: return
             val newSections = restaurant.sections.map { section ->
                 if (section.id == tableStatusChange.sectionId) {
-                    val newTables = section.tableDetails.map { table ->
+                    val newTables = section.tables.map { table ->
                         if (table.id == tableStatusChange.tableId) {
-                            table.copy(tableStatus = tableStatusChange.requestedStatus)
+                            table.copy(status = tableStatusChange.requestedStatus)
                         } else {
                             table
                         }
                     }
-                    section.copy(tableDetails = newTables)
+                    section.copy(tables = newTables)
                 } else {
                     section
                 }
