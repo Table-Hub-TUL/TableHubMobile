@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class Section(
     val id: Long,
     val name: String,
-    val tableDetails: List<TableDetail>,
+    val tables: List<TableDetail>,
     val pois: List<POI>,
-    val sectionLayout: SectionLayout
+    val layout: SectionLayout
 ) : Parcelable

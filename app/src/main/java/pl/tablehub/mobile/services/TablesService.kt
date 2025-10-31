@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import pl.tablehub.mobile.client.model.restaurants.AggregateRestaurantStatus
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 
 import pl.tablehub.mobile.client.rest.interfaces.IRestaurantService
@@ -53,7 +54,7 @@ class TablesService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         fetchRestaurants()
         webSocketService.connectWebSocket()
-        handleSubscriptions()
+        handleAggregateSubscriptions()
         return START_NOT_STICKY
     }
 
@@ -78,10 +79,30 @@ class TablesService : Service() {
         }
     }
 
-    private fun handleSubscriptions() {
-        messageRelay.messageFlow.onEach { message: String ->
+    fun subscribeToSpecificRestaurant(id: Long) {
+        webSocketService.subscribeToSpecificRestaurantUpdate(id)
+        handleSpecificSubscription()
+    }
+
+    fun unsubscribeSpecificRestaurant() {
+        webSocketService.unsubscribeSpecificRestaurantUpdate()
+    }
+
+    private fun handleSpecificSubscription() {
+        messageRelay.messageSpecificFlow.onEach { message: String ->
             try {
                 val decodedMessage = Json.decodeFromString<TableStatusChange>(message)
+                repository.processTableStatusChange(decodedMessage)
+            } catch (e: Exception) {
+                Log.e("ERROR", e.message!!)
+            }
+        }.launchIn(messageScope)
+    }
+
+    private fun handleAggregateSubscriptions() {
+        messageRelay.messageAggregateFlow.onEach { message: String ->
+            try {
+                val decodedMessage = Json.decodeFromString<AggregateRestaurantStatus>(message)
                 repository.processTableStatusChange(decodedMessage)
             } catch (e: Exception) {
                 Log.e("ERROR", e.message!!)

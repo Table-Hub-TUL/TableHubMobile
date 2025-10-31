@@ -50,7 +50,7 @@ fun TableStatusDialog(
         text = {
             Column {
                 TableStatusOptions(
-                    currentStatus = tableDetail.tableStatus,
+                    currentStatus = tableDetail.status,
                     onStatusSelect = onStatusChange
                 )
             }

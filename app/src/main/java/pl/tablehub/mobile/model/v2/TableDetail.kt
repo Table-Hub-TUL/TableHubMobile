@@ -9,7 +9,7 @@ import pl.tablehub.mobile.model.TableStatus
 @Parcelize
 data class TableDetail(
     val id: Long,
-    var tableStatus: TableStatus,
+    var status: TableStatus,
     val position: Point,
     val capacity: Int
 ) : Parcelable

@@ -54,7 +54,7 @@ fun TableItem(
 ) {
     val xOffset = (tableDetail.position.x).dp
     val yOffset = (tableDetail.position.y).dp
-    val tableColor = getTableColor(tableDetail.tableStatus)
+    val tableColor = getTableColor(tableDetail.status)
 
     val tableSize = calculateTableSize(tableDetail.capacity)
     val chairDistance = calculateChairDistance(tableSize)
