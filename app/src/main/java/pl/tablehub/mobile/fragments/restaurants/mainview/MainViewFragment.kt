@@ -46,7 +46,7 @@ class MainViewFragment : Fragment() {
     ): View {
         val onReportSpecific = { restaurant: RestaurantListItem -> findNavController()
             .navigate(R.id.action_mainViewFragment_to_restaurantLayoutFragment,
-                bundleOf(Pair(NavArgs.SELECTED_RESTAURANT, restaurant)))
+                bundleOf(Pair(NavArgs.SELECTED_RESTAURANT_ID, restaurant.id)))
         }
 
         val onMoreDetails: (RestaurantListItem) -> Unit = { restaurant ->

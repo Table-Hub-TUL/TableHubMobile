@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,36 +36,44 @@ class RestaurantLayoutFragment : Fragment() {
 
     private val viewModel: MainViewViewModel by activityViewModels()
 
+    private fun navigateBack() {
+        viewModel.unSubscribeSpecificRestaurant()
+        findNavController().popBackStack()
+    }
+
+    private fun finishChangesAndNavigate() {
+        viewModel.unSubscribeSpecificRestaurant()
+        findNavController().popBackStack(R.id.mainViewFragment, false)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
+
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
             setContent {
-                val restaurant: RestaurantListItem? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    requireArguments().getParcelable(NavArgs.SELECTED_RESTAURANT, RestaurantListItem::class.java)
-                } else {
-                    @Suppress("DEPRECATION")
-                    requireArguments().getParcelable(NavArgs.SELECTED_RESTAURANT)
-                }
+                val restaurantId = requireArguments().getLong(NavArgs.SELECTED_RESTAURANT_ID)
+
                 var restaurantDetail by remember { mutableStateOf<RestaurantDetail?>(null) }
-                if (restaurant != null) {
-                    LaunchedEffect(restaurant.id) {
-                        restaurantDetail = viewModel.getRestaurantById(restaurant.id)
-                        viewModel.subscribeToSpecificRestaurant(restaurant.id)
-                    }
+
+                LaunchedEffect(restaurantId) {
+                    restaurantDetail = viewModel.getRestaurantById(restaurantId)
+                    viewModel.subscribeToSpecificRestaurant(restaurantId)
                 }
+
                 val onTableStatusChanged = {update: TableStatusChange -> viewModel.updateTableStatus(update)}
+
                 if (restaurantDetail != null) {
                     RestaurantLayoutMainView(
                         onBack = {
-                            viewModel.unSubscribeSpecificRestaurant()
-                            findNavController().popBackStack()
+                            navigateBack()
                         },
                         onFinishChanges = {
-                            viewModel.unSubscribeSpecificRestaurant()
-                            findNavController().popBackStack(R.id.mainViewFragment, false)
+                            finishChangesAndNavigate()
                         },
                         onTableStatusChanged = onTableStatusChanged,
                         sections = restaurantDetail?.sections ?: emptyList()
