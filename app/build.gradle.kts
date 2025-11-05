@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.krossbow.stomp.core)
     implementation(libs.androidx.datastore)
     implementation(libs.krossbow.websocket.builtin)
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.jackson.databind)
     implementation(libs.krossbow.websocket.okhttp)
     implementation(libs.okhttp)

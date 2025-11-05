@@ -64,4 +64,10 @@
     <string name="crash_button_close">Close App</string>
     <string name="crash_unknown_error">Unknown error</string>
     <string name="crash_unknown_thread">Unknown</string>
+    <string name="my_stats">My statistics</string>
+    <string name="gam_points">Points:</string>
+    <string name="gam_rewards">Rewards</string>
+    <string name="gam_reports">Reports</string>
+    <string name="gam_achievements">Achievements</string>
+    <string name="gam_ranking">Ranking</string>
 </resources>
