@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".core.CrashActivity"
+            android:name=".activities.CrashActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:excludeFromRecents="true" />
         <service

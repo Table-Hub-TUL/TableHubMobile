@@ -28,6 +28,7 @@ data class GlobalDimensions(
     val textSizeMedium: TextUnit,
     val textSizeLarge: TextUnit,
     val textSizeBig: TextUnit,
+    val textSizeVeryBig: TextUnit,
     val textSizeHuge: TextUnit,
     val buttonHeight: Dp,
     val tinyCornerRadius: Dp,
@@ -42,7 +43,8 @@ data class GlobalDimensions(
     val menuIconSize: Dp,
     val contentIconSize: Dp,
     val iconSize: Dp,
-    val drawerWidth: Dp
+    val drawerWidth: Dp,
+    val bigIconSize: Dp
 )
 
 // the values for sizes are for a approximately typical screen(width = 400, height = 800)
@@ -66,6 +68,7 @@ fun rememberGlobalDimensions(): GlobalDimensions {
         val textSizeBig = (screenWidth * 0.045f).sp //~18sp
         val textSizeLarge = (screenWidth * 0.06f).sp // ~24sp
         val textSizeHuge = (screenWidth * 0.12f).sp // ~48sp
+        val textSizeVeryBig = (screenWidth * 0.09f).sp // ~36sp
 
         // UI elements dimensions
         val buttonHeight = (screenHeight * 0.07f).coerceIn(48f, 64f).dp //56dp
@@ -75,6 +78,7 @@ fun rememberGlobalDimensions(): GlobalDimensions {
         val iconSize = (screenWidth * 0.09f).coerceIn(34f, 38f).dp // 36.dp
         val contentIconSize = (screenWidth * 0.06f).coerceIn(24f, 32f).dp //24
         val menuIconSize = (screenWidth * 0.095f).coerceIn(36f, 40f).dp
+        val bigIconSize = (screenWidth * 0.1f).coerceIn(56f, 64f).dp
 
         // Text sizes for UI elements
         val logoSize = (screenWidth * 0.5f).coerceIn(160f, 240f) //200dp
@@ -117,7 +121,9 @@ fun rememberGlobalDimensions(): GlobalDimensions {
             contentIconSize = contentIconSize,
             iconSize = iconSize,
             menuIconSize = menuIconSize,
-            drawerWidth = drawerWidth
+            drawerWidth = drawerWidth,
+            bigIconSize = bigIconSize,
+            textSizeVeryBig = textSizeVeryBig
         )
     }
 }

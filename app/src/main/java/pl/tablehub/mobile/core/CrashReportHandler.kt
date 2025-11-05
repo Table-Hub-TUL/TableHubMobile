@@ -2,6 +2,7 @@ package pl.tablehub.mobile.core
 
 import android.app.Application
 import android.content.Intent
+import pl.tablehub.mobile.activities.CrashActivity
 import java.io.StringWriter
 import java.io.PrintWriter
 import java.net.SocketTimeoutException
