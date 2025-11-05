@@ -24,9 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.datastore.EncryptedDataStore
-import pl.tablehub.mobile.fragments.mainview.composables.MainMapView
-import pl.tablehub.mobile.fragments.mainview.composables.snackbar.PermissionSnackbar
-import pl.tablehub.mobile.model.v1.Restaurant
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.MainMapView
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.snackbar.PermissionSnackbar
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel

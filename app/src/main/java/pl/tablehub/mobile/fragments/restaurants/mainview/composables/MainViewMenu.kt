@@ -11,13 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuButton
-import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewMenuReturnButton
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.buttons.MainViewMenuButton
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.buttons.MainViewMenuReturnButton
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 

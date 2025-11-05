@@ -15,14 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewButton
-import pl.tablehub.mobile.fragments.mainview.composables.filter.FilterIcon
-import pl.tablehub.mobile.ui.shared.constants.CORNER_ROUND_SIZE
-import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
-import pl.tablehub.mobile.ui.shared.constants.ICON_SIZE
-import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.buttons.MainViewButton
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.filter.FilterIcon
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 

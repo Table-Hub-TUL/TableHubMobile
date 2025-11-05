@@ -17,12 +17,10 @@ import androidx.compose.ui.Modifier
 import com.mapbox.geojson.Point
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import pl.tablehub.mobile.fragments.mainview.composables.buttons.BottomButtons
-import pl.tablehub.mobile.fragments.mainview.composables.filter.FilterMenu
-import pl.tablehub.mobile.fragments.mainview.composables.map.MapboxMapWrapper
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.filter.FilterMenu
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.buttons.BottomButtons
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.map.MapboxMapWrapper
 import pl.tablehub.mobile.model.v1.Location
-import pl.tablehub.mobile.model.v1.Restaurant
-import pl.tablehub.mobile.model.v1.Table
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.model.v2.TableListItem
 

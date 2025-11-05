@@ -9,12 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.fragments.mainview.composables.buttons.MainViewButton
-import pl.tablehub.mobile.ui.shared.constants.HORIZONTAL_PADDING
-import pl.tablehub.mobile.ui.shared.constants.VERTICAL_PADDING
+import pl.tablehub.mobile.fragments.restaurants.mainview.composables.buttons.MainViewButton
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 

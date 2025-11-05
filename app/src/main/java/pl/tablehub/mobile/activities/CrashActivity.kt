@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.core
+package pl.tablehub.mobile.activities
 
 import android.app.Activity
 import android.app.AlertDialog
