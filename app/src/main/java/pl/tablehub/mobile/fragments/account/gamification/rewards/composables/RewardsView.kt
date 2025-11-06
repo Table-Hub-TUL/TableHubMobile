@@ -15,33 +15,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import pl.tablehub.mobile.R
+import pl.tablehub.mobile.model.v2.Address
+import pl.tablehub.mobile.model.v2.Reward
 import pl.tablehub.mobile.ui.shared.composables.BackButton
 import pl.tablehub.mobile.ui.theme.*
-
-data class Reward(
-    val id: Int,
-    val title: String,
-    val iconRes: Int? = null
-)
-
-val sampleRewards = listOf(
-    Reward(1, "Voucher: 50zl"),
-    Reward(2, "Voucher: 100zl"),
-    Reward(3, "Culinary experience"),
-    Reward(4, "Voucher: 1 pizza and drink")
-)
 
 @Composable
 fun RewardsView(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
-    onRedeemClick: (List<Reward>) -> Unit = {},
-    rewards: List<Reward> = sampleRewards
+    onRedeemClick: (Reward) -> Unit = {},
+    rewards: List<Reward> = rewardList
 ) {
     val dims = rememberGlobalDimensions()
-
-    var selectedRewards by remember { mutableStateOf(setOf<Int>()) }
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -86,47 +72,18 @@ fun RewardsView(
                 }
             }
         }
-        Spacer(modifier = Modifier.height(5 * dims.paddingHuge))
+        Spacer(modifier = Modifier.height(0.5 * dims.paddingHuge))
         LazyColumn(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(horizontal = dims.paddingHuge),
             verticalArrangement = Arrangement.spacedBy(dims.paddingMedium)
         ) {
-            items(rewards) { reward ->
+            items(rewards) { reward: Reward ->
                 RewardItem(
                     reward = reward,
-                    isSelected = selectedRewards.contains(reward.id),
-                    onSelectionChange = { isSelected ->
-                        selectedRewards = if (isSelected) {
-                            selectedRewards + reward.id
-                        } else {
-                            selectedRewards - reward.id
-                        }
-                    }
+                    onRedeemClick = onRedeemClick
                 )
             }
-        }
-
-        Spacer(modifier = Modifier.height(dims.paddingLarge))
-
-        Button(
-            onClick = {
-                val selected = rewards.filter { selectedRewards.contains(it.id) }
-                onRedeemClick(selected)
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(dims.buttonHeight),
-            shape = RoundedCornerShape(dims.buttonCornerRadius),
-            colors = ButtonDefaults.buttonColors(containerColor = TERTIARY_COLOR),
-            enabled = selectedRewards.isNotEmpty()
-        ) {
-            Text(
-                text = "Redeem",
-                fontSize = dims.textSizeLarge,
-                fontWeight = FontWeight.Bold,
-                color = SECONDARY_COLOR
-            )
         }
     }
 }

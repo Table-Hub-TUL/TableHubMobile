@@ -6,27 +6,32 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
+import coil.compose.AsyncImage
+import pl.tablehub.mobile.R
+import pl.tablehub.mobile.model.v2.Reward
 import pl.tablehub.mobile.ui.theme.*
 
 @Composable
 fun RewardItem(
     reward: Reward,
-    isSelected: Boolean = false,
-    onSelectionChange: (Boolean) -> Unit = {}
+    onRedeemClick: (Reward) -> Unit = {}
 ) {
     val dims = rememberGlobalDimensions()
-
-    val borderColor = if (isSelected) TERTIARY_COLOR else Color.Gray
-    val borderWidth = if (isSelected) 3.dp else 2.dp
+    val borderColor = PRIMARY_COLOR
+    val borderWidth = 4.dp
 
     Card(
         modifier = Modifier
@@ -36,44 +41,97 @@ fun RewardItem(
                 width = borderWidth,
                 shape = RoundedCornerShape(dims.buttonCornerRadius)
             )
-            .clickable { onSelectionChange(!isSelected) }
-            .padding(),
+            .clickable { onRedeemClick(reward) },
         shape = RoundedCornerShape(dims.buttonCornerRadius),
-        colors = CardDefaults.cardColors(containerColor = SECONDARY_COLOR),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dims.paddingMedium),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
+        Column(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Box(
+            Row(
                 modifier = Modifier
-                    .size(dims.iconSize)
-                    .background(
-                        color = TERTIARY_COLOR,
-                        shape = RoundedCornerShape(dims.paddingSmall)
-                    ),
-                contentAlignment = Alignment.Center
+                    .fillMaxWidth()
+                    .padding(dims.paddingMedium),
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.Start
             ) {
-                Icon(
-                    imageVector = Icons.Filled.CardGiftcard,
-                    contentDescription = "Reward icon",
-                    tint = SECONDARY_COLOR,
-                    modifier = Modifier.size(dims.iconSize * 0.6f)
+                AsyncImage(
+                    model = reward.image.url,
+                    contentDescription = reward.image.altText,
+                    modifier = Modifier
+                        .size(1.5 * dims.bigIconSize)
+                        .clip(RoundedCornerShape(dims.paddingSmall))
+                        .background(TERTIARY_COLOR.copy(alpha = 0.1f)),
+                    contentScale = ContentScale.Crop,
                 )
+
+                Spacer(modifier = Modifier.width(dims.paddingMedium))
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(dims.paddingSmall)
+                ) {
+                    Text(
+                        text = reward.title,
+                        fontSize = dims.textSizeMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    reward.additionalDescription?.let { description ->
+                        Text(
+                            text = description,
+                            fontSize = dims.textSizeSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
             }
-
-            Spacer(modifier = Modifier.width(dims.paddingMedium))
-
-            Text(
-                text = reward.title,
-                fontSize = dims.textSizeLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = TERTIARY_COLOR
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = dims.paddingMedium),
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
             )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(dims.paddingMedium)
+                    .height(IntrinsicSize.Min),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = reward.restaurantName,
+                    fontSize = dims.textSizeMedium,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f, fill = false)
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.LocationOn,
+                        contentDescription = stringResource(R.string.location),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                        modifier = Modifier.size(dims.iconSize * 0.7f)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "${reward.restaurantAddress.street}, ${reward.restaurantAddress.city}",
+                        fontSize = dims.textSizeSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
         }
     }
 }
@@ -89,12 +147,10 @@ fun RewardItemPreview() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             RewardItem(
-                reward = Reward(1, "Voucher: 50zl"),
-                isSelected = false
+                reward = rewardList[0],
             )
             RewardItem(
-                reward = Reward(2, "Voucher: 100zl"),
-                isSelected = true
+                reward = rewardList[1],
             )
         }
     }
