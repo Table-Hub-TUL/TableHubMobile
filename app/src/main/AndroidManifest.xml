@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- REMOVE CLEAR TEXT TRAFFIC -->
+
     <application
         android:usesCleartextTraffic="true"
         android:name=".core.TableHubApplication"
@@ -16,16 +17,16 @@
         android:roundIcon="@drawable/logo_for_system"
         android:supportsRtl="true"
         android:theme="@style/Theme.TableHub"
-        >
-        <activity
-            android:name=".activities.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.TableHub">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        android:enableOnBackInvokedCallback="true"
+        > <activity
+        android:name=".activities.MainActivity"
+        android:exported="true"
+        android:theme="@style/Theme.TableHub">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity
             android:name=".activities.CrashActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
