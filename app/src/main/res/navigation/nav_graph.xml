@@ -94,6 +94,9 @@
     <fragment
         android:id="@+id/myStatsFragment"
         android:name="pl.tablehub.mobile.fragments.account.gamification.stats.MyStatsFragment"
-        android:label="MyStatsFragment" >
-    </fragment>
+        android:label="MyStatsFragment" />
+    <fragment
+        android:id="@+id/rewardsFragment"
+        android:name="pl.tablehub.mobile.fragments.account.gamification.rewards.RewardsFragment"
+        android:label="RewardsFragment" />
 </navigation>
