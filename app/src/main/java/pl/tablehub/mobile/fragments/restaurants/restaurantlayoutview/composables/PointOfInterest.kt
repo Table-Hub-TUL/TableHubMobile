@@ -61,7 +61,7 @@ fun PointOfInterest(
         Text(
             text = poi.description,
             textAlign = TextAlign.Center,
-            fontSize = 12.sp,
+            fontSize = 48.sp,
             color = TERTIARY_COLOR,
             modifier = textModifier
         )
