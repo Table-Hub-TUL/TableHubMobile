@@ -1,6 +1,8 @@
 package pl.tablehub.mobile.client.rest.interfaces
 
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
+import pl.tablehub.mobile.client.rest.utils.Prefixes.API_RESTAURANT_PREFIX
+import pl.tablehub.mobile.client.rest.utils.Prefixes.TABLE_STATUS_PREFIX
 import pl.tablehub.mobile.model.v2.RestaurantDetail
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import retrofit2.http.Body
@@ -10,17 +12,17 @@ import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
 interface IRestaurantService {
-    @GET("api/restaurants")
+    @GET(API_RESTAURANT_PREFIX)
     suspend fun fetchRestaurants(
         @QueryMap options: Map<String, @JvmSuppressWildcards Any>
     ) : List<RestaurantListItem>
 
-    @GET("api/restaurants/{id}")
+    @GET("${API_RESTAURANT_PREFIX}/{id}")
     suspend fun fetchRestaurant(
         @Path("id") id: Long
     ): RestaurantDetail
 
-    @POST("api/table/update-status")
+    @POST("${TABLE_STATUS_PREFIX}/update-status")
     suspend fun updateTableStatus(@Body statusRequest: TableStatusChange)
 
     @GET("api/restaurants/cuisine-list")
