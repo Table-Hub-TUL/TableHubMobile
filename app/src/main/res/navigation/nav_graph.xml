@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/logInFragment">
+    app:startDestination="@id/myStatsFragment">
 
     <fragment
         android:id="@+id/logInFragment"
-        android:name="pl.tablehub.mobile.fragments.login.LogInFragment"
+        android:name="pl.tablehub.mobile.fragments.account.general.login.LogInFragment"
         android:label="LogInFragment" >
         <action
             android:id="@+id/action_logInFragment_to_mainViewFragment"
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"
-        android:name="pl.tablehub.mobile.fragments.reportview.ReportViewFragment"
+        android:name="pl.tablehub.mobile.fragments.restaurants.reportview.ReportViewFragment"
         android:label="ReportViewFragment" >
         <action
             android:id="@+id/action_reportViewFragment_to_mainViewFragment2"
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/restaurantLayoutFragment"
-        android:name="pl.tablehub.mobile.fragments.restaurantlayoutview.RestaurantLayoutFragment"
+        android:name="pl.tablehub.mobile.fragments.restaurants.restaurantlayoutview.RestaurantLayoutFragment"
         android:label="RestaurantLayoutFragment" >
         <argument
             android:name="restaurant"
@@ -65,10 +65,14 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="pl.tablehub.mobile.fragments.signup.SignUpFragment"
+        android:name="pl.tablehub.mobile.fragments.account.general.signup.SignUpFragment"
         android:label="SignUpFragment" >
         <action
             android:id="@+id/action_signUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myStatsFragment"
+        android:name="pl.tablehub.mobile.fragments.account.gamification.stats.MyStatsFragment"
+        android:label="MyStatsFragment" />
 </navigation>

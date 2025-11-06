@@ -65,4 +65,10 @@
     <string name="crash_button_close">Zamknij aplikację</string>
     <string name="crash_unknown_error">Nieznany błąd</string>
     <string name="crash_unknown_thread">Nieznany</string>
+    <string name="my_stats">Moje statystyki</string>
+    <string name="gam_points">Punkty:</string>
+    <string name="gam_rewards">Nagrody</string>
+    <string name="gam_reports">Zgłoszenia</string>
+    <string name="gam_achievements">Osiągnięcia</string>
+    <string name="gam_ranking">Ranking</string>
 </resources>
