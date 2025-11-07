@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/myStatsFragment">
+    app:startDestination="@id/logInFragment">
 
     <fragment
         android:id="@+id/logInFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainViewFragment"
-        android:name="pl.tablehub.mobile.fragments.mainview.MainViewFragment"
+        android:name="pl.tablehub.mobile.fragments.restaurants.mainview.MainViewFragment"
         android:label="MainViewFragment" >
         <action
             android:id="@+id/action_mainViewFragment_to_reportViewFragment"
@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_mainViewFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_mainViewFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"
@@ -71,8 +74,18 @@
             android:id="@+id/action_signUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="pl.tablehub.mobile.fragments.account.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_mainViewFragment"
+            app:destination="@id/mainViewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myStatsFragment"
         android:name="pl.tablehub.mobile.fragments.account.gamification.stats.MyStatsFragment"
-        android:label="MyStatsFragment" />
+        android:label="MyStatsFragment" >
+    </fragment>
 </navigation>
