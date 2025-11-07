@@ -35,7 +35,7 @@ import javax.inject.Inject
 class MainViewFragment : Fragment() {
 
     private val viewModel: MainViewViewModel by activityViewModels()
-    
+
     @Inject
     lateinit var encryptedDataStore: EncryptedDataStore
 
@@ -57,6 +57,9 @@ class MainViewFragment : Fragment() {
         }
 
         val menuOnClicks: Map<String, () -> Unit> = mapOf(
+            "PROFILE" to {
+                findNavController().navigate(R.id.action_mainViewFragment_to_profileFragment)
+            },
             "LOGOUT" to {
                 lifecycleScope.launch {
                     encryptedDataStore.clearJWT()
@@ -80,7 +83,7 @@ class MainViewFragment : Fragment() {
                         findNavController().navigate(R.id.action_mainViewFragment_to_reportViewFragment, bundleOf(
                             Pair(NavArgs.RESTAURANTS, restaurants.toTypedArray()),
                             Pair(NavArgs.USER_LOCATION, userLocation)
-                    ))},
+                        ))},
                     onReportSpecific = onReportSpecific,
                     onMoreDetails = onMoreDetails,
                     menuOnClicks = menuOnClicks

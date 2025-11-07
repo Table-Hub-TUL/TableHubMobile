@@ -11,7 +11,10 @@
     <string name="report_free_tables">Report tables</string>
     <string name="menu">Menu</string>
     <string name="current_location">Current location</string>
-    <string name="profile">My Account</string>
+    <string name="profile">Profile</string>
+    <string name="my_points">My points: %1$d</string>
+    <string name="see_stats_and_points">See statistics and points</string>
+    <string name="change_password">Change password</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
     <string name="history">History</string>
