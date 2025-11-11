@@ -25,9 +25,9 @@ import kotlin.math.sin
 import kotlin.math.PI
 
 
-const val BASE_TABLE_SIZE_DP = 32
-const val BASE_CHAIR_SIZE_DP = 24
-const val TABLE_CAPACITY_TEXT_SIZE_SP = 24
+const val BASE_TABLE_SIZE_DP = 64
+const val BASE_CHAIR_SIZE_DP = 48
+const val TABLE_CAPACITY_TEXT_SIZE_SP = 48
 
 private fun getTableColor(status: TableStatus): Color {
     return when (status) {
