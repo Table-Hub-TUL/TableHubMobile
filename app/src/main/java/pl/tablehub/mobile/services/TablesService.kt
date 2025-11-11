@@ -57,7 +57,19 @@ class TablesService : Service() {
         observeFilterChanges()
         webSocketService.connectWebSocket()
         handleAggregateSubscriptions()
+        fetchInitialData()
         return START_NOT_STICKY
+    }
+
+    private fun fetchInitialData() {
+        connectionScope.launch {
+            try {
+                val cuisines = restaurantClientService.fetchCuisineList()
+                repository.processCuisines(cuisines)
+            } catch (e: Exception) {
+                Log.e("TABLES_SERVICE", "Failed to fetch cuisine list", e)
+            }
+        }
     }
 
     suspend fun getRestaurantById(id: Long): RestaurantDetail {

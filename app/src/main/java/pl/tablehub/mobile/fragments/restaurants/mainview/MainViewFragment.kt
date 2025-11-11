@@ -26,6 +26,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.MainMapView
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.snackbar.PermissionSnackbar
+import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
@@ -74,6 +75,7 @@ class MainViewFragment : Fragment() {
                 val restaurants = viewModel.restaurants.collectAsState().value.values.toList()
                 val restaurantFilters = viewModel.restaurantsFilters.collectAsState().value
                 val userLocation by viewModel.userLocation.collectAsState()
+                val cuisines by viewModel.cuisines.collectAsState()
                 MainMapView(
                     restaurants = restaurants,
                     userLocation = userLocation,
@@ -86,9 +88,14 @@ class MainViewFragment : Fragment() {
                     onMoreDetails = onMoreDetails,
                     menuOnClicks = menuOnClicks,
                     filters = restaurantFilters,
+                    cuisines = cuisines,
                     onRatingChanged = { viewModel.updateFilters(rating = it) },
                     onCuisineSelected = { viewModel.updateFilters(cuisine = it) },
                     onMinFreeSeatsChanged = { viewModel.updateFilters(minSeats = it) },
+                    onMapBoundsChanged = { center, radiusInMeters ->
+                        val location = Location(center.longitude(), center.latitude())
+                        viewModel.updateMapQuery(location, radiusInMeters)
+                    }
                 )
             }
         }

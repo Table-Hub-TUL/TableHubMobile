@@ -17,6 +17,7 @@ import pl.tablehub.mobile.model.v2.TableListItem
 fun FilterMenu(
     drawerState: DrawerState,
     filters: RestaurantSearchQuery,
+    cuisines: List<String>,
     onRatingChanged: (Double) -> Unit,
     onCuisineSelected: (String?) -> Unit,
     onMinFreeSeatsChanged: (Int) -> Unit,
@@ -24,8 +25,6 @@ fun FilterMenu(
 ) {
     val isOpen = drawerState.isOpen
     val scope = rememberCoroutineScope()
-
-    val cuisines = emptyList<String>()
 
     Box(modifier = Modifier.fillMaxSize()) {
         content()

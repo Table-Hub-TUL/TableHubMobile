@@ -35,6 +35,7 @@ class MainViewViewModel @Inject constructor(
     private val _userLocation = MutableStateFlow(Location(0.0, 0.0))
     val userLocation: StateFlow<Location> = _userLocation
     val restaurantsFilters = repository.restaurantsFilters
+    val cuisines: StateFlow<List<String>> = repository.cuisines
 
     private var tablesServiceRef: WeakReference<TablesService>? = null
     private var isServiceBound = false
@@ -107,6 +108,26 @@ class MainViewViewModel @Inject constructor(
         }
     }
 
+    fun updateMapQuery(center: Location, radiusInMeters: Double) {
+        viewModelScope.launch {
+            val currentFilters = restaurantsFilters.value
+
+            if (currentFilters.userLatitude != center.latitude ||
+                currentFilters.userLongitude != center.longitude ||
+                currentFilters.radius != radiusInMeters) {
+
+                repository.updateFilters(
+                    currentFilters.copy(
+                        userLatitude = center.latitude,
+                        userLongitude = center.longitude,
+                        radius = radiusInMeters,
+                        limit = 50
+                    )
+                )
+            }
+        }
+    }
+
     fun updateFilters(
         rating: Double? = null,
         cuisine: String? = null,
@@ -119,11 +140,10 @@ class MainViewViewModel @Inject constructor(
             repository.updateFilters(
                 currentFilters.copy(
                     rating = rating ?: currentFilters.rating,
-                    cuisine = cuisine?.let { listOf(it) } ?: currentFilters.cuisine,
+                    cuisine = cuisine?.let { listOf(it) } ?: emptyList(),
                     minFreeSeats = minSeats ?: currentFilters.minFreeSeats,
                     userLatitude = currentLocation.latitude,
                     userLongitude = currentLocation.longitude,
-//                    radius = 10.0
                 )
             )
         }

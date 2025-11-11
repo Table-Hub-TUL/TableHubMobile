@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
@@ -26,8 +27,10 @@ import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
+import com.mapbox.maps.toCameraOptions
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v1.Restaurant
@@ -45,7 +48,8 @@ fun MapboxMapWrapper(
     potentialCenterLocation: Location,
     restaurants: List<RestaurantListItem>,
     tables: Map<Long, List<TableListItem>>,
-    onMarkerClick: (RestaurantListItem) -> Unit = {}
+    onMarkerClick: (RestaurantListItem) -> Unit = {},
+    onMapBoundsChanged: (center: Point, radiusInMeters: Double) -> Unit
 ) {
     val dims = rememberGlobalDimensions()
     val context = LocalContext.current
@@ -65,6 +69,8 @@ fun MapboxMapWrapper(
         }
     }
 
+    val mapboxMap = remember { mutableStateOf<MapboxMap?>(null) }
+
     MapboxMap(
         Modifier.fillMaxSize(),
         mapViewportState = mapViewportState,
@@ -76,6 +82,7 @@ fun MapboxMapWrapper(
         }
     ) {
         MapEffect(Unit) { mapView ->
+            mapboxMap.value = mapView.mapboxMap
             mapView.location.updateSettings {
                 locationPuck = createDefault2DPuck(withBearing = true)
                 enabled = true
@@ -124,6 +131,25 @@ fun MapboxMapWrapper(
                     .build()
                 mapViewportState.transitionToFollowPuckState(followOptions)
             }
+        }
+
+        LaunchedEffect(mapViewportState, mapboxMap.value) {
+            val map = mapboxMap.value ?: return@LaunchedEffect
+            snapshotFlow { mapViewportState.cameraState }
+                .debounce(500L)
+                .collectLatest { cameraState ->
+                    val visibleBounds = map.coordinateBoundsForCamera(cameraState!!.toCameraOptions())
+                    val centerPoint = cameraState.center
+
+                    val diagonalDistance = calculateDistance(
+                        visibleBounds.northeast.latitude(), visibleBounds.northeast.longitude(),
+                        visibleBounds.southwest.latitude(), visibleBounds.southwest.longitude()
+                    )
+
+                    val radiusInMeters = (diagonalDistance / 2).toDouble()
+
+                    onMapBoundsChanged(centerPoint, radiusInMeters)
+                }
         }
     }
 }

@@ -23,6 +23,8 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
     override val restaurantsFilters: StateFlow<RestaurantSearchQuery> = _restaurantFilters.asStateFlow()
     private val _specificRestaurantState = MutableStateFlow<RestaurantDetail?>(null)
     override val specificRestaurantState: StateFlow<RestaurantDetail?> = _specificRestaurantState.asStateFlow()
+    private val _cuisines = MutableStateFlow<List<String>>(emptyList())
+    override val cuisines: StateFlow<List<String>> = _cuisines.asStateFlow()
 
     override suspend fun processRestaurantList(dtos: List<RestaurantListItem>) {
         _restaurantsMap.value = dtos.associateBy { it.id }
@@ -57,6 +59,10 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
         _restaurantsMap.value = _restaurantsMap.value.toMutableMap().apply {
             this[tableStatusChange.restaurantId] = newRestaurant
         }
+    }
+
+    override suspend fun processCuisines(cuisines: List<String>) {
+        _cuisines.value = cuisines
     }
 
     override suspend fun updateFilters(query: RestaurantSearchQuery) {

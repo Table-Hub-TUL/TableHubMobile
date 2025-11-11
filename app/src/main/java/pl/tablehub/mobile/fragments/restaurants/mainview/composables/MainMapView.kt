@@ -34,9 +34,11 @@ fun MainMapView(
     onMoreDetails: (RestaurantListItem) -> Unit,
     menuOnClicks: Map<String, () -> Unit> = emptyMap(),
     filters: RestaurantSearchQuery,
+    cuisines: List<String>,
     onRatingChanged: (Double) -> Unit,
     onCuisineSelected: (String?) -> Unit,
     onMinFreeSeatsChanged: (Int) -> Unit,
+    onMapBoundsChanged: (center: Point, radiusInMeters: Double) -> Unit,
 ) {
     val menuDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val filterDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -54,6 +56,7 @@ fun MainMapView(
         FilterMenu(
             drawerState = filterDrawerState,
             filters = filters,
+            cuisines = cuisines,
             onRatingChanged = onRatingChanged,
             onCuisineSelected = onCuisineSelected,
             onMinFreeSeatsChanged = onMinFreeSeatsChanged
@@ -86,7 +89,9 @@ fun MainMapView(
                             )
                             centerOnPointTrigger.emit(point)
                         }
-                    })
+                    },
+                    onMapBoundsChanged = onMapBoundsChanged
+                )
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
