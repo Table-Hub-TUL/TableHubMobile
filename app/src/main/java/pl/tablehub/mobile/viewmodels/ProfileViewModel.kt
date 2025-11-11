@@ -1,4 +1,4 @@
-package pl.tablehub.mobile.model.v2
+package pl.tablehub.mobile.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import pl.tablehub.mobile.datastore.SettingsDataStore
+import pl.tablehub.mobile.datastore.EncryptedDataStore
+import pl.tablehub.mobile.model.v2.UserProfile
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val settingsDataStore: SettingsDataStore
+    private val dataStore: EncryptedDataStore
 ) : ViewModel() {
 
     private val _userProfile = MutableStateFlow(UserProfile())
@@ -32,7 +33,7 @@ class ProfileViewModel @Inject constructor(
     fun onLogoutClick() {
         viewModelScope.launch {
             try {
-                settingsDataStore.clearAuthToken()
+                dataStore.clearJWT()
                 println("Action: JWT Token successfully cleared.")
 
                 _logoutEvent.send(Unit)

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.account.profile.composables.ProfileView
-import pl.tablehub.mobile.model.v2.ProfileViewModel
+import pl.tablehub.mobile.viewmodels.ProfileViewModel
 import pl.tablehub.mobile.ui.theme.TableHubTheme
 
 @AndroidEntryPoint

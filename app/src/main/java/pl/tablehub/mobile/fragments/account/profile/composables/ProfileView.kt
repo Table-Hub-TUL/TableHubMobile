@@ -12,7 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import pl.tablehub.mobile.model.v2.ProfileViewModel
+import pl.tablehub.mobile.viewmodels.ProfileViewModel
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
