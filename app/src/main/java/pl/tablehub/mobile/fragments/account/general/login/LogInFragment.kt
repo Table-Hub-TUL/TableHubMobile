@@ -68,14 +68,8 @@ class LogInFragment : Fragment() {
 
                         if (storedToken != null) {
                             findNavController().navigate(
-                                R.id.mainViewFragment,
-                                bundleOf(Pair(NavArgs.JWT, storedToken)),
-                                navOptions {
-                                    popUpTo(R.id.logInFragment) {
-                                        inclusive = true
-                                    }
-                                    launchSingleTop = true
-                                }
+                                R.id.action_logInFragment_to_mainViewFragment,
+                                bundleOf(Pair(NavArgs.JWT, storedToken))
                             )
                         }
                     }

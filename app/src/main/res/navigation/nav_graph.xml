@@ -10,7 +10,10 @@
         android:label="LogInFragment" >
         <action
             android:id="@+id/action_logInFragment_to_mainViewFragment"
-            app:destination="@id/mainViewFragment" />
+            app:destination="@id/mainViewFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_logInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -54,8 +57,8 @@
         android:name="pl.tablehub.mobile.fragments.restaurants.restaurantlayoutview.RestaurantLayoutFragment"
         android:label="RestaurantLayoutFragment" >
         <argument
-            android:name="restaurant"
-            app:argType="pl.tablehub.mobile.model.v2.RestaurantDetail" />
+            android:name="restaurant_id"
+            app:argType="long" />
         <action
             android:id="@+id/action_restaurantLayoutFragment_to_reportViewFragment"
             app:destination="@id/reportViewFragment" />

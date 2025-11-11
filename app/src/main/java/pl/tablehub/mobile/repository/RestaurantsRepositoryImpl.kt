@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.mapNotNull
+import pl.tablehub.mobile.client.model.restaurants.RestaurantSearchQuery
 import pl.tablehub.mobile.client.model.restaurants.AggregateRestaurantStatus
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.model.v1.Restaurant
@@ -18,25 +19,16 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
 
     private val _restaurantsMap = MutableStateFlow<Map<Long, RestaurantListItem>>(emptyMap())
     override val restaurantsMap: StateFlow<Map<Long, RestaurantListItem>> = _restaurantsMap.asStateFlow()
+    private val _restaurantFilters = MutableStateFlow<RestaurantSearchQuery>(RestaurantSearchQuery())
+    override val restaurantsFilters: StateFlow<RestaurantSearchQuery> = _restaurantFilters.asStateFlow()
     private val _specificRestaurantState = MutableStateFlow<RestaurantDetail?>(null)
     override val specificRestaurantState: StateFlow<RestaurantDetail?> = _specificRestaurantState.asStateFlow()
+    private val _cuisines = MutableStateFlow<List<String>>(emptyList())
+    override val cuisines: StateFlow<List<String>> = _cuisines.asStateFlow()
 
     override suspend fun processRestaurantList(dtos: List<RestaurantListItem>) {
-        val currentMap = _restaurantsMap.value.toMutableMap()
-        dtos.forEach { dto ->
-            currentMap[dto.id] = RestaurantListItem(
-                id = dto.id,
-                name = dto.name,
-                address = dto.address,
-                location = dto.location,
-                cuisine = dto.cuisine,
-                rating = dto.rating,
-                tables = emptyList()
-            )
-        }
-        _restaurantsMap.value = currentMap
+        _restaurantsMap.value = dtos.associateBy { it.id }
     }
-
     override suspend fun processTableStatusChange(tableStatusChange: TableStatusChange) {
         if (_specificRestaurantState.value?.id == tableStatusChange.restaurantId) {
             val restaurant = _specificRestaurantState.value ?: return
@@ -67,5 +59,13 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
         _restaurantsMap.value = _restaurantsMap.value.toMutableMap().apply {
             this[tableStatusChange.restaurantId] = newRestaurant
         }
+    }
+
+    override suspend fun processCuisines(cuisines: List<String>) {
+        _cuisines.value = cuisines
+    }
+
+    override suspend fun updateFilters(query: RestaurantSearchQuery) {
+        _restaurantFilters.value = query
     }
 }

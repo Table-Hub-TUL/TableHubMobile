@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.filter.FilterMenu
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.buttons.BottomButtons
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.map.MapboxMapWrapper
+import pl.tablehub.mobile.client.model.restaurants.RestaurantSearchQuery
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.model.v2.TableListItem
@@ -31,7 +32,13 @@ fun MainMapView(
     onReportGeneral: () -> Unit = {},
     onReportSpecific: (RestaurantListItem) -> Unit,
     onMoreDetails: (RestaurantListItem) -> Unit,
-    menuOnClicks: Map<String, () -> Unit> = emptyMap()
+    menuOnClicks: Map<String, () -> Unit> = emptyMap(),
+    filters: RestaurantSearchQuery,
+    cuisines: List<String>,
+    onRatingChanged: (Double) -> Unit,
+    onCuisineSelected: (String?) -> Unit,
+    onMinFreeSeatsChanged: (Int) -> Unit,
+    onMapBoundsChanged: (center: Point, radiusInMeters: Double) -> Unit,
 ) {
     val menuDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val filterDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -39,7 +46,6 @@ fun MainMapView(
     val locationTrigger = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
     val centerOnPointTrigger = remember { MutableSharedFlow<Point>(extraBufferCapacity = 1) }
     var selectedRestaurant by remember { mutableStateOf<RestaurantListItem?>(null) }
-    var visibleRestaurants by remember { mutableStateOf(restaurants) }
     var firstLaunch by rememberSaveable { mutableStateOf(true) }
 
     MainViewMenu(
@@ -49,11 +55,11 @@ fun MainMapView(
     ) {
         FilterMenu(
             drawerState = filterDrawerState,
-            restaurants = restaurants,
-            tables = restaurants.associate {
-                it.id to (it.tables?: emptyList<TableListItem>())
-            },
-            onFilterResult = { filteredList -> visibleRestaurants = filteredList }
+            filters = filters,
+            cuisines = cuisines,
+            onRatingChanged = onRatingChanged,
+            onCuisineSelected = onCuisineSelected,
+            onMinFreeSeatsChanged = onMinFreeSeatsChanged
         ) {
             val (lng, lat) = userLocation
             LaunchedEffect(userLocation) {
@@ -69,7 +75,7 @@ fun MainMapView(
                 MapboxMapWrapper(
                     locationTrigger = locationTrigger,
                     centerOnPointTrigger = centerOnPointTrigger,
-                    restaurants = visibleRestaurants,
+                    restaurants = restaurants,
                     potentialCenterLocation = userLocation,
                     tables = restaurants.associate { restaurant ->
                         restaurant.id to (restaurant.tables?: emptyList<TableListItem>())
@@ -83,7 +89,9 @@ fun MainMapView(
                             )
                             centerOnPointTrigger.emit(point)
                         }
-                    })
+                    },
+                    onMapBoundsChanged = onMapBoundsChanged
+                )
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {

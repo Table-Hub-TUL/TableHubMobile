@@ -26,6 +26,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.MainMapView
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.snackbar.PermissionSnackbar
+import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
@@ -46,7 +47,7 @@ class MainViewFragment : Fragment() {
     ): View {
         val onReportSpecific = { restaurant: RestaurantListItem -> findNavController()
             .navigate(R.id.action_mainViewFragment_to_restaurantLayoutFragment,
-                bundleOf(Pair(NavArgs.SELECTED_RESTAURANT, restaurant)))
+                bundleOf(Pair(NavArgs.SELECTED_RESTAURANT_ID, restaurant.id)))
         }
 
         val onMoreDetails: (RestaurantListItem) -> Unit = { restaurant ->
@@ -72,7 +73,9 @@ class MainViewFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 val restaurants = viewModel.restaurants.collectAsState().value.values.toList()
+                val restaurantFilters = viewModel.restaurantsFilters.collectAsState().value
                 val userLocation by viewModel.userLocation.collectAsState()
+                val cuisines by viewModel.cuisines.collectAsState()
                 MainMapView(
                     restaurants = restaurants,
                     userLocation = userLocation,
@@ -83,7 +86,16 @@ class MainViewFragment : Fragment() {
                     ))},
                     onReportSpecific = onReportSpecific,
                     onMoreDetails = onMoreDetails,
-                    menuOnClicks = menuOnClicks
+                    menuOnClicks = menuOnClicks,
+                    filters = restaurantFilters,
+                    cuisines = cuisines,
+                    onRatingChanged = { viewModel.updateFilters(rating = it) },
+                    onCuisineSelected = { viewModel.updateFilters(cuisine = it) },
+                    onMinFreeSeatsChanged = { viewModel.updateFilters(minSeats = it) },
+                    onMapBoundsChanged = { center, radiusInMeters ->
+                        val location = Location(center.longitude(), center.latitude())
+                        viewModel.updateMapQuery(location, radiusInMeters)
+                    }
                 )
             }
         }
