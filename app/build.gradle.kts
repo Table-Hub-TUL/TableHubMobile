@@ -15,7 +15,7 @@ secrets {
 
 android {
     namespace = "pl.tablehub.mobile"
-    compileSdk = 35
+    compileSdk = 36
 
     lint {
         disable.add("NullSafeMutableLiveData")
@@ -25,7 +25,7 @@ android {
         applicationId = "pl.tablehub.mobile"
         minSdk = 31
         //noinspection OldTargetApi
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
