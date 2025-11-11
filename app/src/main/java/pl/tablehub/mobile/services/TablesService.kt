@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -119,15 +120,18 @@ class TablesService : Service() {
 
     private fun observeFilterChanges() {
         connectionScope.launch {
-            repository.restaurantsFilters.collect { filters ->
-                val options = buildQueryMapFrom(filters)
-                try {
-                    val filteredRestaurants = restaurantClientService.fetchRestaurants(options)
-                    repository.processRestaurantList(filteredRestaurants)
-                } catch (e: Exception) {
-                    Log.e("FILTER_FETCH", "Failed to fetch filtered restaurants", e)
+            repository.restaurantsFilters
+                .debounce(250L)
+                .collect { filters ->
+                    val options = buildQueryMapFrom(filters)
+                    try {
+                        Log.d("FILTER_FETCH", "Fetching filtered restaurants with options: $options")
+                        val filteredRestaurants = restaurantClientService.fetchRestaurants(options)
+                        repository.processRestaurantList(filteredRestaurants)
+                    } catch (e: Exception) {
+                        Log.e("FILTER_FETCH", "Failed to fetch filtered restaurants", e)
+                    }
                 }
-            }
         }
     }
 
@@ -136,8 +140,8 @@ class TablesService : Service() {
         map["rating"] = query.rating
         map["userLat"] = query.userLatitude
         map["userLon"] = query.userLongitude
-        map["radius"] = query.radius // You'll need to set a default radius
-        map["limit"] = query.limit // You'll need to set a default limit
+        map["radius"] = query.radius
+        map["limit"] = query.limit
         if (query.cuisine.isNotEmpty()) {
             map["cuisine"] = query.cuisine.joinToString(",")
         }
