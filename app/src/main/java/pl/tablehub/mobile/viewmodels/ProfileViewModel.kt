@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,15 +18,16 @@ class ProfileViewModel @Inject constructor(
     private val dataStore: EncryptedDataStore
 ) : ViewModel() {
 
+    private val TAG = "ProfileViewModel"
     private val _userProfile = MutableStateFlow(UserProfile())
     val userProfile: StateFlow<UserProfile> = _userProfile
 
     fun onSeeStatsClick() {
-        println("Action: See Statistics and Points Clicked")
+        Log.d(TAG, "Action: See Statistics and Points Clicked")
     }
 
     fun onChangePasswordClick() {
-        println("Action: Change Password Clicked")
+        Log.d(TAG, "Action: Change Password Clicked")
     }
 
     private val _logoutEvent = Channel<Unit>(Channel.Factory.BUFFERED)
@@ -34,7 +36,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 dataStore.clearJWT()
-                println("Action: JWT Token successfully cleared.")
+                Log.d(TAG, "Action: JWT Token successfully cleared.")
 
                 _logoutEvent.send(Unit)
 
@@ -45,7 +47,7 @@ class ProfileViewModel @Inject constructor(
                 )
 
             } catch (e: Exception) {
-                println("Błąd podczas czyszczenia tokena: ${e.message}")
+                Log.e(TAG, "Błąd podczas czyszczenia tokena: ${e.message}", e)
             }
         }
     }

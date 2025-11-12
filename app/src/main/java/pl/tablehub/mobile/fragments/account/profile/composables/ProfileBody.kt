@@ -80,6 +80,11 @@ fun ProfileBody(
 
         Spacer(modifier = Modifier.height(dims.paddingHuge * 15f))
 
-        LogoutButton(onClick = onLogout)
+        PrimaryActionButton(
+            text = stringResource(R.string.logout),
+            onClick = onLogout,
+            containerColor = TERTIARY_COLOR,
+            textSizeOverride = dims.textSizeLarge.value
+        )
     }
 }

@@ -68,7 +68,7 @@ fun ProfileHeader(
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                 color = WHITE_COLOR,
                 modifier = Modifier.padding(top = dims.paddingSmall),
-                fontSize = 30.sp
+                fontSize = dims.textSizeHeader
             )
         }
     }
