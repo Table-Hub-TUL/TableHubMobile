@@ -12,19 +12,22 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import pl.tablehub.mobile.viewmodels.ProfileViewModel
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
+import pl.tablehub.mobile.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileView(
     viewModel: ProfileViewModel,
     onBackClick: () -> Unit,
-    onLogoutAction: () -> Unit
+    onLogoutAction: (String) -> Unit
 ) {
     val userProfile by viewModel.userProfile.collectAsState()
     val dims = rememberGlobalDimensions()
     val horizontalContentPadding = dims.paddingHuge * 3f
+    val guestName = stringResource(R.string.Guest)
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -49,8 +52,7 @@ fun ProfileView(
                 onSeeStatsClick = viewModel::onSeeStatsClick,
                 onChangePasswordClick = viewModel::onChangePasswordClick,
                 onLogout = {
-                    viewModel.onLogoutClick()
-                    onLogoutAction()
+                    onLogoutAction(guestName)
                 },
                 horizontalContentPadding = horizontalContentPadding,
                 modifier = Modifier

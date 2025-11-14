@@ -12,6 +12,7 @@
     <string name="menu">Menu</string>
     <string name="current_location">Current location</string>
     <string name="profile">Profile</string>
+    <string name="Guest">Guest</string>
     <string name="my_points">My points: %1$d</string>
     <string name="see_stats_and_points">See statistics and points</string>
     <string name="change_password">Change password</string>

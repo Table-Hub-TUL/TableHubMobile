@@ -49,8 +49,8 @@ class ProfileFragment : Fragment() {
                         onBackClick = {
                             findNavController().popBackStack()
                         },
-                        onLogoutAction = {
-                            viewModel.onLogoutClick()
+                        onLogoutAction = {guestName ->
+                            viewModel.onLogoutClick(guestName)
                         }
                     )
                 }

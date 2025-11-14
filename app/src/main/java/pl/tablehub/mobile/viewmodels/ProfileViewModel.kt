@@ -2,6 +2,7 @@ package pl.tablehub.mobile.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import pl.tablehub.mobile.fragments.account.profile.composables.ProfileView
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -32,7 +33,7 @@ class ProfileViewModel @Inject constructor(
 
     private val _logoutEvent = Channel<Unit>(Channel.Factory.BUFFERED)
     val logoutEvent = _logoutEvent.receiveAsFlow()
-    fun onLogoutClick() {
+    fun onLogoutClick(guestName: String) {
         viewModelScope.launch {
             try {
                 dataStore.clearJWT()
@@ -41,13 +42,13 @@ class ProfileViewModel @Inject constructor(
                 _logoutEvent.send(Unit)
 
                 _userProfile.value = UserProfile(
-                    fullName = "Gość",
+                    fullName = guestName,
                     email = "",
                     points = 0
                 )
 
             } catch (e: Exception) {
-                Log.e(TAG, "Błąd podczas czyszczenia tokena: ${e.message}", e)
+                Log.e(TAG, "Error during cleaning of the token: ${e.message}", e)
             }
         }
     }
