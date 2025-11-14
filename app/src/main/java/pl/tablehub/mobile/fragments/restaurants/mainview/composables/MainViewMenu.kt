@@ -23,6 +23,7 @@ import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 @Composable
 fun MainViewMenu(
     drawerState: DrawerState,
+    onProfileClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     content: @Composable () -> Unit = {}
@@ -48,6 +49,11 @@ fun MainViewMenu(
                                     drawerState.close()
                                 }
                             })
+                            MainViewMenuButton(
+                                onClick = onProfileClick,
+                                imgName = R.drawable.profile,
+                                stringFromRes = R.string.profile
+                            )
                             MainViewMenuButton(
                                 onClick = onSettingsClick,
                                 imgName = R.drawable.settings,
