@@ -11,6 +11,11 @@ import androidx.compose.runtime.remember
 import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.model.v2.TableListItem
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.roundToInt
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 @Composable
 fun rememberTextOnBitmap(baseBitmap: Bitmap, text: String): Bitmap {
@@ -31,6 +36,25 @@ fun rememberTextOnBitmap(baseBitmap: Bitmap, text: String): Bitmap {
         canvas.drawText(text, x, y, paint)
         mutableBitmap
     }
+}
+
+internal fun calculateDistance(
+    lat1: Double, lon1: Double,
+    lat2: Double, lon2: Double
+): Int {
+    val r = 6371e3
+    val phi1 = lat1 * Math.PI / 180
+    val phi2 = lat2 * Math.PI / 180
+    val deltaPhi = (lat2 - lat1) * Math.PI / 180
+    val deltaLambda = (lon2 - lon1) * Math.PI / 180
+
+    val a = sin(deltaPhi / 2) * sin(deltaPhi / 2) +
+            cos(phi1) * cos(phi2) *
+            sin(deltaLambda / 2) * sin(deltaLambda / 2)
+    val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    val distance = r * c
+
+    return distance.roundToInt()
 }
 
 internal fun calculateFreeTablesText(restaurantId: Long, tables: Map<Long, List<TableListItem>>): String {

@@ -27,6 +27,7 @@ data class GlobalDimensions(
     val textSizeSmall: TextUnit,
     val textSizeMedium: TextUnit,
     val textSizeLarge: TextUnit,
+    val textSizeHeader: TextUnit,
     val textSizeBig: TextUnit,
     val textSizeVeryBig: TextUnit,
     val textSizeHuge: TextUnit,
@@ -67,6 +68,7 @@ fun rememberGlobalDimensions(): GlobalDimensions {
         val textSizeMedium = (screenWidth * 0.05f).sp // ~20sp
         val textSizeBig = (screenWidth * 0.045f).sp //~18sp
         val textSizeLarge = (screenWidth * 0.06f).sp // ~24sp
+        val textSizeHeader = (screenWidth * 0.075f).sp // = 30sp
         val textSizeHuge = (screenWidth * 0.12f).sp // ~48sp
         val textSizeVeryBig = (screenWidth * 0.09f).sp // ~36sp
 
@@ -123,7 +125,8 @@ fun rememberGlobalDimensions(): GlobalDimensions {
             menuIconSize = menuIconSize,
             drawerWidth = drawerWidth,
             bigIconSize = bigIconSize,
-            textSizeVeryBig = textSizeVeryBig
+            textSizeVeryBig = textSizeVeryBig,
+            textSizeHeader = textSizeHeader
         )
     }
 }

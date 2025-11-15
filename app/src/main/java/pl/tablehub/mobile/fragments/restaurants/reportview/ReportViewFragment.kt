@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import pl.tablehub.mobile.model.v2.RestaurantDetail
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 
+
 @AndroidEntryPoint
 class ReportViewFragment : Fragment() {
     override fun onCreateView(
@@ -26,6 +28,9 @@ class ReportViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
+
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
             setContent {
                 val restaurants: List<RestaurantListItem> =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -52,7 +57,7 @@ class ReportViewFragment : Fragment() {
                     userLocation = userLocation,
                     onRestaurantSelected = { restaurant ->
                         findNavController().navigate(R.id.action_reportViewFragment_to_restaurantLayoutFragment, bundleOf(
-                            Pair(NavArgs.SELECTED_RESTAURANT, restaurant)
+                            Pair(NavArgs.SELECTED_RESTAURANT_ID, restaurant.id)
                         ))
                     }
                 )

@@ -22,4 +22,7 @@ interface IRestaurantService {
 
     @POST("api/table/update-status")
     suspend fun updateTableStatus(@Body statusRequest: TableStatusChange)
+
+    @GET("api/restaurants/cuisine-list")
+    suspend fun fetchCuisineList(): List<String>
 }

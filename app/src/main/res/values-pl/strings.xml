@@ -13,6 +13,10 @@
     <string name="menu">Menu</string>
     <string name="current_location">Obecna lokazlizacja</string>
     <string name="profile">Moje Konto</string>
+    <string name="Guest">Gość</string>
+    <string name="my_points">Moje punkty: %1$d</string>
+    <string name="see_stats_and_points">Zobacz statystyki i punkty</string>
+    <string name="change_password">Zmień hasło</string>
     <string name="settings">Ustawienia</string>
     <string name="history">Historia</string>
     <string name="restaurant_name">Nazwa Restauracji...</string>

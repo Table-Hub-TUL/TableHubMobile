@@ -10,7 +10,10 @@
         android:label="LogInFragment" >
         <action
             android:id="@+id/action_logInFragment_to_mainViewFragment"
-            app:destination="@id/mainViewFragment" />
+            app:destination="@id/mainViewFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_logInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -31,6 +34,9 @@
         <action
             android:id="@+id/action_mainViewFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_mainViewFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"
@@ -54,8 +60,8 @@
         android:name="pl.tablehub.mobile.fragments.restaurants.restaurantlayoutview.RestaurantLayoutFragment"
         android:label="RestaurantLayoutFragment" >
         <argument
-            android:name="restaurant"
-            app:argType="pl.tablehub.mobile.model.v2.RestaurantDetail" />
+            android:name="restaurant_id"
+            app:argType="long" />
         <action
             android:id="@+id/action_restaurantLayoutFragment_to_reportViewFragment"
             app:destination="@id/reportViewFragment" />
@@ -71,8 +77,23 @@
             android:id="@+id/action_signUpFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="pl.tablehub.mobile.fragments.account.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_mainViewFragment"
+            app:destination="@id/mainViewFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_logInFragment"
+            app:destination="@id/logInFragment"
+            app:popUpTo="@id/mainViewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/myStatsFragment"
         android:name="pl.tablehub.mobile.fragments.account.gamification.stats.MyStatsFragment"
-        android:label="MyStatsFragment" />
+        android:label="MyStatsFragment" >
+    </fragment>
 </navigation>
