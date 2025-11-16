@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.fragments.account.gamification.redeem
 
+import RedeemView
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +12,6 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import pl.tablehub.mobile.R
-import pl.tablehub.mobile.fragments.account.gamification.redeem.composables.RedeemView
 import pl.tablehub.mobile.model.v2.Reward
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.ui.theme.TableHubTheme
