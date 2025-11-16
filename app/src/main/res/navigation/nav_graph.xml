@@ -98,5 +98,17 @@
     <fragment
         android:id="@+id/rewardsFragment"
         android:name="pl.tablehub.mobile.fragments.account.gamification.rewards.RewardsFragment"
-        android:label="RewardsFragment" />
+        android:label="RewardsFragment" >
+        <action
+            android:id="@+id/action_rewardsFragment_to_redeemFragment"
+            app:destination="@id/redeemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/redeemFragment"
+        android:name="pl.tablehub.mobile.fragments.account.gamification.redeem.RedeemFragment"
+        android:label="RedeemFragment">
+        <argument
+            android:name="selected_reward"
+            app:argType="pl.tablehub.mobile.model.v2.Reward" />
+    </fragment>
 </navigation>
