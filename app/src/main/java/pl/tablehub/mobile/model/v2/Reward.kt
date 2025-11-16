@@ -10,5 +10,6 @@ data class Reward(
     val additionalDescription: String?,
     val image: Image,
     val restaurantName: String,
-    val restaurantAddress: Address
+    val restaurantAddress: Address,
+    val redeemed: Boolean
 ) : Parcelable
