@@ -23,6 +23,7 @@ val rewardList = listOf(
             altText = "Free dessert image",
             ratio = 1.0
         ),
+        redeemed = false
     ),
     Reward(
         title = "20% Off Your Entire Bill",
@@ -42,6 +43,7 @@ val rewardList = listOf(
             altText = "20% discount image",
             ratio = 1.0
         ),
+        redeemed = false
     ),
     Reward(
         title = "Buy One Coffee, Get One Free",
@@ -61,6 +63,7 @@ val rewardList = listOf(
             altText = "Coffee offer image",
             ratio = 1.0
         ),
+        redeemed = false
     ),
     Reward(
         title = "Complimentary Appetizer",
@@ -80,6 +83,7 @@ val rewardList = listOf(
             altText = "Appetizer image",
             ratio = 1.0
         ),
+        redeemed = false
     ),
     Reward(
         title = "Loyalty Point Bonus",
@@ -99,5 +103,6 @@ val rewardList = listOf(
             altText = "Loyalty bonus image",
             ratio = 1.0
         ),
+        redeemed = false
     )
 )

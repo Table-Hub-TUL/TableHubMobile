@@ -15,6 +15,7 @@ import pl.tablehub.mobile.fragments.account.gamification.redeem.composables.Rede
 import pl.tablehub.mobile.fragments.account.gamification.redeem.composables.RestaurantInfo
 import pl.tablehub.mobile.fragments.account.gamification.redeem.composables.RewardDetails
 import pl.tablehub.mobile.fragments.account.gamification.redeem.composables.RewardImage
+import pl.tablehub.mobile.fragments.account.gamification.redeem.composables.TimerButton
 import pl.tablehub.mobile.model.v2.Reward
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
@@ -24,7 +25,10 @@ fun RedeemView(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     reward: Reward,
-    onRedeemClick: (Reward) -> Unit = {}
+    isTimerActive: Boolean,
+    redeemedUntil: Long?,
+    onRedeemClick: (Reward) -> Unit = {},
+    onTimerExpired: () -> Unit = {}
 ) {
     val dims = rememberGlobalDimensions()
 
@@ -57,11 +61,18 @@ fun RedeemView(
 
             RestaurantInfo(reward, dims)
         }
-
-        RedeemButton(
-            dims = dims,
-            reward = reward,
-            onRedeemClick = onRedeemClick
-        )
+        if(isTimerActive) {
+            TimerButton(
+                dims = dims,
+                redeemedUntil = redeemedUntil,
+                onTimerExpired = onTimerExpired
+            )
+        } else {
+            RedeemButton(
+                dims = dims,
+                reward = reward,
+                onRedeemClick = onRedeemClick
+            )
+        }
     }
 }
