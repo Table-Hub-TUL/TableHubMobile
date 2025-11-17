@@ -92,6 +92,7 @@ fun RestaurantMapRenderer(
                                 newStatus
                             )
                         )
+                        selectedTableDetail = null;
                     }
                 )
             }
