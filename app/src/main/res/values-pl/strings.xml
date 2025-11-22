@@ -75,4 +75,6 @@
     <string name="gam_reports">Zgłoszenia</string>
     <string name="gam_achievements">Osiągnięcia</string>
     <string name="gam_ranking">Ranking</string>
+    <string name="gam_redeem">Odbierz swoje nagrody</string>
+    <string name="location">Lokalizacja</string>
 </resources>
