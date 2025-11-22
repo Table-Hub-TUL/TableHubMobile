@@ -13,4 +13,5 @@ object NavArgs {
     const val SELECTED_RESTAURANT = "restaurant"
     const val SELECTED_RESTAURANT_ID = "restaurant_id"
     const val JWT = "JWT"
+    const val SELECTED_REWARD = "selected_reward"
 }
