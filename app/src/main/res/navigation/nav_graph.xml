@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/logInFragment">
+    app:startDestination="@id/rewardsFragment">
 
     <fragment
         android:id="@+id/logInFragment"
@@ -94,6 +94,21 @@
     <fragment
         android:id="@+id/myStatsFragment"
         android:name="pl.tablehub.mobile.fragments.account.gamification.stats.MyStatsFragment"
-        android:label="MyStatsFragment" >
+        android:label="MyStatsFragment" />
+    <fragment
+        android:id="@+id/rewardsFragment"
+        android:name="pl.tablehub.mobile.fragments.account.gamification.rewards.RewardsFragment"
+        android:label="RewardsFragment" >
+        <action
+            android:id="@+id/action_rewardsFragment_to_redeemFragment"
+            app:destination="@id/redeemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/redeemFragment"
+        android:name="pl.tablehub.mobile.fragments.account.gamification.redeem.RedeemFragment"
+        android:label="RedeemFragment">
+        <argument
+            android:name="selected_reward"
+            app:argType="pl.tablehub.mobile.model.v2.Reward" />
     </fragment>
 </navigation>

@@ -10,27 +10,31 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun BackButton(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    backgroundColor: Color = SECONDARY_COLOR,
+    arrowColor: Color = TERTIARY_COLOR,
+    modifier: Modifier = Modifier
 ) {
     val dims = rememberGlobalDimensions()
 
     IconButton(
         onClick = onBackClick,
-        modifier = Modifier
+        modifier = modifier
             .size(dims.buttonHeight)
             .clip(RoundedCornerShape(dims.buttonCornerRadius))
-            .background(SECONDARY_COLOR)
+            .background(backgroundColor)
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Back",
-            tint = TERTIARY_COLOR,
+            tint = arrowColor,
             modifier = Modifier.size(dims.iconSize)
         )
     }

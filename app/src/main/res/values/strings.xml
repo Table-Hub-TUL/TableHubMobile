@@ -74,4 +74,6 @@
     <string name="gam_reports">Reports</string>
     <string name="gam_achievements">Achievements</string>
     <string name="gam_ranking">Ranking</string>
+    <string name="gam_redeem">Redeem you rewards</string>
+    <string name="location">Location</string>
 </resources>
