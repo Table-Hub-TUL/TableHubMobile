@@ -16,6 +16,8 @@
     <string name="my_points">My points: %1$d</string>
     <string name="see_stats_and_points">See statistics and points</string>
     <string name="change_password">Change password</string>
+    <string name="Statistics">Statistics</string>
+    <string name="Rewards">Rewards</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
     <string name="history">History</string>

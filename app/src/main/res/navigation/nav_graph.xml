@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/rewardsFragment">
+    app:startDestination="@id/logInFragment">
 
     <fragment
         android:id="@+id/logInFragment"
@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_mainViewFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_mainViewFragment_to_rewardsFragment"
+            app:destination="@id/rewardsFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"
@@ -86,6 +89,9 @@
             android:id="@+id/action_profileFragment_to_mainViewFragment"
             app:destination="@id/mainViewFragment" />
         <action
+            android:id="@+id/action_profileFragment_to_myStatsFragment"
+            app:destination="@id/myStatsFragment" />
+        <action
             android:id="@+id/action_profileFragment_to_logInFragment"
             app:destination="@id/logInFragment"
             app:popUpTo="@id/mainViewFragment"
@@ -94,7 +100,11 @@
     <fragment
         android:id="@+id/myStatsFragment"
         android:name="pl.tablehub.mobile.fragments.account.gamification.stats.MyStatsFragment"
-        android:label="MyStatsFragment" />
+        android:label="MyStatsFragment" >
+        <action
+            android:id="@+id/action_myStatsFragment_to_rewardsFragment"
+            app:destination="@id/rewardsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/rewardsFragment"
         android:name="pl.tablehub.mobile.fragments.account.gamification.rewards.RewardsFragment"

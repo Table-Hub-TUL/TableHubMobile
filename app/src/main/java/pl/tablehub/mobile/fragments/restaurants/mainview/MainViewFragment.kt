@@ -61,6 +61,9 @@ class MainViewFragment : Fragment() {
             "PROFILE" to {
                 findNavController().navigate(R.id.action_mainViewFragment_to_profileFragment)
             },
+            "REWARDS" to {
+                findNavController().navigate(R.id.action_mainViewFragment_to_rewardsFragment)
+            },
             "LOGOUT" to {
                 lifecycleScope.launch {
                     encryptedDataStore.clearJWT()

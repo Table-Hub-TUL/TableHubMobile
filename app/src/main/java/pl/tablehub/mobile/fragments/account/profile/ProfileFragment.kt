@@ -51,6 +51,9 @@ class ProfileFragment : Fragment() {
                         },
                         onLogoutAction = {guestName ->
                             viewModel.onLogoutClick(guestName)
+                        },
+                        onSeeStatsClick = {
+                            findNavController().navigate(R.id.action_profileFragment_to_myStatsFragment)
                         }
                     )
                 }
