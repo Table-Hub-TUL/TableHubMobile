@@ -40,6 +40,7 @@ class EncryptedDataStore @Inject constructor(
 
 
         private val JWT_TOKEN_KEY = stringPreferencesKey("jwt_token")
+        private const val REWARD_TIMER_KEY_PREFIX = "reward_timer_"
     }
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
@@ -171,6 +172,39 @@ class EncryptedDataStore @Inject constructor(
             keyStore.getKey(KEY_ALIAS, null) as SecretKey
         } catch (e: Exception) {
             throw SecurityException("Failed to retrieve secret key", e)
+        }
+    }
+
+
+    private fun getRewardTimerKey(rewardId: Long) =
+        stringPreferencesKey("$REWARD_TIMER_KEY_PREFIX$rewardId")
+
+    suspend fun saveRewardTimer(rewardId: Long, expiryTimestamp: Long) {
+        try {
+            val encryptedTimestamp = encrypt(expiryTimestamp.toString())
+            context.dataStore.edit { prefs ->
+                prefs[getRewardTimerKey(rewardId)] = encryptedTimestamp
+            }
+        } catch (e: Exception) {
+            throw SecurityException("Failed to save reward timer", e)
+        }
+    }
+
+    fun getRewardTimer(rewardId: Long): Flow<Long?> {
+        return context.dataStore.data.map { prefs ->
+            prefs[getRewardTimerKey(rewardId)]?.let { encryptedTimestamp ->
+                try {
+                    decrypt(encryptedTimestamp).toLongOrNull()
+                } catch (e: Exception) {
+                    null
+                }
+            }
+        }
+    }
+
+    suspend fun removeRewardTimer(rewardId: Long) {
+        context.dataStore.edit { prefs ->
+            prefs.remove(getRewardTimerKey(rewardId))
         }
     }
 }
