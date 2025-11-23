@@ -52,7 +52,8 @@ fun MainMapView(
         drawerState = menuDrawerState,
         onProfileClick = menuOnClicks["PROFILE"] ?: {},
         onLogoutClick = menuOnClicks["LOGOUT"] ?: {},
-        onSettingsClick = menuOnClicks["SETTINGS"] ?: {}
+        onSettingsClick = menuOnClicks["SETTINGS"] ?: {},
+        onRewardsClick = menuOnClicks["REWARDS"] ?: {}
     ) {
         FilterMenu(
             drawerState = filterDrawerState,
