@@ -1,19 +1,25 @@
-package pl.tablehub.mobile.fragments.account.gamification.stats
+package pl.tablehub.mobile.fragments.account.gamification.achievements
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import pl.tablehub.mobile.fragments.account.gamification.stats.composables.MyStatsView
-import androidx.navigation.fragment.findNavController
-import pl.tablehub.mobile.R
+import pl.tablehub.mobile.fragments.account.gamification.achievements.composables.AchievementsView
+import pl.tablehub.mobile.fragments.account.gamification.achievements.composables.achievements
+import pl.tablehub.mobile.viewmodels.ProfileViewModel
 
 @AndroidEntryPoint
-class MyStatsFragment : Fragment() {
+class AchievementsFragment : Fragment() {
+
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,17 +28,14 @@ class MyStatsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-
             setContent {
-                    MyStatsView(
+                    val userProfile by viewModel.userProfile.collectAsState()
+
+                    AchievementsView(
+                        userProfile = userProfile,
+                        achievementsList = achievements,
                         onBackClick = {
                             findNavController().popBackStack()
-                        },
-                        onRewardsClick = {
-                             findNavController().navigate(R.id.action_myStatsFragment_to_rewardsFragment)
-                        },
-                        onAchievementsClick = {
-                            findNavController().navigate(R.id.action_myStatsFragment_to_achievementsFragment)
                         }
                     )
             }

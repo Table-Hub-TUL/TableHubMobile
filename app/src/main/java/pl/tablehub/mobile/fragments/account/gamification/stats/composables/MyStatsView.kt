@@ -28,7 +28,7 @@ fun <A, B, C> List<A>.zip3(b: List<B>, c: List<C>): List<Triple<A, B, C>> =
     this.zip(b.zip(c)) { a, (b, c) -> Triple(a, b, c) }
 
 @Composable
-fun MyStatisticsView(
+fun MyStatsView(
     modifier: Modifier = Modifier,
     points: Int = 450,
     reportsCount: Int = 12,
@@ -125,15 +125,5 @@ fun MyStatisticsView(
                 onClick = onClick
             )
         }
-    }
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun MyStatisticsViewPreview() {
-    TableHubTheme {
-        MyStatisticsView()
     }
 }
