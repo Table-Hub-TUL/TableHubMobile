@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_mainViewFragment_to_rewardsFragment"
             app:destination="@id/rewardsFragment" />
+        <action
+            android:id="@+id/action_mainViewFragment_to_achievementsFragment"
+            app:destination="@id/achievementsFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportViewFragment"
@@ -104,6 +107,9 @@
         <action
             android:id="@+id/action_myStatsFragment_to_rewardsFragment"
             app:destination="@id/rewardsFragment" />
+        <action
+            android:id="@+id/action_myStatsFragment_to_achievementsFragment"
+            app:destination="@id/achievementsFragment" />
     </fragment>
     <fragment
         android:id="@+id/rewardsFragment"
@@ -121,4 +127,8 @@
             android:name="selected_reward"
             app:argType="pl.tablehub.mobile.model.v2.Reward" />
     </fragment>
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="pl.tablehub.mobile.fragments.account.gamification.achievements.AchievementsFragment"
+        android:label="AchievementsFragment" />
 </navigation>
