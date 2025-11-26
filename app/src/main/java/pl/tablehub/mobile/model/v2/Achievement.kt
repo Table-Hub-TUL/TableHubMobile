@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Achievement(
     val id: Long,
     val title: String,
+    val emoji: String? = null,
     val points: Long
 ) : Parcelable
 
