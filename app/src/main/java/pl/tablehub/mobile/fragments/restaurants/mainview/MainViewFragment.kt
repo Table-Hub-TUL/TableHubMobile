@@ -28,6 +28,7 @@ import pl.tablehub.mobile.fragments.restaurants.mainview.composables.MainMapView
 import pl.tablehub.mobile.fragments.restaurants.mainview.composables.snackbar.PermissionSnackbar
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.model.v2.RestaurantListItem
+import pl.tablehub.mobile.repository.AuthRepository
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.viewmodels.MainViewViewModel
 import javax.inject.Inject
@@ -38,7 +39,7 @@ class MainViewFragment : Fragment() {
     private val viewModel: MainViewViewModel by activityViewModels()
 
     @Inject
-    lateinit var encryptedDataStore: EncryptedDataStore
+    lateinit var authRepository: AuthRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +67,7 @@ class MainViewFragment : Fragment() {
             },
             "LOGOUT" to {
                 lifecycleScope.launch {
-                    encryptedDataStore.clearJWT()
+                    authRepository.clearData()
                     findNavController().navigate(R.id.action_mainViewFragment_to_logInFragment)
                 }
             },
