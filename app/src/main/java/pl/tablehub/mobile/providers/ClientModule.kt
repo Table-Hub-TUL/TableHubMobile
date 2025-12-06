@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.hildan.krossbow.websocket.WebSocketClient
 import org.hildan.krossbow.websocket.okhttp.OkHttpWebSocketClient
 import pl.tablehub.mobile.client.middleware.AuthMiddleware
+import pl.tablehub.mobile.client.middleware.TokenAuthenticator
 import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.client.rest.interfaces.IRestaurantService
 import pl.tablehub.mobile.util.Constants
@@ -32,12 +33,17 @@ object ClientModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(authMiddleware: AuthMiddleware): OkHttpClient {
+    fun provideOkHttpClient(
+        authMiddleware: AuthMiddleware,
+        tokenAuthenticator: TokenAuthenticator
+    ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authMiddleware)
+            .authenticator(tokenAuthenticator)
             .build()
     }
 
