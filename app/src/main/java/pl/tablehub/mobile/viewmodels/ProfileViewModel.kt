@@ -12,11 +12,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.model.v2.UserProfile
+import pl.tablehub.mobile.repository.AuthRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val dataStore: EncryptedDataStore
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val TAG = "ProfileViewModel"
@@ -36,7 +37,7 @@ class ProfileViewModel @Inject constructor(
     fun onLogoutClick(guestName: String) {
         viewModelScope.launch {
             try {
-                dataStore.clearJWT()
+                authRepository.clearData()
                 Log.d(TAG, "Action: JWT Token successfully cleared.")
 
                 _logoutEvent.send(Unit)

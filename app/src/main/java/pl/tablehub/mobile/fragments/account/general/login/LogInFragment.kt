@@ -21,6 +21,7 @@ import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.client.model.auth.LoginRequest
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.fragments.account.general.login.composables.MainLoginView
+import pl.tablehub.mobile.repository.AuthRepository
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ import javax.inject.Inject
 class LogInFragment : Fragment() {
 
     @Inject
-    lateinit var encryptedPreferences: EncryptedDataStore
+    lateinit var authRepository: AuthRepository
 
     @Inject
     lateinit var authService: IAuthService
@@ -63,8 +64,8 @@ class LogInFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
-                        encryptedPreferences.storeJWT(loginResponse.token)
-                        val storedToken = encryptedPreferences.getJWT().first()
+                        authRepository.storeJWT(loginResponse.token)
+                        val storedToken = authRepository.getJWT().first()
 
                         if (storedToken != null) {
                             findNavController().navigate(
