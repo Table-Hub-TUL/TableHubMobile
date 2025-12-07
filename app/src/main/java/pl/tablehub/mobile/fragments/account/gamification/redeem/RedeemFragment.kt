@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.datastore.EncryptedDataStore
 import pl.tablehub.mobile.model.v2.Reward
+import pl.tablehub.mobile.repository.AuthRepository
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import pl.tablehub.mobile.ui.theme.TableHubTheme
 import javax.inject.Inject
@@ -28,7 +29,7 @@ import javax.inject.Inject
 class RedeemFragment : Fragment() {
 
     @Inject
-    lateinit var dataStore: EncryptedDataStore
+    lateinit var authRepository: AuthRepository
 
     @Inject
     lateinit var appScope: CoroutineScope
@@ -53,7 +54,7 @@ class RedeemFragment : Fragment() {
                     if (reward != null) {
 
                         val timerFlow = remember(reward.id) {
-                            dataStore.getRewardTimer(reward.id)
+                            authRepository.getRewardTimer(reward.id)
                         }
                         val redeemedUntil by timerFlow.collectAsState(initial = null)
 
@@ -69,7 +70,7 @@ class RedeemFragment : Fragment() {
                             onRedeemClick = { rewardToRedeem ->
                                 val expiryTime = System.currentTimeMillis() + (15 * 60 * 1000)
                                 appScope.launch {
-                                    dataStore.saveRewardTimer(rewardToRedeem.id, expiryTime)
+                                    authRepository.saveRewardTimer(rewardToRedeem.id, expiryTime)
                                 }
 
                                 // TODO: Implement actual redeem logic (np. wywołanie API)
@@ -78,7 +79,7 @@ class RedeemFragment : Fragment() {
                             },
                             onTimerExpired = {
                                 appScope.launch {
-                                    dataStore.removeRewardTimer(reward.id)
+                                    authRepository.removeRewardTimer(reward.id)
                                 }
                             }
                         )
