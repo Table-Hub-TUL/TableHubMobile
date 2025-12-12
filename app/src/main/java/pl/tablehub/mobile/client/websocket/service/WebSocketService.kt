@@ -12,6 +12,7 @@ import pl.tablehub.mobile.util.Constants.BACKEND_WS_IP
 import pl.tablehub.mobile.util.WSMessageRelay
 import javax.inject.Inject
 import kotlinx.coroutines.Job
+import pl.tablehub.mobile.repository.AuthRepository
 import javax.inject.Singleton
 
 @Singleton
@@ -33,12 +34,12 @@ class WebSocketService @Inject constructor(
     private var specificSubscriptionJob: Job? = null
 
     @Inject
-    lateinit var dataStore: EncryptedDataStore
+    lateinit var authRepository: AuthRepository
 
     fun connectWebSocket() {
         serviceScope.launch {
             try {
-                val token = dataStore.getJWT().first()!!
+                val token = authRepository.getJWT().first()!!
                 val urlWithToken = "$SERVER_URL?token=$token"
                 val stompClient = StompClient(client)
                 stompSession = stompClient.connect(

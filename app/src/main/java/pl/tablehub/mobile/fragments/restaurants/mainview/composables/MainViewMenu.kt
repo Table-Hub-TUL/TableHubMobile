@@ -26,6 +26,7 @@ fun MainViewMenu(
     onProfileClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
+    onRewardsClick: () -> Unit = {},
     content: @Composable () -> Unit = {}
 ) {
     val scope = rememberCoroutineScope()
@@ -58,6 +59,11 @@ fun MainViewMenu(
                                 onClick = onSettingsClick,
                                 imgName = R.drawable.settings,
                                 stringFromRes = R.string.settings
+                            )
+                            MainViewMenuButton(
+                                onClick = onRewardsClick,
+                                imgName = R.drawable.rewards,
+                                stringFromRes = R.string.Rewards
                             )
                         }
                         Column(modifier = Modifier.padding(bottom = dims.paddingBig)) {

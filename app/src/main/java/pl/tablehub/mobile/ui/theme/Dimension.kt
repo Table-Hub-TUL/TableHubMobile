@@ -45,7 +45,8 @@ data class GlobalDimensions(
     val contentIconSize: Dp,
     val iconSize: Dp,
     val drawerWidth: Dp,
-    val bigIconSize: Dp
+    val bigIconSize: Dp,
+    val achievementSize: Dp
 )
 
 // the values for sizes are for a approximately typical screen(width = 400, height = 800)
@@ -96,6 +97,7 @@ fun rememberGlobalDimensions(): GlobalDimensions {
         val paddingHuge = (screenWidth * 0.045f).coerceIn(8f, 12f).dp // 18dp
 
         val drawerWidth = (screenWidth * 0.725f).coerceAtMost(300f).dp //290
+        val achievementSize = (screenWidth * 0.18f).coerceIn(70f, 74f).dp //72
 
         GlobalDimensions(
             horizontalPadding = horizontalPadding,
@@ -126,7 +128,8 @@ fun rememberGlobalDimensions(): GlobalDimensions {
             drawerWidth = drawerWidth,
             bigIconSize = bigIconSize,
             textSizeVeryBig = textSizeVeryBig,
-            textSizeHeader = textSizeHeader
+            textSizeHeader = textSizeHeader,
+            achievementSize = achievementSize
         )
     }
 }

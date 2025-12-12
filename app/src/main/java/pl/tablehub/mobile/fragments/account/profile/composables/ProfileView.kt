@@ -22,7 +22,8 @@ import pl.tablehub.mobile.R
 fun ProfileView(
     viewModel: ProfileViewModel,
     onBackClick: () -> Unit,
-    onLogoutAction: (String) -> Unit
+    onLogoutAction: (String) -> Unit,
+    onSeeStatsClick: () -> Unit
 ) {
     val userProfile by viewModel.userProfile.collectAsState()
     val dims = rememberGlobalDimensions()
@@ -49,7 +50,7 @@ fun ProfileView(
             ProfileBody(
                 email = userProfile.email,
                 points = userProfile.points,
-                onSeeStatsClick = viewModel::onSeeStatsClick,
+                onSeeStatsClick = onSeeStatsClick,
                 onChangePasswordClick = viewModel::onChangePasswordClick,
                 onLogout = {
                     onLogoutAction(guestName)
