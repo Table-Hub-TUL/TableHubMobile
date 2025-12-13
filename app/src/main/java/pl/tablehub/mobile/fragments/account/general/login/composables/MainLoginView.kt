@@ -25,7 +25,7 @@ import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 @Composable
 fun MainLoginView(
     modifier: Modifier = Modifier,
-    onLogin: (String, String) -> Unit = { _, _ -> },
+    onLogin: (String, String, Boolean) -> Unit = { _, _, _ -> },
     onRegister: () -> Unit = {},
     onForgotPassword: () -> Unit = {}
 ) {
@@ -62,7 +62,7 @@ fun MainLoginView(
         Spacer(modifier = Modifier.height(dims.smallSpacing))
         ForgotPasswordButton(onForgotPassword)
         Spacer(modifier = Modifier.height(dims.largeSpacing))
-        LogInButton { onLogin(username, password) }
+        LogInButton { onLogin(username, password, rememberMeState) }
         Spacer(modifier = Modifier.height(dims.mediumSpacing))
         RegisterButton(onRegister)
         Spacer(modifier = Modifier.height(dims.smallSpacing))

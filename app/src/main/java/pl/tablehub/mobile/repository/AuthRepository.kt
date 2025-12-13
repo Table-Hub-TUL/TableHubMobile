@@ -12,6 +12,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.jvm.Throws
+import kotlinx.coroutines.flow.map
 
 @Singleton
 class AuthRepository @Inject constructor(
@@ -22,7 +23,16 @@ class AuthRepository @Inject constructor(
     companion object {
         private val JWT_TOKEN_KEY = stringPreferencesKey("jwt_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
+        private val REMEMBER_ME_KEY = stringPreferencesKey("remember_me")
         private const val REWARD_TIMER_KEY_PREFIX = "reward_timer_"
+    }
+
+    suspend fun saveRememberMe(shouldRemember: Boolean) {
+        encryptedDataStore.put(REMEMBER_ME_KEY, shouldRemember)
+    }
+
+    fun getRememberMe(): Flow<Boolean> {
+        return encryptedDataStore.get(REMEMBER_ME_KEY).map { it?.toBoolean() ?: false }
     }
 
     suspend fun storeTokens(accessToken: String, refreshToken: String) {
