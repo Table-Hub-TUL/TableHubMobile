@@ -18,7 +18,7 @@ class EncryptedDataStore @Inject constructor(
 ) {
 
     suspend fun <T> put(key: Preferences.Key<String>, value: T) {
-        val stringValue = value.toString() // Convert any type to string first
+        val stringValue = value.toString()
         val encryptedBytes = cryptoManager.encrypt(stringValue)
         val encryptedBase64 = Base64.encodeToString(encryptedBytes, Base64.NO_WRAP)
 
@@ -48,5 +48,18 @@ class EncryptedDataStore @Inject constructor(
     }
     fun getLong(key: Preferences.Key<String>): Flow<Long?> {
         return get(key).map { it?.toLongOrNull() }
+    }
+
+    fun getLoggedInUsernameFlow(): Flow<String?> {
+        return get(USERNAME_KEY)
+    }
+
+    fun getEmailFlow(): Flow<String?> {
+        return get(EMAIL_KEY)
+    }
+
+    companion object {
+        val USERNAME_KEY = stringPreferencesKey("username")
+        val EMAIL_KEY = stringPreferencesKey("email")
     }
 }

@@ -8,7 +8,7 @@ data class Reward(
     val id: Long,
     val title: String,
     val additionalDescription: String?,
-    val image: Image,
+    val image: String,
     val restaurantName: String,
     val restaurantAddress: Address,
     val redeemed: Boolean

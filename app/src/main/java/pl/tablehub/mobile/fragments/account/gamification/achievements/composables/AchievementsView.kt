@@ -3,45 +3,40 @@ package pl.tablehub.mobile.fragments.account.gamification.achievements.composabl
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
-import pl.tablehub.mobile.model.v2.Achievement
-import pl.tablehub.mobile.model.v2.UserProfile
+import pl.tablehub.mobile.fragments.account.gamification.achievements.AchievementsState // Import nowego stanu
 import pl.tablehub.mobile.ui.shared.composables.BackButton
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
 import pl.tablehub.mobile.ui.theme.WHITE_COLOR
 import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
+import pl.tablehub.mobile.viewmodels.AchievementsViewModel
 
 @Composable
 fun AchievementsView(
-    userProfile: UserProfile,
-    achievementsList: List<Achievement>,
+    viewModel: AchievementsViewModel,
     onBackClick: () -> Unit
 ) {
+    val state by viewModel.state.collectAsState()
+
     val dims = rememberGlobalDimensions()
 
     Column(
@@ -78,26 +73,51 @@ fun AchievementsView(
             )
         }
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = dims.paddingLarge),
-        ) {
-            itemsIndexed(achievementsList) { index, achievement ->
-                val isUnlocked = userProfile.points >= achievement.points
+        when (state) {
 
-                val nextUnlocked = if (index < achievementsList.lastIndex) {
-                    userProfile.points >= achievementsList[index + 1].points
-                } else {
-                    false
+            AchievementsState.Loading, AchievementsState.Initial -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = PRIMARY_COLOR)
                 }
+            }
 
-                TimelineItem(
-                    achievement = achievement,
-                    isUnlocked = isUnlocked,
-                    isNextUnlocked = nextUnlocked,
-                    isLast = index == achievementsList.lastIndex
-                )
+            is AchievementsState.Error -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "Błąd ładowania: ${(state as AchievementsState.Error).message}",
+                        color = Color.Red
+                    )
+                }
+            }
+
+            is AchievementsState.Success -> {
+                val successState = state as AchievementsState.Success
+                val achievementsList = successState.achievements
+                val userPoints = successState.userPoints
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = dims.paddingLarge),
+                ) {
+                    itemsIndexed(achievementsList) { index, achievement ->
+
+                        val isUnlocked = userPoints >= achievement.points
+
+                        val nextUnlocked = if (index < achievementsList.lastIndex) {
+                            userPoints >= achievementsList[index + 1].points
+                        } else {
+                            false
+                        }
+
+                        TimelineItem(
+                            achievement = achievement,
+                            isUnlocked = isUnlocked,
+                            isNextUnlocked = nextUnlocked,
+                            isLast = index == achievementsList.lastIndex
+                        )
+                    }
+                }
             }
         }
     }

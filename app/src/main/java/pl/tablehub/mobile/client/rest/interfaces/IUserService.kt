@@ -13,7 +13,7 @@ interface IUserService {
     suspend fun getAchievements() : List<Achievement>
     @GET("${API_USER_PREFIX}/{username}/stats")
     suspend fun getUserStats(@Path("username") username: String) : UserStats
-    @GET("${API_USER_PREFIX}/{username}/rewards}")
+    @GET("${API_USER_PREFIX}/{username}/rewards")
     suspend fun getUserRewards(@Path("username") username: String) : List<Reward>
     @POST("${API_USER_PREFIX}/{username}/rewards/{rewardID}")
     suspend fun redeemReward(@Path("username") username: String, @Path("rewardID") rewardID: Long)

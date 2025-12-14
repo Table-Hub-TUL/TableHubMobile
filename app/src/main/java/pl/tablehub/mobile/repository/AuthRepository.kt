@@ -4,6 +4,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import org.json.JSONObject
+import pl.tablehub.mobile.client.middleware.AuthMiddleware
 import pl.tablehub.mobile.client.model.auth.RefreshTokenRequest
 import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.datastore.EncryptedDataStore
@@ -12,7 +13,6 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.jvm.Throws
-
 @Singleton
 class AuthRepository @Inject constructor(
     private val encryptedDataStore: EncryptedDataStore,
@@ -23,6 +23,7 @@ class AuthRepository @Inject constructor(
         private val JWT_TOKEN_KEY = stringPreferencesKey("jwt_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
         private const val REWARD_TIMER_KEY_PREFIX = "reward_timer_"
+
     }
 
     suspend fun storeTokens(accessToken: String, refreshToken: String) {
@@ -93,7 +94,6 @@ class AuthRepository @Inject constructor(
         }
 
         val payload = parts[1]
-        // Use android.util.Base64 with URL_SAFE | NO_WRAP flags for JWTs
         val decodedBytes = android.util.Base64.decode(
             payload,
             android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
@@ -117,5 +117,15 @@ class AuthRepository @Inject constructor(
 
     suspend fun removeRewardTimer(rewardId: Long) {
         encryptedDataStore.remove(getRewardTimerKey(rewardId))
+    }
+
+    suspend fun saveUsername(username: String) {
+        encryptedDataStore.put(EncryptedDataStore.USERNAME_KEY, username)
+    }
+
+    suspend fun logout() {
+        encryptedDataStore.remove(AuthMiddleware.ACCESS_TOKEN_KEY)
+        encryptedDataStore.remove(AuthMiddleware.REFRESH_TOKEN_KEY)
+        encryptedDataStore.remove(EncryptedDataStore.USERNAME_KEY)
     }
 }

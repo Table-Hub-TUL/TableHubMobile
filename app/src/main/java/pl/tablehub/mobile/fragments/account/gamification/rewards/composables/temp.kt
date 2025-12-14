@@ -18,11 +18,7 @@ val rewardList = listOf(
             country = "USA"
         ),
         id = 1,
-        image = Image(
-            url = "https://fastly.picsum.photos/id/323/200/200.jpg?hmac=EoedzCHJZRv1-7_RBKDcba4cXIfclsicfsYbW3-VEsA",
-            altText = "Free dessert image",
-            ratio = 1.0
-        ),
+        image = "https://fastly.picsum.photos/id/323/200/200.jpg?hmac=EoedzCHJZRv1-7_RBKDcba4cXIfclsicfsYbW3-VEsA",
         redeemed = false
     ),
     Reward(
@@ -38,11 +34,7 @@ val rewardList = listOf(
             country = "USA"
         ),
         id = 2,
-        image = Image(
-            url = "https://fastly.picsum.photos/id/660/200/200.jpg?hmac=5UOdBCKDcPq_zS0RAVkvSD934EYVyCEdExCagJur-g8",
-            altText = "20% discount image",
-            ratio = 1.0
-        ),
+        image = "https://fastly.picsum.photos/id/660/200/200.jpg?hmac=5UOdBCKDcPq_zS0RAVkvSD934EYVyCEdExCagJur-g8",
         redeemed = false
     ),
     Reward(
@@ -58,11 +50,7 @@ val rewardList = listOf(
             country = "UK"
         ),
         id = 3,
-        image = Image(
-            url = "https://fastly.picsum.photos/id/522/200/200.jpg?hmac=-4K81k9CA5C9S2DWiH5kP8rMvaAPk2LByYZHP9ejTjA",
-            altText = "Coffee offer image",
-            ratio = 1.0
-        ),
+        image = "https://fastly.picsum.photos/id/522/200/200.jpg?hmac=-4K81k9CA5C9S2DWiH5kP8rMvaAPk2LByYZHP9ejTjA",
         redeemed = false
     ),
     Reward(
@@ -78,12 +66,7 @@ val rewardList = listOf(
             country = "Canada"
         ),
         id = 4,
-        image = Image(
-            url = "https://fastly.picsum.photos/id/281/200/200.jpg?hmac=5FvZ-Y5zbbpS3-mJ_mp6-eH61MkwhUJi9qnhscegqkY",
-            altText = "Appetizer image",
-            ratio = 1.0
-        ),
-        redeemed = false
+        image = "https://fastly.picsum.photos/id/281/200/200.jpg?hmac=5FvZ-Y5zbbpS3-mJ_mp6-eH61MkwhUJi9qnhscegqkY",redeemed = false
     ),
     Reward(
         title = "Loyalty Point Bonus",
@@ -98,11 +81,7 @@ val rewardList = listOf(
             country = "Australia"
         ),
         id = 5,
-        image = Image(
-            url = "https://fastly.picsum.photos/id/376/200/200.jpg?hmac=lM2SnAPO9nDnPBP5FjJOFIJSaRoPKUJRovk6goT_nA4",
-            altText = "Loyalty bonus image",
-            ratio = 1.0
-        ),
+        image = "https://fastly.picsum.photos/id/376/200/200.jpg?hmac=lM2SnAPO9nDnPBP5FjJOFIJSaRoPKUJRovk6goT_nA4",
         redeemed = false
     )
 )

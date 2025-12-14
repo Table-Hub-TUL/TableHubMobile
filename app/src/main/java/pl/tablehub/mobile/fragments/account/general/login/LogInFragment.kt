@@ -65,6 +65,7 @@ class LogInFragment : Fragment() {
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
                         authRepository.storeJWT(loginResponse.token)
+                        authRepository.saveUsername(username)
                         val storedToken = authRepository.getJWT().first()
 
                         if (storedToken != null) {
