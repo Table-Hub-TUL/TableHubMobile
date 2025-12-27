@@ -20,17 +20,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import pl.tablehub.mobile.ui.shared.composables.AppLogo
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TableHubTheme
-import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions // ✅ import your shared dimensions
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 fun MainLoginView(
     modifier: Modifier = Modifier,
-    onLogin: (String, String) -> Unit = { _, _ -> },
+    onLogin: (String, String, Boolean) -> Unit = { _, _, _ -> },
     onRegister: () -> Unit = {},
     onForgotPassword: () -> Unit = {}
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var rememberMeState by remember { mutableStateOf(false) }
 
     val dims = rememberGlobalDimensions()
 
@@ -54,9 +55,14 @@ fun MainLoginView(
         Spacer(modifier = Modifier.height(dims.mediumSpacing))
         PasswordInput(onValueChange = { password = it })
         Spacer(modifier = Modifier.height(dims.smallSpacing))
+        RememberMeOption(
+            isChecked = rememberMeState,
+            onCheckedChange = { rememberMeState = it }
+        )
+        Spacer(modifier = Modifier.height(dims.smallSpacing))
         ForgotPasswordButton(onForgotPassword)
         Spacer(modifier = Modifier.height(dims.largeSpacing))
-        LogInButton { onLogin(username, password) }
+        LogInButton { onLogin(username, password, rememberMeState) }
         Spacer(modifier = Modifier.height(dims.mediumSpacing))
         RegisterButton(onRegister)
         Spacer(modifier = Modifier.height(dims.smallSpacing))

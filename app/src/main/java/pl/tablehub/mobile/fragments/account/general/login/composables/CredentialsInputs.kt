@@ -1,12 +1,18 @@
 package pl.tablehub.mobile.fragments.account.general.login.composables
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -17,8 +23,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -181,4 +189,37 @@ fun WelcomeText() {
         fontWeight = FontWeight.Bold,
         color = TERTIARY_COLOR
     )
+}
+
+@Composable
+fun RememberMeOption(
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    val dims = rememberGlobalDimensions()
+    Row(
+        modifier = Modifier
+            .toggleable(
+                value = isChecked,
+                onValueChange = { onCheckedChange(it) },
+                role = Role.Checkbox
+            )
+            .padding(vertical = dims.paddingSmall),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = isChecked,
+            onCheckedChange = null,
+            colors = CheckboxDefaults.colors(
+                checkedColor = TERTIARY_COLOR,
+                uncheckedColor = TERTIARY_COLOR.copy(alpha = 0.7f),
+                checkmarkColor = androidx.compose.ui.graphics.Color.White
+            )
+        )
+        Spacer(modifier = Modifier.width(dims.paddingSmall))
+        Text(text = stringResource(R.string.remember_me),
+            fontSize = dims.textSizeMedium,
+            color = TERTIARY_COLOR
+        )
+    }
 }
