@@ -47,15 +47,15 @@ class LogInFragment : Fragment() {
                     onRegister = {
                         findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
                     },
-                    onLogin = { username, password ->
-                        handleLogin(username, password)
+                    onLogin = { username, password, rememberMe ->
+                        handleLogin(username, password, rememberMe)
                     }
                 )
             }
         }
     }
 
-    private fun handleLogin(username: String, password: String) {
+    private fun handleLogin(username: String, password: String, rememberMe: Boolean) {
         val loginRequest = LoginRequest(username = username, password = password)
 
         lifecycleScope.launch {
@@ -64,7 +64,9 @@ class LogInFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
-                        authRepository.storeJWT(loginResponse.token)
+                        authRepository.storeTokens(loginResponse.token, loginResponse.refreshToken)
+                        authRepository.saveRememberMe(rememberMe)
+
                         val storedToken = authRepository.getJWT().first()
 
                         if (storedToken != null) {

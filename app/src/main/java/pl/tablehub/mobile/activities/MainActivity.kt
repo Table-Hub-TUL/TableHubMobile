@@ -35,6 +35,14 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment?.navController ?: return
 
         lifecycleScope.launch {
+            val shouldRemember = authRepository.getRememberMe().first()
+
+            if (!shouldRemember) {
+                authRepository.clearData()
+                navigateToLogin(navController)
+                return@launch
+            }
+
             if (authRepository.hasValidToken()) {
                 navigateToMain(navController)
             } else {
