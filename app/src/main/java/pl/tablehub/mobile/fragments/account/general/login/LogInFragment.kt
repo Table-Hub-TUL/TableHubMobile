@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.rollbar.android.Rollbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -19,8 +21,7 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.client.model.auth.LoginRequest
-import pl.tablehub.mobile.datastore.EncryptedDataStore
-import pl.tablehub.mobile.fragments.account.general.login.composables.MainLoginView
+import pl.tablehub.mobile.fragments.account.general.login.composables.MailInputView
 import pl.tablehub.mobile.repository.AuthRepository
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
 import javax.inject.Inject
@@ -43,6 +44,7 @@ class LogInFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
+                /*
                 MainLoginView(
                     onRegister = {
                         findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
@@ -50,6 +52,10 @@ class LogInFragment : Fragment() {
                     onLogin = { username, password, rememberMe ->
                         handleLogin(username, password, rememberMe)
                     }
+                )*/
+
+                MailInputView(
+                    onValueChange = {}
                 )
             }
         }
