@@ -74,7 +74,12 @@ class TablesService : Service() {
     }
 
     suspend fun getRestaurantById(id: Long): RestaurantDetail {
-        return restaurantClientService.fetchRestaurant(id)
+        val detail = restaurantClientService.fetchRestaurant(id)
+
+        // ADD THIS LINE: Save the fetched detail to the repository
+        repository.setSpecificRestaurant(detail)
+
+        return detail
     }
 
     fun updateTableStatus(update: TableStatusChange) {

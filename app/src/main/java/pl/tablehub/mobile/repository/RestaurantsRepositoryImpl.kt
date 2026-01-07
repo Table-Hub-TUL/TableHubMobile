@@ -11,6 +11,7 @@ import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.model.v2.RestaurantDetail
 import pl.tablehub.mobile.model.v2.RestaurantListItem
+import pl.tablehub.mobile.model.TableStatus
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,12 +28,42 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
     override val cuisines: StateFlow<List<String>> = _cuisines.asStateFlow()
 
     override suspend fun processRestaurantList(dtos: List<RestaurantListItem>) {
-        _restaurantsMap.value = dtos.associateBy { it.id }
+        val specificRestaurant = _specificRestaurantState.value
+
+        val updatedDtos = if (specificRestaurant != null) {
+            dtos.map { restaurant ->
+                // If the incoming restaurant matches the one we are holding in detail memory
+                if (restaurant.id == specificRestaurant.id) {
+                    // Calculate the REAL count from our detailed local state
+                    val calculatedCount = specificRestaurant.sections
+                        .flatMap { it.tables }
+                        .count { table -> table.status == TableStatus.AVAILABLE }
+
+                    // Override the server's (potentially stale) count with our fresh local count
+                    restaurant.copy(freeTableCount = calculatedCount)
+                } else {
+                    restaurant
+                }
+            }
+        } else {
+            dtos
+        }
+
+        _restaurantsMap.value = updatedDtos.associateBy { it.id }
     }
-    override suspend fun processTableStatusChange(tableStatusChange: TableStatusChange) {
-        if (_specificRestaurantState.value?.id == tableStatusChange.restaurantId) {
-            val restaurant = _specificRestaurantState.value ?: return
-            val newSections = restaurant.sections.map { section ->
+
+    override suspend fun setSpecificRestaurant(restaurant: RestaurantDetail) {
+        _specificRestaurantState.value = restaurant
+    }
+
+    override suspend fun processTableStatusChange(tableStatusChange: TableStatusChange) {/*
+        val currentDetail = _specificRestaurantState.value
+
+        // We can only recalculate based on tables if we have the full details (sections/tables) loaded
+        if (currentDetail?.id == tableStatusChange.restaurantId) {
+
+            // 1. Create the new list of sections with the updated table status
+            val newSections = currentDetail.sections.map { section ->
                 if (section.id == tableStatusChange.sectionId) {
                     val newTables = section.tables.map { table ->
                         if (table.id == tableStatusChange.tableId) {
@@ -46,8 +77,30 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
                     section
                 }
             }
-            _specificRestaurantState.value = restaurant.copy(sections = newSections)
+
+            // 2. Update the specific restaurant state with the new structure
+            val updatedDetail = currentDetail.copy(sections = newSections)
+            _specificRestaurantState.value = updatedDetail
+
+            // 3. Recalculate the absolute Free Table Count from the updated data
+            // We sum the count of available tables across all sections
+            val calculatedFreeCount = newSections.sumOf { section ->
+                section.tables.count { it.status == TableStatus.AVAILABLE }
+            }
+
+            // 4. Update the Map State (List View) with the fresh, recalculated count
+            val restaurantListItem = _restaurantsMap.value[tableStatusChange.restaurantId]
+            if (restaurantListItem != null) {
+                val updatedRestaurantListItem = restaurantListItem.copy(
+                    freeTableCount = calculatedFreeCount
+                )
+
+                _restaurantsMap.value = _restaurantsMap.value.toMutableMap().apply {
+                    this[tableStatusChange.restaurantId] = updatedRestaurantListItem
+                }
+            }
         }
+        */
     }
 
     override suspend fun processTableStatusChange(tableStatusChange: AggregateRestaurantStatus) {

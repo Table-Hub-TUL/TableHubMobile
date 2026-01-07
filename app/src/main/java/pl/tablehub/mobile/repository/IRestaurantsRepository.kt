@@ -17,4 +17,5 @@ interface IRestaurantsRepository {
     suspend fun updateFilters(query: RestaurantSearchQuery)
     suspend fun processTableStatusChange(tableStatusChange: AggregateRestaurantStatus)
     suspend fun processCuisines(cuisines: List<String>)
+    suspend fun setSpecificRestaurant(restaurant: RestaurantDetail)
 }
