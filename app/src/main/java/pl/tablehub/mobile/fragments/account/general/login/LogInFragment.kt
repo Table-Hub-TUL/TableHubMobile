@@ -72,9 +72,9 @@ class LogInFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
+                        authRepository.saveUsername(username)
                         authRepository.storeTokens(loginResponse.token, loginResponse.refreshToken)
                         authRepository.saveRememberMe(rememberMe)
-
                         val storedToken = authRepository.getJWT().first()
 
                         if (storedToken != null) {

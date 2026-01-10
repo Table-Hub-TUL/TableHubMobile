@@ -23,9 +23,9 @@ android {
 
     defaultConfig {
         applicationId = "pl.tablehub.mobile"
-        minSdk = 31
-        //noinspection OldTargetApi
+        minSdk = 33
         targetSdk = 36
+        //noinspection OldTargetApi
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
