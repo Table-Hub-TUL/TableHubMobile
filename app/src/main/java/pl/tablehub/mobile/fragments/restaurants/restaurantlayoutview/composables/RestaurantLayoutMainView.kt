@@ -44,6 +44,7 @@ import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 @Composable
 fun RestaurantLayoutMainView(
     modifier: Modifier = Modifier,
+    restaurantId: Long,
     onBack: () -> Unit = {},
     onFinishChanges: () -> Unit = {},
     onTableStatusChanged: ((TableStatusChange) -> Unit) = { _: TableStatusChange -> },
@@ -58,7 +59,8 @@ fun RestaurantLayoutMainView(
     ) {
         selectedSection?.let {
             RestaurantMapRenderer(
-                it,
+                section = it,
+                restaurantId = restaurantId,
                 onTableStatusChanged = onTableStatusChanged
             )
         }

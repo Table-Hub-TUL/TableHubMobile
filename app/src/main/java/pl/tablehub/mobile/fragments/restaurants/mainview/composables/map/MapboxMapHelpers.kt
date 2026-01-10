@@ -6,10 +6,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import pl.tablehub.mobile.model.v1.Section
 import pl.tablehub.mobile.model.TableStatus
+import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.model.v2.TableListItem
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -57,9 +59,9 @@ internal fun calculateDistance(
     return distance.roundToInt()
 }
 
-internal fun calculateFreeTablesText(restaurantId: Long, tables: Map<Long, List<TableListItem>>): String {
-    val count: Int = (tables[restaurantId]?.count { it.tableStatus == TableStatus.AVAILABLE }
-        ?: 0)
+internal fun calculateFreeTablesText(restaurant: RestaurantListItem): String {
+    val count = restaurant.freeTableCount
+    Log.d("FreeTables", "freeTableCount = $count")
     return when(count < 100) {
         true -> count.toString()
         false -> "99+"

@@ -69,6 +69,7 @@ class RestaurantLayoutFragment : Fragment() {
 
                 if (restaurantDetail != null) {
                     RestaurantLayoutMainView(
+                        restaurantId = restaurantId,
                         onBack = {
                             navigateBack()
                         },

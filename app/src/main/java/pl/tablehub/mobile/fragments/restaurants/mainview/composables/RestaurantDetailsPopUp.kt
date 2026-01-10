@@ -98,13 +98,12 @@ internal fun PopUpButton(
 @Composable
 fun RestaurantDetailsPopup(
     restaurant: RestaurantListItem,
-    tables: List<TableListItem>,
     onDismissRequest: () -> Unit,
     onReportTable: (RestaurantListItem) -> Unit,
     onMoreDetailsClick: (RestaurantListItem) -> Unit
 ) {
     val dims = rememberGlobalDimensions()
-    val availableTables by remember { mutableIntStateOf(tables.count { it.tableStatus == TableStatus.AVAILABLE }) }
+    val availableTables = restaurant.freeTableCount
     PopUpWrapper(
         onDismissRequest = onDismissRequest
     ) {

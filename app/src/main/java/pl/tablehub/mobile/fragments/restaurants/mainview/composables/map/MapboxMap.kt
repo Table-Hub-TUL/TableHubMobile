@@ -47,7 +47,6 @@ fun MapboxMapWrapper(
     centerOnPointTrigger: SharedFlow<Point>,
     potentialCenterLocation: Location,
     restaurants: List<RestaurantListItem>,
-    tables: Map<Long, List<TableListItem>>,
     onMarkerClick: (RestaurantListItem) -> Unit = {},
     onMapBoundsChanged: (center: Point, radiusInMeters: Double) -> Unit
 ) {
@@ -57,7 +56,7 @@ fun MapboxMapWrapper(
         BitmapFactory.decodeResource(context.resources, R.drawable.marker)
     }
     val textBitmaps = restaurants.map { restaurant ->
-        rememberTextOnBitmap(baseBitmap = baseMarkerBitmap, text = calculateFreeTablesText(restaurant.id, tables))
+        rememberTextOnBitmap(baseBitmap = baseMarkerBitmap, text = restaurant.freeTableCount.toString())
     }
 
     val mapViewportState = rememberMapViewportState {

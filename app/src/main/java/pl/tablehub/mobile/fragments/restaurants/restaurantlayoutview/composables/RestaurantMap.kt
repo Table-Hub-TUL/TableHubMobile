@@ -35,6 +35,7 @@ fun stringToPath(svgPath: String): Path {
 @Composable
 fun RestaurantMapRenderer(
     section: Section,
+    restaurantId: Long,
     onTableStatusChanged: (TableStatusChange) -> Unit
 ) {
     val mapPath = stringToPath(section.layout.shape)
@@ -86,7 +87,7 @@ fun RestaurantMapRenderer(
                         table.status = newStatus
                         onTableStatusChanged(
                             TableStatusChange(
-                                1,
+                                restaurantId = restaurantId,
                                 sectionId = section.id,
                                 tableId = table.id,
                                 newStatus

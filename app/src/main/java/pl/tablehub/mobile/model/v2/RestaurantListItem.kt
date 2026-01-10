@@ -13,7 +13,6 @@ data class RestaurantListItem(
     val address: Address,
     val location: Location,
     val rating: Double,
-    val tables: List<TableListItem> = emptyList(),
     val totalTableCount: Int = 0,
     val freeTableCount: Int = 0
 ) : Parcelable
