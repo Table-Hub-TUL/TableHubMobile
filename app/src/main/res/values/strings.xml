@@ -79,4 +79,6 @@
     <string name="gam_redeem">Redeem you rewards</string>
     <string name="location">Location</string>
     <string name="remember_me">Remember me</string>
+    <string name="change_your_password">Change your password</string>
+    <string name="input_email">Input your email, where we will send the link to reset the password</string>
 </resources>
