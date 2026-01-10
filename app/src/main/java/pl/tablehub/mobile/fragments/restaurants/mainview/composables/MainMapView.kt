@@ -79,9 +79,6 @@ fun MainMapView(
                     centerOnPointTrigger = centerOnPointTrigger,
                     restaurants = restaurants,
                     potentialCenterLocation = userLocation,
-                    tables = restaurants.associate { restaurant ->
-                        restaurant.id to (restaurant.tables?: emptyList<TableListItem>())
-                    },
                     onMarkerClick = { restaurant ->
                         selectedRestaurant = restaurant
                         scope.launch {
@@ -123,7 +120,6 @@ fun MainMapView(
                     RestaurantDetailsPopup(
                         restaurant = restaurant,
                         onDismissRequest = { selectedRestaurant = null },
-                        tables = restaurant.tables?: emptyList<TableListItem>(),
                         onReportTable = onReportSpecific,
                         onMoreDetailsClick = onMoreDetails)
                 }
