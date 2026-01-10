@@ -17,6 +17,7 @@ import pl.tablehub.mobile.R
 import pl.tablehub.mobile.fragments.account.profile.composables.ProfileView
 import pl.tablehub.mobile.viewmodels.ProfileViewModel
 import pl.tablehub.mobile.ui.theme.TableHubTheme
+import androidx.compose.ui.res.stringResource
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -25,6 +26,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.logoutEvent.collectLatest {

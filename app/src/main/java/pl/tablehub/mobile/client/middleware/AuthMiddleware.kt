@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.client.middleware
 
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -28,5 +29,9 @@ class AuthMiddleware @Inject constructor(
             .build()
 
         return chain.proceed(newRequest)
+    }
+    companion object {
+        val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
+        val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
     }
 }

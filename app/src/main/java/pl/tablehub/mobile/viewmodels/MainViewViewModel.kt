@@ -14,7 +14,10 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pl.tablehub.mobile.model.v1.Location
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
@@ -24,6 +27,7 @@ import pl.tablehub.mobile.repository.IRestaurantsRepository
 import pl.tablehub.mobile.services.TablesService
 import java.lang.ref.WeakReference
 import javax.inject.Inject
+import pl.tablehub.mobile.model.TableStatus
 
 @HiltViewModel
 class MainViewViewModel @Inject constructor(
@@ -31,10 +35,11 @@ class MainViewViewModel @Inject constructor(
     private val repository: IRestaurantsRepository
 ) : AndroidViewModel(application) {
     private val _restaurants = repository.restaurantsMap
+    val restaurantsFilters = repository.restaurantsFilters
     val restaurants: StateFlow<Map<Long, RestaurantListItem>> = _restaurants
     private val _userLocation = MutableStateFlow(Location(0.0, 0.0))
     val userLocation: StateFlow<Location> = _userLocation
-    val restaurantsFilters = repository.restaurantsFilters
+    //val restaurantsFilters = repository.restaurantsFilters
     val cuisines: StateFlow<List<String>> = repository.cuisines
 
     private var tablesServiceRef: WeakReference<TablesService>? = null

@@ -1,9 +1,11 @@
 package pl.tablehub.mobile.client.rest.interfaces
 
+import pl.tablehub.mobile.client.model.user.UserProfileResponse
 import pl.tablehub.mobile.client.model.user.UserStats
 import pl.tablehub.mobile.client.rest.utils.Prefixes.API_USER_PREFIX
 import pl.tablehub.mobile.model.v2.Achievement
 import pl.tablehub.mobile.model.v2.Reward
+import pl.tablehub.mobile.model.v2.RewardDto
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -11,10 +13,12 @@ import retrofit2.http.Path
 interface IUserService {
     @GET("${API_USER_PREFIX}/achievements")
     suspend fun getAchievements() : List<Achievement>
+    @GET("${API_USER_PREFIX}/{username}/profile")
+    suspend fun getUserProfile(@Path("username") username: String): UserProfileResponse
     @GET("${API_USER_PREFIX}/{username}/stats")
     suspend fun getUserStats(@Path("username") username: String) : UserStats
-    @GET("${API_USER_PREFIX}/{username}/rewards}")
-    suspend fun getUserRewards(@Path("username") username: String) : List<Reward>
+    @GET("${API_USER_PREFIX}/{username}/rewards")
+    suspend fun getUserRewards(@Path("username") username: String) : List<RewardDto>
     @POST("${API_USER_PREFIX}/{username}/rewards/{rewardID}")
     suspend fun redeemReward(@Path("username") username: String, @Path("rewardID") rewardID: Long)
-}
+ }

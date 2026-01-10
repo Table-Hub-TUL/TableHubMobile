@@ -11,6 +11,8 @@ import coil.compose.AsyncImage
 import pl.tablehub.mobile.model.v2.Reward
 import pl.tablehub.mobile.ui.theme.GlobalDimensions
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
 internal fun RewardImage(
@@ -18,8 +20,8 @@ internal fun RewardImage(
     dims: GlobalDimensions
 ) {
     AsyncImage(
-        model = reward.image.url,
-        contentDescription = reward.image.altText,
+        model = reward.image,
+        contentDescription = stringResource(R.string.gam_rewards),
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(dims.buttonCornerRadius))

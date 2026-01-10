@@ -12,6 +12,7 @@ import pl.tablehub.mobile.client.middleware.AuthMiddleware
 import pl.tablehub.mobile.client.middleware.TokenAuthenticator
 import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.client.rest.interfaces.IRestaurantService
+import pl.tablehub.mobile.client.rest.interfaces.IUserService
 import pl.tablehub.mobile.util.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -67,5 +68,11 @@ object ClientModule {
     @Singleton
     fun provideRestaurantService(retrofit: Retrofit): IRestaurantService {
         return retrofit.create(IRestaurantService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): IUserService {
+        return retrofit.create(IUserService::class.java)
     }
 }
