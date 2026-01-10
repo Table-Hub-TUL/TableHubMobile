@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,21 +30,27 @@ class ProfileViewModel @Inject constructor(
     val logoutEvent = _logoutEvent.receiveAsFlow()
 
     init {
-        loadUserProfileData()
     }
 
-    fun loadUserProfileData() {
+    fun loadUserProfileData(guestName: String) {
         viewModelScope.launch {
             try {
-                val stats = userRepository.getUserStats()
+                val username = userRepository.getLoggedInUsername()
+
+                val profileDeferred = async { userRepository.getUserProfile(username) }
+                val statsDeferred = async { userRepository.getUserStats() }
+
+                val profile = profileDeferred.await()
+                val stats = statsDeferred.await()
 
                 _userProfile.value = UserProfile(
+                    fullName = profile.name ?: profile.userName,
+                    email = profile.email,
                     points = stats.points
                 )
-
             } catch (e: Exception) {
-                Log.e(TAG, "Failed to load user profile data or points: ${e.message}")
-                _userProfile.value = _userProfile.value.copy(points = 0)
+                Log.e("ProfileViewModel", "Error loading data: ${e.message}", e)
+                _userProfile.value = UserProfile(fullName = guestName, email = "", points = 0)
             }
         }
     }

@@ -13,6 +13,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.jvm.Throws
+import android.util.Base64
 @Singleton
 class AuthRepository @Inject constructor(
     private val encryptedDataStore: EncryptedDataStore,
@@ -22,6 +23,8 @@ class AuthRepository @Inject constructor(
     companion object {
         private val JWT_TOKEN_KEY = stringPreferencesKey("jwt_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
+
+        private val USER_EMAIL_KEY = stringPreferencesKey("user_email")
         private const val REWARD_TIMER_KEY_PREFIX = "reward_timer_"
 
     }
@@ -128,4 +131,6 @@ class AuthRepository @Inject constructor(
         encryptedDataStore.remove(AuthMiddleware.REFRESH_TOKEN_KEY)
         encryptedDataStore.remove(EncryptedDataStore.USERNAME_KEY)
     }
+
+
 }

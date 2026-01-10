@@ -1,15 +1,12 @@
 package pl.tablehub.mobile.model.v2
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
-data class Reward(
+data class RewardDto(
     val id: Long,
     val title: String,
     val additionalDescription: String?,
-    val image: Image,
+    val image: String,
     val restaurantName: String,
-    val restaurantAddress: Address,
+    val street: String,
+    val city: String,
     val redeemed: Boolean
-) : Parcelable
+)

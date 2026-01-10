@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,6 +30,10 @@ fun ProfileView(
     val dims = rememberGlobalDimensions()
     val horizontalContentPadding = dims.paddingHuge * 3f
     val guestName = stringResource(R.string.Guest)
+
+    LaunchedEffect(Unit) {
+        viewModel.loadUserProfileData(guestName)
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize()

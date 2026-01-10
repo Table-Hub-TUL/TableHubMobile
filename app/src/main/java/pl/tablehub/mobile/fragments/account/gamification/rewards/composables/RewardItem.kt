@@ -57,7 +57,7 @@ fun RewardItem(
             ) {
                 AsyncImage(
                     model = reward.image,
-                    contentDescription = reward.image,
+                    contentDescription = reward.image.url,
                     modifier = Modifier
                         .size(1.5 * dims.bigIconSize)
                         .clip(RoundedCornerShape(dims.paddingSmall))
