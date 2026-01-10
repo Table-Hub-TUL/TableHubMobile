@@ -14,6 +14,8 @@ import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.jvm.Throws
 import android.util.Base64
+import kotlinx.coroutines.flow.map
+
 @Singleton
 class AuthRepository @Inject constructor(
     private val encryptedDataStore: EncryptedDataStore,
@@ -25,8 +27,17 @@ class AuthRepository @Inject constructor(
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
 
         private val USER_EMAIL_KEY = stringPreferencesKey("user_email")
+        private val REMEMBER_ME_KEY = stringPreferencesKey("remember_me")
         private const val REWARD_TIMER_KEY_PREFIX = "reward_timer_"
 
+    }
+
+    suspend fun saveRememberMe(shouldRemember: Boolean) {
+        encryptedDataStore.put(REMEMBER_ME_KEY, shouldRemember)
+    }
+
+    fun getRememberMe(): Flow<Boolean> {
+        return encryptedDataStore.get(REMEMBER_ME_KEY).map { it?.toBoolean() ?: false }
     }
 
     suspend fun storeTokens(accessToken: String, refreshToken: String) {

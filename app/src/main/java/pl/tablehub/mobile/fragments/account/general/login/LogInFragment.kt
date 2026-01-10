@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.rollbar.android.Rollbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.client.rest.interfaces.IAuthService
 import pl.tablehub.mobile.client.model.auth.LoginRequest
-import pl.tablehub.mobile.datastore.EncryptedDataStore
+import pl.tablehub.mobile.fragments.account.general.login.composables.MailInputView
 import pl.tablehub.mobile.fragments.account.general.login.composables.MainLoginView
 import pl.tablehub.mobile.repository.AuthRepository
 import pl.tablehub.mobile.ui.shared.constants.NavArgs
@@ -47,15 +49,21 @@ class LogInFragment : Fragment() {
                     onRegister = {
                         findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
                     },
-                    onLogin = { username, password ->
-                        handleLogin(username, password)
+                    onLogin = { username, password, rememberMe ->
+                        handleLogin(username, password, rememberMe)
                     }
                 )
+                /*
+                MailInputView(
+                    onValueChange = {}
+                )
+
+                 */
             }
         }
     }
 
-    private fun handleLogin(username: String, password: String) {
+    private fun handleLogin(username: String, password: String, rememberMe: Boolean) {
         val loginRequest = LoginRequest(username = username, password = password)
 
         lifecycleScope.launch {
@@ -64,8 +72,9 @@ class LogInFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
-                        authRepository.storeJWT(loginResponse.token)
                         authRepository.saveUsername(username)
+                        authRepository.storeTokens(loginResponse.token, loginResponse.refreshToken)
+                        authRepository.saveRememberMe(rememberMe)
                         val storedToken = authRepository.getJWT().first()
 
                         if (storedToken != null) {
