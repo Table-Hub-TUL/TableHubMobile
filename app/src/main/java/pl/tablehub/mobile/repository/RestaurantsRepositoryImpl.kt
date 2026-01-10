@@ -28,35 +28,29 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
     override val cuisines: StateFlow<List<String>> = _cuisines.asStateFlow()
 
     override suspend fun processRestaurantList(dtos: List<RestaurantListItem>) {
-        val specificRestaurant = _specificRestaurantState.value
-
-        val updatedDtos = if (specificRestaurant != null) {
-            dtos.map { restaurant ->
-                // If the incoming restaurant matches the one we are holding in detail memory
-                if (restaurant.id == specificRestaurant.id) {
-                    // Calculate the REAL count from our detailed local state
-                    val calculatedCount = specificRestaurant.sections
-                        .flatMap { it.tables }
-                        .count { table -> table.status == TableStatus.AVAILABLE }
-
-                    // Override the server's (potentially stale) count with our fresh local count
-                    restaurant.copy(freeTableCount = calculatedCount)
-                } else {
-                    restaurant
-                }
+        val oldMap = _restaurantsMap.value
+        val updated = dtos.associateBy { dto ->
+            dto.id
+        }.mapValues { (id, newItem) ->
+            val oldItem = oldMap[id]
+            if (oldItem != null) {
+                newItem.copy(
+                    totalTableCount = oldItem.totalTableCount,
+                    freeTableCount = oldItem.freeTableCount
+                )
+            } else {
+                newItem
             }
-        } else {
-            dtos
         }
-
-        _restaurantsMap.value = updatedDtos.associateBy { it.id }
+        _restaurantsMap.value = updated
     }
+
 
     override suspend fun setSpecificRestaurant(restaurant: RestaurantDetail) {
         _specificRestaurantState.value = restaurant
     }
 
-    override suspend fun processTableStatusChange(tableStatusChange: TableStatusChange) {/*
+    override suspend fun processTableStatusChange(tableStatusChange: TableStatusChange) {
         val currentDetail = _specificRestaurantState.value
 
         // We can only recalculate based on tables if we have the full details (sections/tables) loaded
@@ -100,7 +94,6 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
                 }
             }
         }
-        */
     }
 
     override suspend fun processTableStatusChange(tableStatusChange: AggregateRestaurantStatus) {
