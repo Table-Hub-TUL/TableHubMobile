@@ -92,7 +92,7 @@ fun AchievementsView(
 
             is AchievementsState.Success -> {
                 val successState = state as AchievementsState.Success
-                val achievementsList = successState.achievements
+                val achievementsList = achievements
                 val userPoints = successState.userPoints
 
                 LazyColumn(
