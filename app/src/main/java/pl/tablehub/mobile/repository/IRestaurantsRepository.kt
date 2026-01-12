@@ -6,6 +6,7 @@ import pl.tablehub.mobile.client.model.restaurants.RestaurantSearchQuery
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.model.v2.RestaurantDetail
 import pl.tablehub.mobile.model.v2.RestaurantListItem
+import pl.tablehub.mobile.model.v2.Reward
 
 interface IRestaurantsRepository {
     val restaurantsMap: StateFlow<Map<Long, RestaurantListItem>>
@@ -18,4 +19,5 @@ interface IRestaurantsRepository {
     suspend fun processTableStatusChange(tableStatusChange: AggregateRestaurantStatus)
     suspend fun processCuisines(cuisines: List<String>)
     suspend fun setSpecificRestaurant(restaurant: RestaurantDetail)
+    suspend fun getAllRestaurantsRewards(): List<Reward>
 }

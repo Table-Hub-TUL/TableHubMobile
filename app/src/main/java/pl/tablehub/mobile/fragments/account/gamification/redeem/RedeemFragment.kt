@@ -73,7 +73,6 @@ class RedeemFragment : Fragment() {
                                     authRepository.saveRewardTimer(rewardToRedeem.id, expiryTime)
                                 }
 
-                                // TODO: Implement actual redeem logic (np. wywołanie API)
                                 Toast.makeText(context, "Reward Redeemed!", Toast.LENGTH_SHORT).show()
                                 findNavController().popBackStack()
                             },

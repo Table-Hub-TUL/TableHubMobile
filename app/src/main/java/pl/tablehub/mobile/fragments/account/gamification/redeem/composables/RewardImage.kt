@@ -20,8 +20,8 @@ internal fun RewardImage(
     dims: GlobalDimensions
 ) {
     AsyncImage(
-        model = reward.image,
-        contentDescription = stringResource(R.string.gam_rewards),
+        model = reward.image.url,
+        contentDescription = reward.image.altText,
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(dims.buttonCornerRadius))

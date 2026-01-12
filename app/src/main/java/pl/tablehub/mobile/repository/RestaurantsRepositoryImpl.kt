@@ -1,5 +1,8 @@
 package pl.tablehub.mobile.repository
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -8,15 +11,22 @@ import kotlinx.coroutines.flow.mapNotNull
 import pl.tablehub.mobile.client.model.restaurants.RestaurantSearchQuery
 import pl.tablehub.mobile.client.model.restaurants.AggregateRestaurantStatus
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
+import pl.tablehub.mobile.client.rest.interfaces.IRestaurantService
 import pl.tablehub.mobile.model.v1.Restaurant
 import pl.tablehub.mobile.model.v2.RestaurantDetail
 import pl.tablehub.mobile.model.v2.RestaurantListItem
 import pl.tablehub.mobile.model.TableStatus
+import pl.tablehub.mobile.model.v2.Address
+import pl.tablehub.mobile.model.v2.Image
+import pl.tablehub.mobile.model.v2.Reward
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
+
+    @Inject
+    lateinit var restaurantService: IRestaurantService
 
     private val _restaurantsMap = MutableStateFlow<Map<Long, RestaurantListItem>>(emptyMap())
     override val restaurantsMap: StateFlow<Map<Long, RestaurantListItem>> = _restaurantsMap.asStateFlow()
@@ -113,5 +123,50 @@ class RestaurantsRepositoryImpl @Inject constructor() : IRestaurantsRepository {
 
     override suspend fun updateFilters(query: RestaurantSearchQuery) {
         _restaurantFilters.value = query
+    }
+
+    override suspend fun getAllRestaurantsRewards(): List<Reward> = coroutineScope {
+        // 1. Ensure we have the list of restaurants
+        var restaurants = _restaurantsMap.value.values.toList()
+        if (restaurants.isEmpty()) {
+            // We use the injected field here
+            restaurants = restaurantService.fetchRestaurants(emptyMap())
+            processRestaurantList(restaurants)
+        }
+
+        // 2. Fetch rewards for each restaurant in parallel
+        val deferredRewards = restaurants.map { restaurant ->
+            async {
+                try {
+                    restaurantService.fetchRestaurantRewards(restaurant.id)
+                } catch (e: Exception) {
+                    emptyList()
+                }
+            }
+        }
+
+        // 3. Aggregate and Map to Domain Model
+        deferredRewards.awaitAll().flatten().map { dto ->
+            Reward(
+                id = dto.id,
+                title = dto.title,
+                additionalDescription = dto.additionalDescription,
+                image = Image(
+                    url = dto.image.url,
+                    altText = dto.image.altText.toString(),
+                    ratio = dto.image.ratio
+                ),
+                restaurantName = dto.restaurantName,
+                restaurantAddress = Address(
+                    street = dto.restaurantAddress.streetName,
+                    streetNumber = dto.restaurantAddress.streetNumber,
+                    apartmentNumber = dto.restaurantAddress.apartmentNumber,
+                    city = dto.restaurantAddress.city,
+                    postalCode = dto.restaurantAddress.postalCode,
+                    country = dto.restaurantAddress.country
+                ),
+                redeemed = dto.redeemed
+            )
+        }
     }
 }

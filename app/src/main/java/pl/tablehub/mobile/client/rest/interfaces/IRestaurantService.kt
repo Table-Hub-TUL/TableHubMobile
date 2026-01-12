@@ -1,5 +1,6 @@
 package pl.tablehub.mobile.client.rest.interfaces
 
+import pl.tablehub.mobile.client.model.restaurants.RestaurantRewardResponse
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
 import pl.tablehub.mobile.client.rest.utils.Prefixes.API_RESTAURANT_PREFIX
 import pl.tablehub.mobile.client.rest.utils.Prefixes.TABLE_STATUS_PREFIX
@@ -27,4 +28,9 @@ interface IRestaurantService {
 
     @GET("api/restaurants/cuisine-list")
     suspend fun fetchCuisineList(): List<String>
+
+    @GET("${API_RESTAURANT_PREFIX}/{id}/rewards")
+    suspend fun fetchRestaurantRewards(
+        @Path("id") id: Long
+    ): List<RestaurantRewardResponse>
 }

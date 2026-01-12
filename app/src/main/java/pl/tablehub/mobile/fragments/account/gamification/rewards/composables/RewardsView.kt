@@ -28,9 +28,10 @@ import androidx.compose.ui.unit.times
 fun RewardsView(
     modifier: Modifier = Modifier,
     viewModel: RewardsViewModel,
+    onRedeemClick: (Reward) -> Unit = {},
     onBackClick: () -> Unit = {}
 ) {
-    val state by viewModel.state.collectAsState()
+    //val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val dims = rememberGlobalDimensions()
 
@@ -100,37 +101,18 @@ fun RewardsView(
 
             Spacer(modifier = Modifier.height(0.5 * dims.paddingHuge))
 
-            when (state) {
-                RewardsState.Loading, RewardsState.Initial -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = PRIMARY_COLOR)
-                    }
-                }
+            val rewards = rewardList
 
-                is RewardsState.Error -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text = "Błąd ładowania: ${(state as RewardsState.Error).message}",
-                            color = Color.Red
-                        )
-                    }
-                }
-
-                is RewardsState.Success -> {
-                    val rewards = (state as RewardsState.Success).rewards
-
-                    LazyColumn(
-                        modifier = Modifier.weight(1f),
-                        contentPadding = PaddingValues(horizontal = dims.paddingHuge),
-                        verticalArrangement = Arrangement.spacedBy(dims.paddingMedium)
-                    ) {
-                        items(rewards) { reward: Reward ->
-                            RewardItem(
-                                reward = reward,
-                                onRedeemClick = { viewModel.redeemReward(reward.id) }
-                            )
-                        }
-                    }
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(horizontal = dims.paddingHuge),
+                verticalArrangement = Arrangement.spacedBy(dims.paddingMedium)
+            ) {
+                items(rewards) { reward: Reward ->
+                    RewardItem(
+                        reward = reward,
+                        onRedeemClick = onRedeemClick
+                    )
                 }
             }
         }
