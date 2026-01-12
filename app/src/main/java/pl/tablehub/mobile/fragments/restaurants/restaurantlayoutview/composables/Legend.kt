@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,12 +23,14 @@ import androidx.compose.ui.unit.sp
 import pl.tablehub.mobile.R
 import pl.tablehub.mobile.ui.theme.GREEN_FREE_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 @Composable
 private fun TableStatusBox(
     color: Color,
     textRes: Int
 ) {
+    val dims = rememberGlobalDimensions()
     Box(
         modifier = Modifier
             .size(20.dp)
@@ -37,7 +40,7 @@ private fun TableStatusBox(
     Text(
         text = stringResource(textRes),
         color = TERTIARY_COLOR,
-        fontSize = 12.sp, // TODO: Change it to scalable version
+        fontSize = dims.textSizeMedium,
         fontWeight = FontWeight.Medium
     )
 }
@@ -46,9 +49,10 @@ private fun TableStatusBox(
 fun CompactLegend(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .padding(horizontal = 12.dp, vertical = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 12.dp, vertical = 10.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         val tableStatuses = listOf(
             Color.Gray to R.string.unknown,

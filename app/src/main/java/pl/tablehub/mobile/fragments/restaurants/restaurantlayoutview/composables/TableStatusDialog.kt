@@ -24,6 +24,7 @@ import pl.tablehub.mobile.model.v2.TableDetail
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
 import pl.tablehub.mobile.ui.theme.SECONDARY_COLOR
 import pl.tablehub.mobile.ui.theme.TERTIARY_COLOR
+import pl.tablehub.mobile.ui.theme.rememberGlobalDimensions
 
 private const val BUTTON_HEIGHT_DP = 48
 private const val BUTTON_TEXT_SIZE_SP = 16
@@ -35,6 +36,7 @@ fun TableStatusDialog(
     onStatusChange: (TableStatus) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val dims = rememberGlobalDimensions()
     AlertDialog(
         modifier = modifier,
         containerColor = SECONDARY_COLOR,
@@ -49,6 +51,15 @@ fun TableStatusDialog(
         },
         text = {
             Column {
+                if(tableDetail.status != TableStatus.UNKNOWN) {
+                    Text(
+                        text = "Confidence score: 100",
+                        fontSize = dims.textSizeMedium,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center,
+                        color = TERTIARY_COLOR
+                    )
+                }
                 TableStatusOptions(
                     currentStatus = tableDetail.status,
                     onStatusSelect = onStatusChange
