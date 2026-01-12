@@ -34,7 +34,8 @@ fun TableStatusDialog(
     tableDetail: TableDetail,
     onDismiss: () -> Unit,
     onStatusChange: (TableStatus) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    confText: String
 ) {
     val dims = rememberGlobalDimensions()
     AlertDialog(
@@ -53,7 +54,7 @@ fun TableStatusDialog(
             Column {
                 if(tableDetail.status != TableStatus.UNKNOWN) {
                     Text(
-                        text = "Confidence score: 100",
+                        text = confText,
                         fontSize = dims.textSizeMedium,
                         fontWeight = FontWeight.Medium,
                         textAlign = TextAlign.Center,
@@ -84,6 +85,7 @@ private fun TableStatusOptions(
         availableStatuses.forEach { status ->
             StatusButton(
                 status = status,
+                currentTableStatus = currentStatus,
                 isSelected = currentStatus == status,
                 onClick = { onStatusSelect(status) }
             )
@@ -95,6 +97,7 @@ private fun TableStatusOptions(
 @Composable
 private fun StatusButton(
     status: TableStatus,
+    currentTableStatus: TableStatus,
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -109,7 +112,7 @@ private fun StatusButton(
             .height(BUTTON_HEIGHT_DP.dp)
     ) {
         Text(
-            text = getStatusDisplayText(status),
+            text = getStatusDisplayText(status, currentTableStatus),
             color = SECONDARY_COLOR,
             fontSize = BUTTON_TEXT_SIZE_SP.sp,
             fontWeight = FontWeight.Medium
@@ -142,10 +145,16 @@ private fun DialogActions(
 }
 
 @Composable
-private fun getStatusDisplayText(status: TableStatus): String {
-    return when (status) {
-        TableStatus.AVAILABLE -> stringResource(R.string.free)
+private fun getStatusDisplayText(targetStatus: TableStatus, currentTableStatus: TableStatus): String {
+    return when (targetStatus) {
+        TableStatus.AVAILABLE -> {
+            if (currentTableStatus == TableStatus.AVAILABLE) {
+                "Validate"
+            } else {
+                stringResource(R.string.free)
+            }
+        }
         TableStatus.OCCUPIED -> stringResource(R.string.occupied)
-        else -> status.name
+        else -> targetStatus.name
     }
 }

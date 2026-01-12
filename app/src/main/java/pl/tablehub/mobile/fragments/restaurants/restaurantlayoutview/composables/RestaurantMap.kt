@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.unit.dp
 import pl.tablehub.mobile.client.model.restaurants.TableStatusChange
+import pl.tablehub.mobile.model.TableStatus
 import pl.tablehub.mobile.model.v2.Section
 import pl.tablehub.mobile.model.v2.TableDetail
 import pl.tablehub.mobile.ui.theme.PRIMARY_COLOR
@@ -41,6 +43,7 @@ fun RestaurantMapRenderer(
     val mapPath = stringToPath(section.layout.shape)
     val transformState = rememberZoomPanState()
     var selectedTableDetail by remember { mutableStateOf<TableDetail?>(null) }
+    val validatedTableIds = remember { mutableStateListOf<Long>() }
 
     val contentWidthDp = section.layout.viewportWidth.dp
     val contentHeightDp = section.layout.viewportHeight.dp
@@ -80,10 +83,21 @@ fun RestaurantMapRenderer(
             }
         }
             selectedTableDetail?.let { table ->
+                val isValidated = validatedTableIds.contains(table.id)
+                val score = if (table.status != TableStatus.AVAILABLE || isValidated) "95" else "82"
                 TableStatusDialog(
                     tableDetail = table,
                     onDismiss = { selectedTableDetail = null },
                     onStatusChange = { newStatus ->
+                        if (newStatus == TableStatus.AVAILABLE) {
+                            if (table.status == TableStatus.AVAILABLE) {
+                                validatedTableIds.add(table.id)
+                            } else {
+                                validatedTableIds.remove(table.id)
+                            }
+                        } else {
+                            validatedTableIds.remove(table.id)
+                        }
                         table.status = newStatus
                         onTableStatusChanged(
                             TableStatusChange(
@@ -94,7 +108,8 @@ fun RestaurantMapRenderer(
                             )
                         )
                         selectedTableDetail = null;
-                    }
+                    },
+                    confText = "Confidence score: $score"
                 )
             }
         }
